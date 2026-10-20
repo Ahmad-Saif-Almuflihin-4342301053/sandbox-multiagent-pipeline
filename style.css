@@ -316,6 +316,45 @@ body {
   cursor: not-allowed;
 }
 
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.07);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  padding: 0.4rem 0.8rem;
+  font-size: 0.825rem;
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition-fast);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--border-hover);
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-secondary:active:not(:disabled) {
+  transform: translateY(0);
+  background: rgba(99, 102, 241, 0.2);
+  border-color: var(--primary);
+}
+
+.btn-secondary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Micro-interaction: Active button state feedback */
+.btn.btn-active-feedback {
+  background: rgba(16, 185, 129, 0.2) !important;
+  border-color: var(--success) !important;
+  color: #6ee7b7 !important;
+  transform: scale(0.96);
+  transition: all 0.15s ease;
+}
+
 .btn-ghost {
   background: transparent;
   color: var(--text-muted);
@@ -367,9 +406,18 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
   margin-bottom: 1.5rem;
   padding-bottom: 0.75rem;
   border-bottom: 1px solid var(--border-color);
+}
+
+.logs-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
 }
 
 .logs-header-left {
@@ -615,15 +663,21 @@ body {
   border-left: 4px solid var(--success);
 }
 
-.toast.toast-danger {
+.toast.toast-danger,
+.toast.toast-error {
   border-left: 4px solid var(--danger);
+}
+
+.toast.toast-warning {
+  border-left: 4px solid var(--warning);
 }
 
 .toast.toast-info {
   border-left: 4px solid var(--primary);
 }
 
-.toast.toast-exit {
+.toast.toast-exit,
+.toast.fade-out {
   animation: toastOut 0.25s ease forwards;
 }
 

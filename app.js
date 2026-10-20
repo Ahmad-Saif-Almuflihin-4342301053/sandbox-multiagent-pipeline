@@ -331,6 +331,8 @@ function initAppUI() {
     const emptyState = document.getElementById('emptyState');
     const logCount = document.getElementById('logCount');
     const clearAllBtn = document.getElementById('clearAllBtn');
+    const exportJsonBtn = document.getElementById('exportJsonBtn');
+    const copyReportBtn = document.getElementById('copyReportBtn');
     const toastContainer = document.getElementById('toastContainer');
     const submitBtn = document.getElementById('submitBtn');
 
@@ -503,6 +505,88 @@ function initAppUI() {
             if (logDateInput) logDateInput.value = new Date().toISOString().split('T')[0];
 
             renderNotes();
+        });
+    }
+
+    // Handle Export JSON
+    if (exportJsonBtn) {
+        exportJsonBtn.addEventListener('click', () => {
+            const notes = getAllNotes();
+            if (notes.length === 0) {
+                showToast('Belum ada catatan untuk diekspor.', 'warning');
+                return;
+            }
+
+            exportJsonBtn.classList.add('btn-active-feedback');
+            setTimeout(() => exportJsonBtn.classList.remove('btn-active-feedback'), 300);
+
+            try {
+                if (typeof exportNotesToJSON === 'function') {
+                    exportNotesToJSON(true);
+                } else {
+                    // Fallback jika exportNotesToJSON belum dimuat
+                    const payload = {
+                        exportDate: new Date().toISOString(),
+                        totalNotes: notes.length,
+                        version: '1.0.0',
+                        notes: notes
+                    };
+                    const jsonString = JSON.stringify(payload, null, 2);
+                    const blob = new Blob([jsonString], { type: 'application/json' });
+                    const url = URL.createObjectURL(blob);
+                    const downloadAnchor = document.createElement('a');
+                    const dateStr = new Date().toISOString().split('T')[0];
+                    downloadAnchor.href = url;
+                    downloadAnchor.download = `catatan-magang-export-${dateStr}.json`;
+                    document.body.appendChild(downloadAnchor);
+                    downloadAnchor.click();
+                    document.body.removeChild(downloadAnchor);
+                    URL.revokeObjectURL(url);
+                }
+                showToast('Data catatan berhasil diekspor ke JSON!', 'success');
+            } catch (err) {
+                console.error('Gagal mengekspor catatan ke JSON:', err);
+                showToast('Gagal mengekspor catatan.', 'error');
+            }
+        });
+    }
+
+    // Handle Salin Laporan ke Clipboard
+    if (copyReportBtn) {
+        copyReportBtn.addEventListener('click', async () => {
+            const notes = getAllNotes();
+            if (notes.length === 0) {
+                showToast('Belum ada catatan untuk disalin.', 'warning');
+                return;
+            }
+
+            copyReportBtn.classList.add('btn-active-feedback');
+            setTimeout(() => copyReportBtn.classList.remove('btn-active-feedback'), 300);
+
+            try {
+                let reportText = `=== LAPORAN KEGIATAN MAGANG ===\nTotal Catatan: ${notes.length}\nTanggal Dibuat: ${new Date().toLocaleDateString('id-ID')}\n\n`;
+                notes.forEach((item, index) => {
+                    reportText += `${index + 1}. [${item.date}] (${item.category.toUpperCase()}) ${item.title}\n   ${item.content}\n\n`;
+                });
+
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    await navigator.clipboard.writeText(reportText);
+                } else {
+                    // Fallback untuk browser yang membatasi clipboard API
+                    const textarea = document.createElement('textarea');
+                    textarea.value = reportText;
+                    textarea.style.position = 'fixed';
+                    textarea.style.opacity = '0';
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textarea);
+                }
+                showToast('Laporan berhasil disalin ke clipboard!', 'success');
+            } catch (err) {
+                console.error('Gagal menyalin laporan:', err);
+                showToast('Gagal menyalin laporan ke clipboard.', 'error');
+            }
         });
     }
 
