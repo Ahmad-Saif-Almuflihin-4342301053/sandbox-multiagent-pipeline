@@ -314,6 +314,49 @@ function clearAllNotes() {
     };
 }
 
+/**
+ * Menghasilkan objek payload data export catatan magang beserta metadata
+ * @returns {{ exportDate: string, totalNotes: number, version: string, notes: Array<Object> }}
+ */
+function getExportPayload() {
+    const notes = getAllNotes();
+    return {
+        exportDate: new Date().toISOString(),
+        totalNotes: notes.length,
+        version: '1.0.0',
+        notes: notes
+    };
+}
+
+/**
+ * Mengekspor data catatan ke format JSON string atau memicu unduhan file .json di browser
+ * @param {boolean} [triggerDownload=false] - Jika true di lingkungan browser, memicu download file otomatis
+ * @returns {string} JSON string yang siap diekspor atau disalin
+ */
+function exportNotesToJSON(triggerDownload = false) {
+    const payload = getExportPayload();
+    const jsonString = JSON.stringify(payload, null, 2);
+
+    if (triggerDownload && typeof window !== 'undefined' && typeof document !== 'undefined') {
+        try {
+            const blob = new Blob([jsonString], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const downloadAnchor = document.createElement('a');
+            const dateStr = new Date().toISOString().split('T')[0];
+            downloadAnchor.href = url;
+            downloadAnchor.download = `catatan-magang-export-${dateStr}.json`;
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            document.body.removeChild(downloadAnchor);
+            URL.revokeObjectURL(url);
+        } catch (err) {
+            console.error('Gagal mengunduh file export JSON:', err);
+        }
+    }
+
+    return jsonString;
+}
+
 /* ==========================================================================
    DOM & UI Controller Layer (Integrasi aman dengan index.html)
    ========================================================================== */
@@ -640,6 +683,8 @@ if (typeof module !== 'undefined' && module.exports) {
         updateNote,
         deleteNote,
         clearAllNotes,
+        getExportPayload,
+        exportNotesToJSON,
         initAppUI
     };
 }
