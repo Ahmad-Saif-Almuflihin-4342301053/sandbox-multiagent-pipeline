@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mini Logbook - Catatan Magang Harian</title>
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Background Glow Accents -->
+  <div class="bg-blur bg-blur-1" aria-hidden="true"></div>
+  <div class="bg-blur bg-blur-2" aria-hidden="true"></div>
+
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-badge">
+        <span class="badge-dot"></span> Logbook Magang
+      </div>
+      <h1 class="header-title">Catatan Kegiatan Harian</h1>
+      <p class="header-subtitle">Dokumentasikan progres, pembelajaran, dan aktivitas magangmu setiap hari.</p>
+    </header>
+
+    <!-- Main Content Layout -->
+    <main class="main-content">
+      <!-- Input Card -->
+      <section class="card form-card">
+        <h2 class="card-title">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 20h9"></path>
+            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+          </svg>
+          Tambah Catatan Baru
+        </h2>
+
+        <form id="logForm" class="log-form" novalidate>
+          <div class="form-group">
+            <label for="logDate">Tanggal Kegiatan <span class="required">*</span></label>
+            <input type="date" id="logDate" name="logDate" class="form-input" required>
+          </div>
+
+          <div class="form-group">
+            <label for="logTitle">Judul Aktivitas <span class="required">*</span></label>
+            <input type="text" id="logTitle" name="logTitle" class="form-input" placeholder="Misal: Implementasi Autentikasi JWT" required>
+          </div>
+
+          <div class="form-group">
+            <label for="logCategory">Kategori</label>
+            <select id="logCategory" name="logCategory" class="form-input">
+              <option value="development">🚀 Development & Coding</option>
+              <option value="meeting">👥 Meeting & Diskusi</option>
+              <option value="learning">📚 Riset & Belajar</option>
+              <option value="testing">🧪 QA & Testing</option>
+              <option value="other">📌 Lainnya</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="logContent">Deskripsi Kegiatan <span class="required">*</span></label>
+            <textarea id="logContent" name="logContent" class="form-input form-textarea" rows="4" placeholder="Tuliskan ringkasan tugas yang dikerjakan, tantangan, atau hasil yang dicapai..." required></textarea>
+          </div>
+
+          <!-- Alert / Error message container -->
+          <div id="formAlert" class="form-alert hidden" role="alert"></div>
+
+          <button type="submit" id="submitBtn" class="btn btn-primary">
+            <span class="btn-text">Simpan Catatan</span>
+            <span class="spinner hidden" aria-hidden="true"></span>
+          </button>
+        </form>
+      </section>
+
+      <!-- Logs Display Card -->
+      <section class="card logs-card">
+        <div class="logs-header">
+          <div class="logs-header-left">
+            <h2 class="card-title">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+              </svg>
+              Daftar Catatan
+            </h2>
+            <span id="logCount" class="counter-badge">0 Catatan</span>
+          </div>
+
+          <div class="logs-actions">
+            <button id="clearAllBtn" class="btn btn-ghost btn-sm" title="Hapus semua catatan">
+              <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+              </svg>
+              Bersihkan
+            </button>
+          </div>
+        </div>
+
+        <!-- Skeleton Loading State (Shown during initial load or processing) -->
+        <div id="loadingSkeleton" class="skeleton-list hidden" aria-label="Memuat data..." aria-busy="true">
+          <div class="skeleton-item">
+            <div class="skeleton-line skeleton-title"></div>
+            <div class="skeleton-line skeleton-meta"></div>
+            <div class="skeleton-line skeleton-text"></div>
+          </div>
+          <div class="skeleton-item">
+            <div class="skeleton-line skeleton-title"></div>
+            <div class="skeleton-line skeleton-meta"></div>
+            <div class="skeleton-line skeleton-text"></div>
+          </div>
+        </div>
+
+        <!-- Empty State -->
+        <div id="emptyState" class="empty-state">
+          <div class="empty-icon-wrapper">
+            <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+          </div>
+          <h3 class="empty-title">Belum ada catatan magang</h3>
+          <p class="empty-desc">Isi formulir di sebelah kiri untuk mulai mencatat aktivitas harianmu.</p>
+        </div>
+
+        <!-- Dynamic Log Entries List -->
+        <ul id="logList" class="log-list" aria-live="polite">
+          <!-- Item list diinjeksi secara dinamis oleh app.js -->
+        </ul>
+      </section>
+    </main>
+  </div>
+
+  <!-- Toast Notification Container for Micro-Interactions -->
+  <div id="toastContainer" class="toast-container" aria-live="assertive"></div>
+
+  <!-- Script Core & Logic -->
+  <script src="app.js"></script>
+</body>
+</html>
