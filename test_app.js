@@ -17,6 +17,8 @@ const {
     createNote,
     updateNote,
     deleteNote,
+    getExportPayload,
+    exportNotesToJSON,
     inMemoryFallback
 } = require('./app.js');
 
@@ -180,6 +182,176 @@ runTest('createNote integrates anti-XSS and creates new item', () => {
     const all = getAllNotes();
     assert.strictEqual(all.length, 1);
     assert.strictEqual(all[0].id, res.note.id);
+});
+
+// 6. Data Integrity & Export Payload Reliability Tests (Issue #5)
+runTest('getExportPayload produces complete schema with valid metadata and empty notes array', () => {
+    // Reset mock storage to empty
+    const store = {};
+    global.window = {
+        localStorage: {
+            setItem: (k, v) => { store[k] = v; },
+            getItem: (k) => store[k] || null,
+            removeItem: (k) => { delete store[k]; }
+        }
+    };
+    inMemoryFallback.isUsingFallback = false;
+    inMemoryFallback.data = null;
+
+    const payload = getExportPayload();
+
+    assert.ok(payload !== null && typeof payload === 'object', 'Payload must be an object');
+    assert.strictEqual(payload.version, '1.0.0', 'Version should match semantic versioning 1.0.0');
+    assert.strictEqual(payload.totalNotes, 0, 'Total notes should be 0 when storage empty');
+    assert.ok(Array.isArray(payload.notes), 'Notes field must be an array');
+    assert.strictEqual(payload.notes.length, 0, 'Notes array length should match totalNotes');
+    assert.ok(!isNaN(Date.parse(payload.exportDate)), 'exportDate must be a valid ISO date string');
+});
+
+runTest('getExportPayload preserves data integrity, structure, and sanitized content across multiple items', () => {
+    const store = {};
+    global.window = {
+        localStorage: {
+            setItem: (k, v) => { store[k] = v; },
+            getItem: (k) => store[k] || null,
+            removeItem: (k) => { delete store[k]; }
+        }
+    };
+    inMemoryFallback.isUsingFallback = false;
+    inMemoryFallback.data = null;
+
+    // Seed notes
+    createNote({
+        title: 'Fitur Export <JSON>',
+        content: 'Implementasi unit test dan validasi skema export',
+        category: 'development'
+    });
+    createNote({
+        title: 'Daily Standup & Sync',
+        content: 'Membahas progress Worker 1, Worker 2, dan Worker 3',
+        category: 'meeting'
+    });
+
+    const payload = getExportPayload();
+
+    assert.strictEqual(payload.version, '1.0.0');
+    assert.strictEqual(payload.totalNotes, 2);
+    assert.strictEqual(payload.notes.length, 2);
+
+    // Verify properties integrity of each note
+    payload.notes.forEach(note => {
+        assert.ok(typeof note.id === 'string' && note.id.length > 0, 'Note must have an ID');
+        assert.ok(typeof note.title === 'string' && note.title.length > 0, 'Note must have a title');
+        assert.ok(typeof note.content === 'string' && note.content.length > 0, 'Note must have content');
+        assert.ok(typeof note.category === 'string', 'Note must have category');
+        assert.ok(typeof note.date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(note.date), 'Date must follow YYYY-MM-DD');
+        assert.ok(!isNaN(Date.parse(note.createdAt)), 'createdAt must be valid ISO timestamp');
+    });
+
+    // Verify anti-XSS preservation in export payload
+    assert.ok(payload.notes.some(n => n.title.includes('&lt;JSON&gt;')));
+    assert.ok(!payload.notes.some(n => n.title.includes('<JSON>')));
+});
+
+runTest('exportNotesToJSON returns valid formatted JSON string matching payload structure', () => {
+    const jsonString = exportNotesToJSON();
+    assert.strictEqual(typeof jsonString, 'string', 'exportNotesToJSON must return a string');
+
+    let parsed;
+    assert.doesNotThrow(() => {
+        parsed = JSON.parse(jsonString);
+    }, 'Output must be parseable JSON');
+
+    assert.strictEqual(parsed.version, '1.0.0');
+    assert.strictEqual(parsed.totalNotes, 2);
+    assert.strictEqual(parsed.notes.length, 2);
+    assert.ok(!isNaN(Date.parse(parsed.exportDate)));
+});
+
+runTest('exportNotesToJSON handles triggerDownload safely in Node and browser-like environments', () => {
+    // 1. In environment without DOM (Node.js default)
+    assert.doesNotThrow(() => {
+        const res = exportNotesToJSON(true);
+        assert.strictEqual(typeof res, 'string');
+    });
+
+    // 2. In browser-like mock environment
+    let anchorClicked = false;
+    let createdAnchor = null;
+    let objectUrlRevoked = false;
+
+    global.document = {
+        createElement: (tag) => {
+            if (tag === 'a') {
+                createdAnchor = {
+                    href: '',
+                    download: '',
+                    click: () => { anchorClicked = true; }
+                };
+                return createdAnchor;
+            }
+            return {};
+        },
+        body: {
+            appendChild: () => {},
+            removeChild: () => {}
+        }
+    };
+
+    global.Blob = class FakeBlob {
+        constructor(parts, options) {
+            this.parts = parts;
+            this.options = options;
+        }
+    };
+
+    global.URL = {
+        createObjectURL: () => 'blob:http://localhost/test-uuid',
+        revokeObjectURL: () => { objectUrlRevoked = true; }
+    };
+
+    const result = exportNotesToJSON(true);
+    assert.strictEqual(typeof result, 'string');
+    assert.strictEqual(anchorClicked, true, 'Trigger download should click anchor tag');
+    assert.ok(createdAnchor.download.startsWith('catatan-magang-export-'), 'Download filename prefix check');
+    assert.ok(createdAnchor.download.endsWith('.json'), 'Download filename extension check');
+    assert.strictEqual(objectUrlRevoked, true, 'Object URL should be revoked after download trigger');
+
+    // Clean up globals
+    delete global.document;
+    delete global.Blob;
+    delete global.URL;
+});
+
+runTest('export data integrity remains consistent when localStorage is disabled (fallback mode)', () => {
+    // Setup disabled storage
+    global.window = {
+        localStorage: {
+            getItem: () => { throw new Error('Blocked'); },
+            setItem: () => { throw new Error('Blocked'); },
+            removeItem: () => { throw new Error('Blocked'); }
+        }
+    };
+    inMemoryFallback.isUsingFallback = true;
+    inMemoryFallback.data = [
+        {
+            id: 'fb-1',
+            title: 'Fallback Note',
+            content: 'Catatan dalam memori',
+            date: '2026-10-20',
+            category: 'testing',
+            createdAt: new Date().toISOString()
+        }
+    ];
+
+    const payload = getExportPayload();
+    assert.strictEqual(payload.totalNotes, 1);
+    assert.strictEqual(payload.notes[0].id, 'fb-1');
+    assert.strictEqual(payload.notes[0].title, 'Fallback Note');
+
+    const json = exportNotesToJSON();
+    const parsed = JSON.parse(json);
+    assert.strictEqual(parsed.notes[0].id, 'fb-1');
 });
 
 console.log(`\nResults: ${testsPassed}/${testsTotal} passed.\n`);
