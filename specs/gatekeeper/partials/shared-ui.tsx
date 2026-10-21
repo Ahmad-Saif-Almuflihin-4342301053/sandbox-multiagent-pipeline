@@ -512,6 +512,7 @@ export const AuditOptionsOverlay: React.FC<{
 }> = ({ toggleId, isDesktop = false }) => {
   return (
     <>
+      <input type="checkbox" id={toggleId} style={{ display: "none" }} />
       <style>
         {`
           #${toggleId}:checked ~ .audit-options-backdrop {
@@ -581,9 +582,10 @@ export const AuditOptionsOverlay: React.FC<{
           isDesktop
             ? {
                 position: "absolute",
-                bottom: "68px",
-                left: "0",
+                bottom: "76px",
+                left: "24px",
                 width: "420px",
+                maxWidth: "calc(100% - 48px)",
                 maxHeight: "480px",
                 background: COLORS.warmCream,
                 borderRadius: "20px",

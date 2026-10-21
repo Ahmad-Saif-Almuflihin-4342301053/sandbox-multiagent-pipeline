@@ -27,40 +27,16 @@ export const GuestWorkspace: React.FC<GuestWorkspaceProps> = ({
         boxSizing: "border-box",
       }}
     >
-      {/* Header (56px) */}
-      <header
-        style={{
-          height: "56px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: isDesktop ? "0 28px" : "0 16px",
-          borderBottom: "1px solid rgba(30, 41, 59, 0.06)",
-          flexShrink: 0,
-          background: COLORS.warmCream,
-          zIndex: 10,
-        }}
-      >
-        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-          <label
-            htmlFor={sidebarToggleId}
-            style={{
-              padding: "8px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              cursor: "pointer",
-              borderRadius: "8px",
-              color: COLORS.deepSlate,
-            }}
-            title="Buka Menu"
-          >
-            <IconMenu size={22} color={COLORS.deepSlate} />
-          </label>
-          <WaskitaLogo width={isDesktop ? 136 : 120} height={isDesktop ? 29 : 26} />
-        </div>
-
-        <div>
+      {/* Header Mobile (56px) vs Desktop Standalone Sign In Button (Tanpa Background Header & Tanpa Logo Duplikat) */}
+      {isDesktop ? (
+        <div
+          style={{
+            position: "absolute",
+            top: "16px",
+            right: "28px",
+            zIndex: 30,
+          }}
+        >
           <button
             type="button"
             style={{
@@ -72,12 +48,64 @@ export const GuestWorkspace: React.FC<GuestWorkspaceProps> = ({
               fontWeight: 600,
               color: COLORS.deepSlate,
               cursor: "pointer",
+              boxShadow: "0 1px 3px rgba(30, 41, 59, 0.06)",
             }}
           >
             Sign in
           </button>
         </div>
-      </header>
+      ) : (
+        <header
+          style={{
+            height: "56px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: "0 16px",
+            borderBottom: "1px solid rgba(30, 41, 59, 0.06)",
+            flexShrink: 0,
+            background: COLORS.warmCream,
+            zIndex: 10,
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+            <label
+              htmlFor={sidebarToggleId}
+              style={{
+                padding: "8px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "pointer",
+                borderRadius: "8px",
+                color: COLORS.deepSlate,
+              }}
+              title="Buka Menu"
+            >
+              <IconMenu size={22} color={COLORS.deepSlate} />
+            </label>
+            <WaskitaLogo width={120} height={26} />
+          </div>
+
+          <div>
+            <button
+              type="button"
+              style={{
+                background: COLORS.softPeriwinkle,
+                border: "none",
+                borderRadius: "9999px",
+                padding: "8px 20px",
+                fontSize: "13px",
+                fontWeight: 600,
+                color: COLORS.deepSlate,
+                cursor: "pointer",
+              }}
+            >
+              Sign in
+            </button>
+          </div>
+        </header>
+      )}
 
       {/* Desktop Centered Content (Hero + Kapsul Input + Disclaimer) vs Mobile Separated Content */}
       {isDesktop ? (
@@ -210,7 +238,7 @@ export const GuestWorkspace: React.FC<GuestWorkspaceProps> = ({
               maxWidth: "600px",
             }}
           >
-            Ketentuan Layanan dan Kebijakan Privasi Waskita berlaku. Waskita adalah AI pra-terbit dan dapat membuat kekeliruan.
+            Ketentuan Layanan dan Kebijakan Privasi Waskita berlaku. Waskita menyajikan panduan audit pra-publikasi untuk evaluasi draf artikel web.
           </p>
         </main>
       ) : (
@@ -223,13 +251,18 @@ export const GuestWorkspace: React.FC<GuestWorkspaceProps> = ({
               flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
-              padding: "0 24px 96px 24px",
+              padding: "0 24px 120px 24px",
               textAlign: "center",
               width: "100%",
               margin: "0 auto",
               boxSizing: "border-box",
             }}
           >
+            {/* Logo Resmi Waskita di atas Judul CTA Mobile */}
+            <div style={{ marginBottom: "18px" }}>
+              <WaskitaLogo width={140} height={30} />
+            </div>
+
             <h1
               style={{
                 fontSize: "24px",
@@ -244,15 +277,18 @@ export const GuestWorkspace: React.FC<GuestWorkspaceProps> = ({
             </h1>
           </main>
 
-          {/* Mobile Floating Input Capsule Bawah */}
+          {/* Mobile Floating Input Capsule Bawah dengan Teks Keterangan di Bawahnya */}
           <div
             style={{
               position: "absolute",
-              bottom: "16px",
+              bottom: "20px",
               left: "16px",
               right: "16px",
               boxSizing: "border-box",
               zIndex: 20,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
             }}
           >
             <div
@@ -264,6 +300,8 @@ export const GuestWorkspace: React.FC<GuestWorkspaceProps> = ({
                 alignItems: "center",
                 gap: "10px",
                 boxShadow: "0 8px 24px rgba(30, 41, 59, 0.08)",
+                width: "100%",
+                boxSizing: "border-box",
               }}
             >
               {/* Tombol Bulat Plus (+) */}
@@ -326,6 +364,21 @@ export const GuestWorkspace: React.FC<GuestWorkspaceProps> = ({
                 <IconArrowRight size={20} color={COLORS.deepSlate} />
               </button>
             </div>
+
+            {/* Keterangan / Disclaimer di Bawah Field Text Mobile */}
+            <p
+              style={{
+                fontSize: "10px",
+                color: "rgba(30, 41, 59, 0.6)",
+                textAlign: "center",
+                marginTop: "10px",
+                marginBottom: 0,
+                lineHeight: 1.4,
+                padding: "0 8px",
+              }}
+            >
+              Ketentuan Layanan dan Kebijakan Privasi Waskita berlaku. Waskita menyajikan panduan audit pra-publikasi untuk evaluasi draf artikel web.
+            </p>
           </div>
         </>
       )}

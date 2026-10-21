@@ -148,13 +148,13 @@ const DesktopGuestView: React.FC = () => {
           plusToggleId={PLUS_TOGGLE_ID}
           sidebarToggleId={SIDEBAR_TOGGLE_ID}
         />
-      </div>
 
-      {/* Popover Opsi Audit Desktop */}
-      <AuditOptionsOverlay
-        toggleId={PLUS_TOGGLE_ID}
-        isDesktop={true}
-      />
+        {/* Popover Opsi Audit Desktop Mengembang ke Kanan di dalam Kolom 2 Workspace */}
+        <AuditOptionsOverlay
+          toggleId={PLUS_TOGGLE_ID}
+          isDesktop={true}
+        />
+      </div>
     </div>
   );
 };
