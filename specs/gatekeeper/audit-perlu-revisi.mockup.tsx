@@ -539,7 +539,7 @@ export default defineScreen({
                         background: "#EF4444",
                         zIndex: 2,
                       }}
-                      title="Batas toleransi <= 0.60"
+                      title="Batas toleransi ≤ 0.60"
                     />
                   </div>
                   <div
@@ -615,7 +615,7 @@ export default defineScreen({
                         background: "#10B981",
                         zIndex: 2,
                       }}
-                      title="Batas standar >= 0.55"
+                      title="Batas standar ≥ 0.55"
                     />
                   </div>
                   <div
@@ -691,7 +691,7 @@ export default defineScreen({
                         background: "#F59E0B",
                         zIndex: 2,
                       }}
-                      title="Batas wajar <= 40%"
+                      title="Batas wajar ≤ 40%"
                     />
                   </div>
                   <div
@@ -1892,7 +1892,7 @@ Tolong revisi naskah di atas dengan memenuhi kriteria:
                     background: "#EF4444",
                     zIndex: 2,
                   }}
-                  title="Batas toleransi <= 0.60"
+                  title="Batas toleransi ≤ 0.60"
                 />
               </div>
               <div
@@ -1965,7 +1965,7 @@ Tolong revisi naskah di atas dengan memenuhi kriteria:
                     background: "#10B981",
                     zIndex: 2,
                   }}
-                  title="Batas standar >= 0.55"
+                  title="Batas standar ≥ 0.55"
                 />
               </div>
               <div
@@ -2038,7 +2038,7 @@ Tolong revisi naskah di atas dengan memenuhi kriteria:
                     background: "#F59E0B",
                     zIndex: 2,
                   }}
-                  title="Batas wajar <= 40%"
+                  title="Batas wajar ≤ 40%"
                 />
               </div>
               <div
