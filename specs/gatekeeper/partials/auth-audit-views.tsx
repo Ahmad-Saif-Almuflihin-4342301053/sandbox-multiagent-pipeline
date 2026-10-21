@@ -1,6 +1,7 @@
 import React from "react";
 import {
   COLORS,
+  WaskitaLogo,
   SemiCircleGauge,
   IconAlertCircle,
   IconCheck,
@@ -1758,18 +1759,24 @@ export const NewAnalysisEmptyView: React.FC<AuditStreamProps> = ({
       style={{
         flex: 1,
         width: "100%",
-        minHeight: "100%",
+        minHeight: isDesktop ? "100vh" : "100%",
+        height: isDesktop ? "100vh" : "auto",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        padding: isDesktop ? "40px 32px" : "0 24px 96px 24px",
+        padding: isDesktop ? "0 32px 48px 32px" : "0 24px 120px 24px",
         textAlign: "center",
-        maxWidth: isDesktop ? "840px" : "100%",
+        maxWidth: isDesktop ? "760px" : "100%",
         margin: "0 auto",
         boxSizing: "border-box",
       }}
     >
+      {/* Logo Resmi Waskita di atas Judul CTA */}
+      <div style={{ marginBottom: isDesktop ? "24px" : "18px" }}>
+        <WaskitaLogo width={isDesktop ? 160 : 140} height={isDesktop ? 34 : 30} />
+      </div>
+
       <h1
         style={{
           fontSize: isDesktop ? "36px" : "24px",
@@ -1782,35 +1789,18 @@ export const NewAnalysisEmptyView: React.FC<AuditStreamProps> = ({
       >
         Segera Periksa, ARTIKELMU!
       </h1>
-      <p
-        style={{
-          fontSize: isDesktop ? "15px" : "13px",
-          color: "rgba(30, 41, 59, 0.65)",
-          marginTop: "10px",
-          marginBottom: isDesktop ? "28px" : 0,
-          maxWidth: "520px",
-          lineHeight: 1.5,
-        }}
-      >
-        Pemeriksaan kualitas naskah pra-terbit berbasis CDS, semantik VSM, leksikal MATTR, dan analisis SERP terpercaya.
-      </p>
 
-      {/* Di Desktop: Kapsul Input berada di TENGAH LAYAR di bawah Hero */}
+      {/* Di Desktop: Kapsul Input berada di TENGAH LAYAR mengalir tepat di bawah Judul Hero CTA */}
       {isDesktop && (
         <div
           style={{
             width: "100%",
-            maxWidth: "760px",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: "12px",
-            boxSizing: "border-box",
+            marginTop: "28px",
+            position: "relative",
           }}
         >
           <div
             style={{
-              width: "100%",
               background: COLORS.warmSand,
               borderRadius: "28px",
               padding: "8px 12px",
@@ -1818,7 +1808,7 @@ export const NewAnalysisEmptyView: React.FC<AuditStreamProps> = ({
               alignItems: "center",
               gap: "10px",
               boxShadow: "0 8px 24px rgba(30, 41, 59, 0.08)",
-              border: "1px solid rgba(30, 41, 59, 0.06)",
+              width: "100%",
               boxSizing: "border-box",
             }}
           >
@@ -1886,14 +1876,16 @@ export const NewAnalysisEmptyView: React.FC<AuditStreamProps> = ({
           {/* Teks Disclaimer Privasi Resmi */}
           <p
             style={{
-              fontSize: "12px",
-              color: "rgba(30, 41, 59, 0.5)",
-              margin: 0,
-              lineHeight: 1.4,
+              fontSize: "11px",
+              color: "rgba(30, 41, 59, 0.6)",
               textAlign: "center",
+              marginTop: "14px",
+              marginBottom: 0,
+              lineHeight: 1.5,
+              maxWidth: "600px",
             }}
           >
-            Ketentuan Layanan dan Kebijakan Privasi Waskita berlaku. Waskita adalah AI pra-terbit dan dapat membuat kekeliruan.
+            Ketentuan Layanan dan Kebijakan Privasi Waskita berlaku. Waskita menyajikan panduan audit pra-publikasi untuk evaluasi draf artikel web.
           </p>
         </div>
       )}
