@@ -401,6 +401,24 @@ export const IconAlertCircle: React.FC<IconProps> = ({ size = 16, color = "curre
   </svg>
 );
 
+export const IconUser: React.FC<IconProps> = ({ size = 20, color = "currentColor", style, className }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke={color}
+    strokeWidth="1.8"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    style={style}
+    className={className}
+  >
+    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+    <circle cx="12" cy="7" r="4" />
+  </svg>
+);
+
 export const IconExternalLink: React.FC<IconProps> = ({ size = 14, color = "currentColor", style, className }) => (
   <svg
     width={size}
@@ -487,7 +505,7 @@ export const SemiCircleGauge: React.FC<{
   );
 };
 
-// Audit Options Overlay: Mobile Bottom Sheet (58vh) or Desktop Centered Modal Card (480px)
+// Audit Options Overlay: Mobile Bottom Sheet (58vh) or Desktop Popover Menu (420px)
 export const AuditOptionsOverlay: React.FC<{
   toggleId: string;
   isDesktop?: boolean;
@@ -500,7 +518,7 @@ export const AuditOptionsOverlay: React.FC<{
             display: block !important;
           }
           #${toggleId}:checked ~ .audit-options-container {
-            transform: ${isDesktop ? "translate(-50%, -50%) scale(1)" : "translateY(0)"} !important;
+            transform: ${isDesktop ? "translateY(0) scale(1)" : "translateY(0)"} !important;
             opacity: 1 !important;
             pointer-events: auto !important;
           }
@@ -538,7 +556,7 @@ export const AuditOptionsOverlay: React.FC<{
         `}
       </style>
 
-      {/* Backdrop */}
+      {/* Backdrop: Invisible for Desktop (to dismiss popover by clicking outside without darkening), Dark for Mobile */}
       <label
         htmlFor={toggleId}
         className="audit-options-backdrop"
@@ -549,34 +567,34 @@ export const AuditOptionsOverlay: React.FC<{
           left: 0,
           right: 0,
           bottom: 0,
-          background: "rgba(15, 23, 42, 0.45)",
-          backdropFilter: "blur(2px)",
+          background: isDesktop ? "transparent" : "rgba(15, 23, 42, 0.45)",
+          backdropFilter: isDesktop ? "none" : "blur(2px)",
           zIndex: 90,
           cursor: "pointer",
         }}
       />
 
-      {/* Modal / Bottom Sheet Content */}
+      {/* Modal / Bottom Sheet / Desktop Floating Popover Content */}
       <div
         className="audit-options-container"
         style={
           isDesktop
             ? {
-                position: "fixed",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -46%) scale(0.96)",
-                width: "480px",
-                maxHeight: "78vh",
+                position: "absolute",
+                bottom: "68px",
+                left: "0",
+                width: "420px",
+                maxHeight: "480px",
                 background: COLORS.warmCream,
-                borderRadius: "24px",
+                borderRadius: "20px",
                 zIndex: 100,
                 display: "flex",
                 flexDirection: "column",
-                boxShadow: "0 20px 40px rgba(15, 23, 42, 0.22)",
+                boxShadow: "0 12px 32px rgba(30, 41, 59, 0.15)",
                 opacity: 0,
                 pointerEvents: "none",
-                transition: "all 0.25s cubic-bezier(0.16, 1, 0.3, 1)",
+                transform: "translateY(10px) scale(0.98)",
+                transition: "all 0.2s cubic-bezier(0.16, 1, 0.3, 1)",
                 overflow: "hidden",
                 border: "1px solid rgba(30, 41, 59, 0.08)",
               }

@@ -79,133 +79,256 @@ export const GuestWorkspace: React.FC<GuestWorkspaceProps> = ({
         </div>
       </header>
 
-      {/* Hero Tengah: HANYA judul CTA 'Segera Periksa, ARTIKELMU!' (DILARANG duplikasi logo di atasnya!) */}
-      <main
-        style={{
-          flex: 1,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: isDesktop ? "0 32px 120px 32px" : "0 24px 96px 24px",
-          textAlign: "center",
-          maxWidth: isDesktop ? "840px" : "100%",
-          width: "100%",
-          margin: "0 auto",
-          boxSizing: "border-box",
-        }}
-      >
-        <h1
+      {/* Desktop Centered Content (Hero + Kapsul Input + Disclaimer) vs Mobile Separated Content */}
+      {isDesktop ? (
+        <main
           style={{
-            fontSize: isDesktop ? "36px" : "24px",
-            fontWeight: 800,
-            letterSpacing: "-0.025em",
-            color: COLORS.deepSlate,
-            margin: 0,
-            lineHeight: 1.25,
-          }}
-        >
-          Segera Periksa, ARTIKELMU!
-        </h1>
-        <p
-          style={{
-            fontSize: isDesktop ? "15px" : "13px",
-            color: "rgba(30, 41, 59, 0.65)",
-            marginTop: "10px",
-            marginBottom: 0,
-            maxWidth: "520px",
-          }}
-        >
-          Pemeriksaan kualitas naskah pra-terbit berbasis CDS, semantik VSM, leksikal MATTR, dan analisis SERP terpercaya.
-        </p>
-      </main>
-
-      {/* Floating Input Capsule Bawah */}
-      <div
-        style={{
-          position: "absolute",
-          bottom: isDesktop ? "24px" : "16px",
-          left: isDesktop ? "50%" : "16px",
-          right: isDesktop ? "auto" : "16px",
-          transform: isDesktop ? "translateX(-50%)" : "none",
-          width: isDesktop ? "100%" : "auto",
-          maxWidth: isDesktop ? "780px" : "none",
-          boxSizing: "border-box",
-          zIndex: 20,
-        }}
-      >
-        <div
-          style={{
-            background: COLORS.warmSand,
-            borderRadius: "28px",
-            padding: "8px 12px",
+            flex: 1,
             display: "flex",
+            flexDirection: "column",
             alignItems: "center",
-            gap: "10px",
-            boxShadow: "0 8px 24px rgba(30, 41, 59, 0.08)",
+            justifyContent: "center",
+            padding: "0 32px 48px 32px",
+            textAlign: "center",
+            maxWidth: "760px",
+            width: "100%",
+            margin: "0 auto",
+            boxSizing: "border-box",
           }}
         >
-          {/* Tombol Bulat Plus (+) */}
-          <label
-            htmlFor={plusToggleId}
-            style={{
-              width: "40px",
-              height: "40px",
-              borderRadius: "50%",
-              background: COLORS.mutedSkyBlue,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              cursor: "pointer",
-              flexShrink: 0,
-              color: COLORS.deepSlate,
-            }}
-            title="Opsi Audit & Berkas"
-          >
-            <IconPlus size={20} color={COLORS.deepSlate} />
-          </label>
+          {/* Logo Resmi Waskita di atas Judul CTA */}
+          <div style={{ marginBottom: "24px" }}>
+            <WaskitaLogo width={160} height={34} />
+          </div>
 
-          {/* Input / Textarea 'Ketik atau tempel naskah...' */}
-          <textarea
-            rows={1}
-            placeholder="Ketik atau tempel naskah..."
+          {/* Judul Hero CTA (Teks deskripsi kecil dihapus) */}
+          <h1
+            style={{
+              fontSize: "36px",
+              fontWeight: 800,
+              letterSpacing: "-0.025em",
+              color: COLORS.deepSlate,
+              margin: 0,
+              lineHeight: 1.25,
+            }}
+          >
+            Segera Periksa, ARTIKELMU!
+          </h1>
+
+          {/* Kapsul Input Tengah */}
+          <div
+            style={{
+              width: "100%",
+              marginTop: "28px",
+              position: "relative",
+            }}
+          >
+            <div
+              style={{
+                background: COLORS.warmSand,
+                borderRadius: "28px",
+                padding: "8px 12px",
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+                boxShadow: "0 8px 24px rgba(30, 41, 59, 0.08)",
+                width: "100%",
+                boxSizing: "border-box",
+              }}
+            >
+              {/* Tombol Bulat Plus (+) */}
+              <label
+                htmlFor={plusToggleId}
+                style={{
+                  width: "40px",
+                  height: "40px",
+                  borderRadius: "50%",
+                  background: COLORS.mutedSkyBlue,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                  flexShrink: 0,
+                  color: COLORS.deepSlate,
+                }}
+                title="Opsi Audit & Berkas"
+              >
+                <IconPlus size={20} color={COLORS.deepSlate} />
+              </label>
+
+              {/* Input / Textarea 'Ketik atau tempel naskah...' */}
+              <textarea
+                rows={1}
+                placeholder="Ketik atau tempel naskah..."
+                style={{
+                  flex: 1,
+                  background: "transparent",
+                  border: "none",
+                  outline: "none",
+                  resize: "none",
+                  fontSize: "14px",
+                  fontFamily: "inherit",
+                  color: COLORS.deepSlate,
+                  lineHeight: "22px",
+                  padding: "9px 4px",
+                  boxSizing: "border-box",
+                }}
+              />
+
+              {/* Tombol Bulat Panah Kanan (ArrowRight) */}
+              <button
+                type="button"
+                style={{
+                  width: "40px",
+                  height: "40px",
+                  borderRadius: "50%",
+                  background: COLORS.softPeriwinkle,
+                  border: "none",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                  flexShrink: 0,
+                  color: COLORS.deepSlate,
+                }}
+                title="Kirim Analisis"
+              >
+                <IconArrowRight size={20} color={COLORS.deepSlate} />
+              </button>
+            </div>
+          </div>
+
+          {/* Teks Disclaimer Privasi di bawah Kapsul Tengah */}
+          <p
+            style={{
+              fontSize: "11px",
+              color: "rgba(30, 41, 59, 0.6)",
+              textAlign: "center",
+              marginTop: "14px",
+              marginBottom: 0,
+              lineHeight: 1.5,
+              maxWidth: "600px",
+            }}
+          >
+            Ketentuan Layanan dan Kebijakan Privasi Waskita berlaku. Waskita adalah AI pra-terbit dan dapat membuat kekeliruan.
+          </p>
+        </main>
+      ) : (
+        <>
+          {/* Mobile Hero Tengah */}
+          <main
             style={{
               flex: 1,
-              background: "transparent",
-              border: "none",
-              outline: "none",
-              resize: "none",
-              fontSize: "14px",
-              fontFamily: "inherit",
-              color: COLORS.deepSlate,
-              lineHeight: "22px",
-              padding: "9px 4px",
-              boxSizing: "border-box",
-            }}
-          />
-
-          {/* Tombol Bulat Panah Kanan (ArrowRight) */}
-          <button
-            type="button"
-            style={{
-              width: "40px",
-              height: "40px",
-              borderRadius: "50%",
-              background: COLORS.softPeriwinkle,
-              border: "none",
               display: "flex",
+              flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
-              cursor: "pointer",
-              flexShrink: 0,
-              color: COLORS.deepSlate,
+              padding: "0 24px 96px 24px",
+              textAlign: "center",
+              width: "100%",
+              margin: "0 auto",
+              boxSizing: "border-box",
             }}
-            title="Kirim Analisis"
           >
-            <IconArrowRight size={20} color={COLORS.deepSlate} />
-          </button>
-        </div>
-      </div>
+            <h1
+              style={{
+                fontSize: "24px",
+                fontWeight: 800,
+                letterSpacing: "-0.025em",
+                color: COLORS.deepSlate,
+                margin: 0,
+                lineHeight: 1.25,
+              }}
+            >
+              Segera Periksa, ARTIKELMU!
+            </h1>
+          </main>
+
+          {/* Mobile Floating Input Capsule Bawah */}
+          <div
+            style={{
+              position: "absolute",
+              bottom: "16px",
+              left: "16px",
+              right: "16px",
+              boxSizing: "border-box",
+              zIndex: 20,
+            }}
+          >
+            <div
+              style={{
+                background: COLORS.warmSand,
+                borderRadius: "28px",
+                padding: "8px 12px",
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+                boxShadow: "0 8px 24px rgba(30, 41, 59, 0.08)",
+              }}
+            >
+              {/* Tombol Bulat Plus (+) */}
+              <label
+                htmlFor={plusToggleId}
+                style={{
+                  width: "40px",
+                  height: "40px",
+                  borderRadius: "50%",
+                  background: COLORS.mutedSkyBlue,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                  flexShrink: 0,
+                  color: COLORS.deepSlate,
+                }}
+                title="Opsi Audit & Berkas"
+              >
+                <IconPlus size={20} color={COLORS.deepSlate} />
+              </label>
+
+              {/* Input / Textarea 'Ketik atau tempel naskah...' */}
+              <textarea
+                rows={1}
+                placeholder="Ketik atau tempel naskah..."
+                style={{
+                  flex: 1,
+                  background: "transparent",
+                  border: "none",
+                  outline: "none",
+                  resize: "none",
+                  fontSize: "14px",
+                  fontFamily: "inherit",
+                  color: COLORS.deepSlate,
+                  lineHeight: "22px",
+                  padding: "9px 4px",
+                  boxSizing: "border-box",
+                }}
+              />
+
+              {/* Tombol Bulat Panah Kanan (ArrowRight) */}
+              <button
+                type="button"
+                style={{
+                  width: "40px",
+                  height: "40px",
+                  borderRadius: "50%",
+                  background: COLORS.softPeriwinkle,
+                  border: "none",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                  flexShrink: 0,
+                  color: COLORS.deepSlate,
+                }}
+                title="Kirim Analisis"
+              >
+                <IconArrowRight size={20} color={COLORS.deepSlate} />
+              </button>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };
