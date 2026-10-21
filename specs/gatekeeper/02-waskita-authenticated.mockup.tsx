@@ -123,8 +123,17 @@ const MobileAuthenticatedScreen: React.FC = () => {
           #${SESSION_TWO_MOBILE}:checked ~ main .mobile-view-session-2 {
             display: block !important;
           }
+          #${SESSION_NEW_MOBILE}:checked ~ main {
+            display: flex !important;
+            flex-direction: column !important;
+            height: calc(100vh - 56px) !important;
+          }
           #${SESSION_NEW_MOBILE}:checked ~ main .mobile-view-session-new {
-            display: block !important;
+            display: flex !important;
+            flex-direction: column !important;
+            flex: 1 !important;
+            height: 100% !important;
+            min-height: 100% !important;
           }
         `}
       </style>
@@ -297,8 +306,16 @@ const DesktopAuthenticatedScreen: React.FC = () => {
           #${SESSION_TWO_DESKTOP}:checked ~ * .desktop-view-session-2 {
             display: block !important;
           }
+          #${SESSION_NEW_DESKTOP}:checked ~ * main {
+            display: flex !important;
+            flex-direction: column !important;
+            height: 100% !important;
+          }
           #${SESSION_NEW_DESKTOP}:checked ~ * .desktop-view-session-new {
-            display: block !important;
+            display: flex !important;
+            flex-direction: column !important;
+            flex: 1 !important;
+            height: 100% !important;
           }
 
           /* Desktop Floating Dock: Only visible when session 1 or 2 is active, hidden on session-new */

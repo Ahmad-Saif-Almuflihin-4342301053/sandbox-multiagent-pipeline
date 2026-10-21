@@ -1162,13 +1162,27 @@ export const AuthSidebar: React.FC<AuthSidebarProps> = ({
               dangerouslySetInnerHTML={{
                 __html: `
                   (function() {
-                    document.addEventListener('click', function(e) {
-                      var el = e.target && e.target.closest ? e.target.closest('.auth-mobile-nav-item') : null;
-                      if (el) {
-                        var toggle = document.getElementById('${sidebarToggleId}');
-                        if (toggle) toggle.checked = false;
+                    function handleNavClose(e) {
+                      if (e.target.closest('.auth-popover-menu') || e.target.closest('[aria-label="Opsi Riwayat"]')) {
+                        return;
                       }
-                    });
+                      var trigger = e.target.closest('.btn-new-analysis') || 
+                                    e.target.closest('.history-row-one') || 
+                                    e.target.closest('.history-row-two') || 
+                                    e.target.closest('.auth-mobile-nav-item');
+                      if (trigger) {
+                        var sessionLabel = trigger.querySelector('label[for^="session-"]');
+                        if (sessionLabel && e.target !== sessionLabel && !sessionLabel.contains(e.target)) {
+                          sessionLabel.click();
+                        }
+                        var toggle = document.getElementById('${sidebarToggleId}');
+                        if (toggle) {
+                          toggle.checked = false;
+                        }
+                      }
+                    }
+                    document.addEventListener('click', handleNavClose, true);
+                    document.addEventListener('touchend', handleNavClose, true);
                   })();
                 `,
               }}
@@ -1550,23 +1564,6 @@ export const FloatingComposerDock: React.FC<FloatingComposerDockProps> = ({
             <IconArrowRight size={20} color={COLORS.deepSlate} />
           </button>
         </div>
-
-        {!isDesktop && (
-          <p
-            style={{
-              fontSize: "10px",
-              color: "rgba(30, 41, 59, 0.6)",
-              textAlign: "center",
-              marginTop: "8px",
-              marginBottom: 0,
-              lineHeight: 1.4,
-              padding: "0 8px",
-              pointerEvents: "auto",
-            }}
-          >
-            Ketentuan Layanan dan Kebijakan Privasi Waskita berlaku. Waskita menyajikan panduan audit pra-publikasi untuk evaluasi draf artikel web.
-          </p>
-        )}
       </div>
     </div>
   );
