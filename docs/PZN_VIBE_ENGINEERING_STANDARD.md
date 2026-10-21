@@ -81,3 +81,9 @@ Jika ditemukan bug atau ketidaksesuaian pada hasil kerja salah satu Sub-Worker:
 1. **JANGAN merombak ulang seluruh proyek dari nol.**
 2. Identifikasi tepat di **file parsial mana** letak kesalahannya (misal: hanya di `partials/guest-sidebar.tsx` atau `partials/auth-audit-views.tsx`).
 3. Tugaskan perbaikan terfokus (*surgical fix*) hanya pada file parsial tersebut.
+
+
+## 5. Protokol Eksekusi Paralel DevOps (Anti-Serial Waiting)
+- **Aturan Eksekusi Worktree Mandiri:** Ketika Sub-Worker memiliki folder fisik terpisah (`worker-1` vs `worker-2`), DevOps **WAJIB** mengeksekusinya secara **PARALEL (bersamaan di latar belakang / background task)** menggunakan tab terminal masing-masing atau perintah asynchronous, **BUKAN** menunggu satu sub-worker selesai baru mulai memproses yang lain.
+- **Prinsip Gelombang Non-Blokir (Non-Blocking Waves):**
+  - Jika Sub-Worker 1B sedang bekerja di `worker-1`, Sub-Worker 2A **HARUS** langsung di-dispatch di `worker-2` pada saat yang sama.
