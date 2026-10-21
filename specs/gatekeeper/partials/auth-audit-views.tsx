@@ -901,9 +901,12 @@ Wajib sertakan poin penting berikut:
                     borderRadius: "9999px",
                     fontSize: "11.5px",
                     fontWeight: 600,
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "4px",
                   }}
                 >
-                  ✓ {tag}
+                  <IconCheck size={12} color="#065F46" /> {tag}
                 </span>
               ))}
             </div>
