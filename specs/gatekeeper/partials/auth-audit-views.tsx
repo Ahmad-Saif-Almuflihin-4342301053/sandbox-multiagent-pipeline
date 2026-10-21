@@ -6,10 +6,13 @@ import {
   IconCheck,
   IconCopy,
   IconExternalLink,
+  IconPlus,
+  IconArrowRight,
 } from "./shared-ui";
 
 export interface AuditStreamProps {
   isDesktop?: boolean;
+  plusToggleId?: string;
 }
 
 /**
@@ -816,7 +819,8 @@ Wajib sertakan poin penting berikut:
             background: "transparent",
             border: "none",
             borderRadius: 0,
-            padding: "20px 0 0 0",
+            padding: "20px 0",
+            borderBottom: "1px solid rgba(30, 41, 59, 0.1)",
           }}
         >
           <h3 style={{ fontSize: "15px", fontWeight: 700, margin: "0 0 4px 0", color: COLORS.deepSlate }}>
@@ -910,6 +914,267 @@ Wajib sertakan poin penting berikut:
                 </span>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* Seksi 4: Naskah Anotasi Stabilo Hijau (#BBF7D0) */}
+        <section
+          style={{
+            background: "transparent",
+            border: "none",
+            borderRadius: 0,
+            padding: "20px 0",
+            borderBottom: "1px solid rgba(30, 41, 59, 0.1)",
+          }}
+        >
+          <h3 style={{ fontSize: "15px", fontWeight: 700, margin: "0 0 4px 0", color: COLORS.deepSlate }}>
+            Naskah Terkurasi &amp; Anotasi
+          </h3>
+          <p style={{ fontSize: "12px", color: "rgba(30, 41, 59, 0.65)", margin: "0 0 10px 0" }}>
+            Tinjauan draf hasil revisi dengan pembuktian stilometri dan penutupan celah informasi
+          </p>
+
+          <div
+            style={{
+              fontSize: "13px",
+              lineHeight: 1.6,
+              color: "#334155",
+              marginBottom: "12px",
+            }}
+          >
+            <p style={{ margin: "0 0 8px 0" }}>
+              <mark
+                style={{
+                  background: "#BBF7D0",
+                  color: "#1E293B",
+                  padding: "1px 4px",
+                  borderRadius: 3,
+                }}
+              >
+                Menyeduh kopi tubruk Robusta Dampit dengan presisi memerlukan air bertemperatur 92°C serta rasio 1:15 (10g bubuk medium untuk 150ml air).
+              </mark>{" "}
+              Proses blooming selama 30 detik melepaskan gas karbon dioksida tanpa mengorbankan minyak esensial kopi.
+            </p>
+            <p style={{ margin: 0 }}>
+              <mark
+                style={{
+                  background: "#BBF7D0",
+                  color: "#1E293B",
+                  padding: "1px 4px",
+                  borderRadius: 3,
+                }}
+              >
+                Manisnya gula aren cair mengikat ketegasan body tanpa ampas berlebih naik ke permukaan.
+              </mark>{" "}
+              Kombinasi ini menghasilkan profil rasa legit, tebal, dan bebas dari sensasi pahit getir yang tajam.
+            </p>
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "6px",
+              fontSize: "12px",
+              color: "#059669",
+              fontWeight: 600,
+            }}
+          >
+            <IconCheck size={14} color="#059669" />
+            <span>Kelulusan Anotasi: Naskah 100% orisinal, bebas klise, dan seluruh parameter teknis telah terverifikasi.</span>
+          </div>
+        </section>
+
+        {/* Seksi 5: Overview Editorial Publikasi & Salin Ringkasan */}
+        <section
+          style={{
+            background: "transparent",
+            border: "none",
+            borderRadius: 0,
+            padding: "20px 0",
+            borderBottom: "1px solid rgba(30, 41, 59, 0.1)",
+          }}
+        >
+          <h3 style={{ fontSize: "15px", fontWeight: 700, margin: "0 0 4px 0", color: COLORS.deepSlate }}>
+            Overview Editorial Publikasi
+          </h3>
+          <p style={{ fontSize: "12px", color: "rgba(30, 41, 59, 0.65)", margin: "0 0 10px 0" }}>
+            Catatan redaksi untuk kesiapan publikasi ke sistem CMS
+          </p>
+
+          <ul
+            style={{
+              margin: "0 0 12px 0",
+              paddingLeft: "18px",
+              fontSize: "12.5px",
+              lineHeight: 1.5,
+              color: "#334155",
+            }}
+          >
+            <li>Draf telah siap diterbitkan langsung ke WordPress/Ghost dengan skor kelayakan 85%.</li>
+            <li>Rekomendasi internal link: hubungkan dengan artikel "Profil Roasting Robusta Dampit".</li>
+            <li>Snippet meta deskripsi otomatis terverifikasi dengan panjang karakter optimal (145 karakter).</li>
+          </ul>
+
+          <div
+            style={{
+              background: "rgba(255, 255, 255, 0.7)",
+              border: "1px solid rgba(16, 185, 129, 0.3)",
+              borderRadius: "12px",
+              padding: "12px 14px",
+              position: "relative",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginBottom: "6px",
+              }}
+            >
+              <span style={{ fontSize: "11px", fontWeight: 700, color: "#065F46" }}>
+                ringkasan-editorial-final.txt
+              </span>
+              <button
+                type="button"
+                style={{
+                  background: COLORS.warmSand,
+                  border: "none",
+                  borderRadius: "6px",
+                  padding: "3px 8px",
+                  fontSize: "11px",
+                  fontWeight: 600,
+                  color: COLORS.deepSlate,
+                  cursor: "pointer",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "4px",
+                }}
+              >
+                <IconCopy size={12} color={COLORS.deepSlate} /> Salin Ringkasan
+              </button>
+            </div>
+            <pre
+              style={{
+                margin: 0,
+                fontSize: "11.5px",
+                lineHeight: 1.5,
+                color: COLORS.deepSlate,
+                whiteSpace: "pre-wrap",
+                fontFamily: 'SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
+              }}
+            >
+{`[EDITORIAL PASSED] Kualitas Naskah Lolos Standar Waskita
+- Topik: Resep Kopi Tubruk Tradisional & Takaran Pas
+- CDS Score: 85% (Threshold: 75%) | Status: Siap Terbit
+- VSM Cosine: 0.36 | MATTR: 0.74 (Orisinalitas Kuat)
+- Draf siap diintegrasikan ke jadwal editorial blog.`}
+            </pre>
+          </div>
+        </section>
+
+        {/* Seksi 6: Referensi SERP · Top 3 Google */}
+        <section
+          style={{
+            background: "transparent",
+            border: "none",
+            borderRadius: 0,
+            padding: "20px 0 0 0",
+          }}
+        >
+          <h3 style={{ fontSize: "15px", fontWeight: 700, margin: "0 0 4px 0", color: COLORS.deepSlate }}>
+            Referensi SERP · Top 3 Google
+          </h3>
+          <p style={{ fontSize: "12px", color: "rgba(30, 41, 59, 0.65)", margin: "0 0 12px 0" }}>
+            Artikel kompetitor acuan untuk kueri "resep kopi tubruk tradisional"
+          </p>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+            {[
+              {
+                rank: "#1",
+                title: "Cara Membuat Kopi Tubruk yang Enak dan Pas Mantap",
+                domain: "kompas.com/food",
+                snippet: "Kunci kopi tubruk nikmat ada pada kesegaran gilingan dan air mendidih yang didiamkan sebentar...",
+              },
+              {
+                rank: "#2",
+                title: "Resep Kopi Tubruk Tradisional Khas Nusantara",
+                domain: "resepkopi.id/tubruk",
+                snippet: "Langkah mudah menyeduh kopi hitam tubruk tanpa ampas naik ke permukaan...",
+              },
+              {
+                rank: "#3",
+                title: "Panduan Seduh Manual: Kopi Tubruk Sempurna",
+                domain: "ottencoffee.co.id/magazine",
+                snippet: "Mengenal rasio seduh 1:15 dan profil gilingan medium to fine untuk tubruk...",
+              },
+            ].map((item) => (
+              <div
+                key={item.rank}
+                style={{
+                  display: "flex",
+                  alignItems: "flex-start",
+                  gap: "10px",
+                  padding: "8px 0",
+                  borderBottom: "1px dashed rgba(30, 41, 59, 0.12)",
+                }}
+              >
+                <span
+                  style={{
+                    background: COLORS.warmSand,
+                    color: COLORS.deepSlate,
+                    fontSize: "11px",
+                    fontWeight: 800,
+                    borderRadius: "6px",
+                    padding: "2px 6px",
+                    flexShrink: 0,
+                    marginTop: "2px",
+                  }}
+                >
+                  {item.rank}
+                </span>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      gap: "6px",
+                    }}
+                  >
+                    <h4
+                      style={{
+                        fontSize: "13px",
+                        fontWeight: 700,
+                        margin: 0,
+                        color: COLORS.deepSlate,
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                      }}
+                    >
+                      {item.title}
+                    </h4>
+                    <IconExternalLink size={13} color="rgba(30, 41, 59, 0.6)" />
+                  </div>
+                  <span style={{ fontSize: "11px", color: "#059669", fontWeight: 500 }}>
+                    {item.domain}
+                  </span>
+                  <p
+                    style={{
+                      fontSize: "11.5px",
+                      color: "rgba(30, 41, 59, 0.65)",
+                      margin: "3px 0 0 0",
+                      lineHeight: 1.4,
+                    }}
+                  >
+                    {item.snippet}
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
         </section>
       </div>
@@ -1463,19 +1728,25 @@ export const HistoryTwoAuditStream: React.FC<AuditStreamProps> = ({ isDesktop = 
  * 3. NewAnalysisEmptyView:
  * - Tampilan kanvas kosong saat tombol 'Analisis Baru' dipencet.
  * - Hero 'Segera Periksa, ARTIKELMU!' tanpa duplikasi logo (karena logo sudah ada di header).
+ * - Di Desktop: posisikan kapsul input berada di TENGAH LAYAR di bawah hero (karena belum ada hasil analisis).
+ *   Diikuti teks disclaimer privasi tepat di bawah kapsul.
+ * - Di Mobile: hero berada di tengah layar, kapsul input ditangani melayang di bawah.
  */
-export const NewAnalysisEmptyView: React.FC<AuditStreamProps> = ({ isDesktop = false }) => {
+export const NewAnalysisEmptyView: React.FC<AuditStreamProps> = ({
+  isDesktop = false,
+  plusToggleId = "auth-plus-toggle",
+}) => {
   return (
     <div
       style={{
         flex: 1,
         width: "100%",
-        height: "100%",
+        minHeight: "100%",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        padding: isDesktop ? "0 32px 120px 32px" : "0 24px 96px 24px",
+        padding: isDesktop ? "40px 32px" : "0 24px 96px 24px",
         textAlign: "center",
         maxWidth: isDesktop ? "840px" : "100%",
         margin: "0 auto",
@@ -1499,13 +1770,116 @@ export const NewAnalysisEmptyView: React.FC<AuditStreamProps> = ({ isDesktop = f
           fontSize: isDesktop ? "15px" : "13px",
           color: "rgba(30, 41, 59, 0.65)",
           marginTop: "10px",
-          marginBottom: 0,
+          marginBottom: isDesktop ? "28px" : 0,
           maxWidth: "520px",
           lineHeight: 1.5,
         }}
       >
         Pemeriksaan kualitas naskah pra-terbit berbasis CDS, semantik VSM, leksikal MATTR, dan analisis SERP terpercaya.
       </p>
+
+      {/* Di Desktop: Kapsul Input berada di TENGAH LAYAR di bawah Hero */}
+      {isDesktop && (
+        <div
+          style={{
+            width: "100%",
+            maxWidth: "760px",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "12px",
+            boxSizing: "border-box",
+          }}
+        >
+          <div
+            style={{
+              width: "100%",
+              background: COLORS.warmSand,
+              borderRadius: "28px",
+              padding: "8px 12px",
+              display: "flex",
+              alignItems: "center",
+              gap: "10px",
+              boxShadow: "0 8px 24px rgba(30, 41, 59, 0.08)",
+              border: "1px solid rgba(30, 41, 59, 0.06)",
+              boxSizing: "border-box",
+            }}
+          >
+            {/* Tombol Bulat Plus (+) */}
+            <label
+              htmlFor={plusToggleId}
+              style={{
+                width: "40px",
+                height: "40px",
+                borderRadius: "50%",
+                background: COLORS.mutedSkyBlue,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "pointer",
+                flexShrink: 0,
+                color: COLORS.deepSlate,
+              }}
+              title="Opsi Audit & Berkas"
+            >
+              <IconPlus size={20} color={COLORS.deepSlate} />
+            </label>
+
+            {/* Input / Textarea 'Ketik atau tempel naskah...' */}
+            <textarea
+              rows={1}
+              placeholder="Ketik atau tempel naskah..."
+              style={{
+                flex: 1,
+                background: "transparent",
+                border: "none",
+                outline: "none",
+                resize: "none",
+                fontSize: "14px",
+                fontFamily: "inherit",
+                color: COLORS.deepSlate,
+                lineHeight: "22px",
+                padding: "9px 4px",
+                boxSizing: "border-box",
+              }}
+            />
+
+            {/* Tombol Bulat Panah Kanan (ArrowRight) */}
+            <button
+              type="button"
+              style={{
+                width: "40px",
+                height: "40px",
+                borderRadius: "50%",
+                background: COLORS.softPeriwinkle,
+                border: "none",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "pointer",
+                flexShrink: 0,
+                color: COLORS.deepSlate,
+              }}
+              title="Kirim Analisis"
+            >
+              <IconArrowRight size={20} color={COLORS.deepSlate} />
+            </button>
+          </div>
+
+          {/* Teks Disclaimer Privasi Resmi */}
+          <p
+            style={{
+              fontSize: "12px",
+              color: "rgba(30, 41, 59, 0.5)",
+              margin: 0,
+              lineHeight: 1.4,
+              textAlign: "center",
+            }}
+          >
+            Ketentuan Layanan dan Kebijakan Privasi Waskita berlaku. Waskita adalah AI pra-terbit dan dapat membuat kekeliruan.
+          </p>
+        </div>
+      )}
     </div>
   );
 };

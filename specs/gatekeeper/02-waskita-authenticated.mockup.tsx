@@ -227,6 +227,11 @@ const DesktopAuthenticatedScreen: React.FC = () => {
       {/* State Machine Inputs */}
       <input
         type="checkbox"
+        id={SIDEBAR_TOGGLE_ID_DESKTOP}
+        style={{ display: "none" }}
+      />
+      <input
+        type="checkbox"
         id={HEADER_MENU_TOGGLE_ID_DESKTOP}
         style={{ display: "none" }}
       />
@@ -259,6 +264,17 @@ const DesktopAuthenticatedScreen: React.FC = () => {
 
       <style>
         {`
+          /* Desktop Collapsible Sidebar CSS */
+          #${SIDEBAR_TOGGLE_ID_DESKTOP}:checked ~ .auth-sidebar-desktop {
+            width: 68px !important;
+          }
+          #${SIDEBAR_TOGGLE_ID_DESKTOP}:checked ~ .auth-sidebar-desktop .auth-sidebar-expanded-content {
+            display: none !important;
+          }
+          #${SIDEBAR_TOGGLE_ID_DESKTOP}:checked ~ .auth-sidebar-desktop .auth-sidebar-rail-content {
+            display: flex !important;
+          }
+
           /* Header Popover Menu Toggle Desktop */
           #${HEADER_MENU_TOGGLE_ID_DESKTOP}:checked ~ * .auth-header-popover {
             display: flex !important;
@@ -283,6 +299,11 @@ const DesktopAuthenticatedScreen: React.FC = () => {
           }
           #${SESSION_NEW_DESKTOP}:checked ~ * .desktop-view-session-new {
             display: block !important;
+          }
+
+          /* Desktop Floating Dock: Only visible when session 1 or 2 is active, hidden on session-new */
+          #${SESSION_NEW_DESKTOP}:checked ~ * .auth-floating-composer-dock-desktop {
+            display: none !important;
           }
         `}
       </style>
@@ -334,7 +355,7 @@ const DesktopAuthenticatedScreen: React.FC = () => {
             <HistoryTwoAuditStream isDesktop={true} />
           </div>
           <div className="desktop-view-session-new">
-            <NewAnalysisEmptyView isDesktop={true} />
+            <NewAnalysisEmptyView isDesktop={true} plusToggleId={PLUS_TOGGLE_ID_DESKTOP} />
           </div>
         </main>
 

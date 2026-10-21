@@ -17,6 +17,7 @@ import {
   IconDownload,
   IconFileText,
   IconSettings,
+  IconUser,
 } from "./shared-ui";
 
 export interface AuthSidebarProps {
@@ -58,7 +59,9 @@ export const AuthSidebar: React.FC<AuthSidebarProps> = ({
         boxSizing: "border-box",
         overflow: "hidden",
         flexShrink: 0,
-        transition: isDesktop ? "none" : "transform 0.28s cubic-bezier(0.16, 1, 0.3, 1)",
+        transition: isDesktop
+          ? "width 0.25s cubic-bezier(0.16, 1, 0.3, 1)"
+          : "transform 0.28s cubic-bezier(0.16, 1, 0.3, 1)",
         transform: isDesktop ? "none" : "translateX(-100%)",
       }}
     >
@@ -134,461 +137,1036 @@ export const AuthSidebar: React.FC<AuthSidebarProps> = ({
         `}
       </style>
 
-      {/* Header: Logo, Search, tombol X (jika mobile) */}
-      <header
-        style={{
-          height: "56px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "0 16px",
-          position: "relative",
-          zIndex: 20,
-          background: COLORS.warmCream,
-          flexShrink: 0,
-        }}
-      >
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <WaskitaLogo width={120} height={26} />
-        </div>
-
-        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-          <button
-            type="button"
-            aria-label="Cari Riwayat"
+      {isDesktop ? (
+        <>
+          {/* Desktop Expanded State (280px) */}
+          <div
+            className="auth-sidebar-expanded-content"
             style={{
-              background: "transparent",
-              border: "none",
-              cursor: "pointer",
-              padding: 6,
+              width: "280px",
+              height: "100%",
               display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              color: COLORS.deepSlate,
-              borderRadius: "8px",
+              flexDirection: "column",
+              flexShrink: 0,
             }}
           >
-            <IconSearch size={20} color={COLORS.deepSlate} />
-          </button>
+            {/* Header: Toggle Menu Collapse & Logo Waskita, Search */}
+            <header
+              style={{
+                height: "56px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                padding: "0 16px",
+                position: "relative",
+                zIndex: 20,
+                background: COLORS.warmCream,
+                flexShrink: 0,
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                <label
+                  htmlFor={sidebarToggleId}
+                  style={{
+                    padding: "6px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    cursor: "pointer",
+                    borderRadius: "8px",
+                    color: COLORS.deepSlate,
+                  }}
+                  title="Ciutkan Sidebar"
+                >
+                  <IconMenu size={20} color={COLORS.deepSlate} />
+                </label>
+                <WaskitaLogo width={120} height={26} />
+              </div>
 
-          {!isDesktop && (
+              <button
+                type="button"
+                aria-label="Cari Riwayat"
+                style={{
+                  background: "transparent",
+                  border: "none",
+                  cursor: "pointer",
+                  padding: 6,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  color: COLORS.deepSlate,
+                  borderRadius: "8px",
+                }}
+              >
+                <IconSearch size={20} color={COLORS.deepSlate} />
+              </button>
+            </header>
+
+            {/* Gradasi Transparan Bawah Header */}
+            <div
+              style={{
+                height: "16px",
+                background: `linear-gradient(to bottom, ${COLORS.warmCream} 65%, rgba(247, 244, 235, 0) 100%)`,
+                position: "relative",
+                zIndex: 10,
+                flexShrink: 0,
+                marginTop: "-1px",
+              }}
+            />
+
+            {/* Konten Tengah (Scrollable Riwayat Analisis Gemini-style) */}
+            <main
+              style={{
+                flex: 1,
+                padding: "6px 14px 20px 14px",
+                overflowY: "auto",
+                display: "flex",
+                flexDirection: "column",
+                gap: "8px",
+                boxSizing: "border-box",
+              }}
+            >
+              {/* Tombol Analisis Baru (Membungkus Radio sessionNewId) */}
+              <label
+                htmlFor={sessionNewId}
+                className="btn-new-analysis"
+                style={{
+                  width: "100%",
+                  background: COLORS.warmSand,
+                  border: "none",
+                  borderRadius: "14px",
+                  padding: "12px 14px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "10px",
+                  fontSize: "13.5px",
+                  fontWeight: 700,
+                  color: COLORS.deepSlate,
+                  cursor: "pointer",
+                  textAlign: "left",
+                  marginBottom: "10px",
+                  boxSizing: "border-box",
+                  userSelect: "none",
+                }}
+              >
+                <IconSquarePen size={18} color={COLORS.deepSlate} />
+                <span>Analisis Baru</span>
+              </label>
+
+              <div
+                style={{
+                  fontSize: "11px",
+                  fontWeight: 700,
+                  color: "rgba(30, 41, 59, 0.5)",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.05em",
+                  padding: "0 8px 4px 8px",
+                }}
+              >
+                Riwayat Analisis
+              </div>
+
+              {/* Daftar Riwayat Bersih ala Gemini */}
+              <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
+                {/* Riwayat 1: Resep Kopi Tubruk Tradisional */}
+                <div
+                  className="auth-history-row history-row-one"
+                  style={{
+                    position: "relative",
+                  }}
+                >
+                  <input
+                    type="checkbox"
+                    id="popover-history-1-desktop"
+                    className="auth-popover-toggle"
+                    style={{ display: "none" }}
+                  />
+
+                  <label
+                    htmlFor={sessionOneId}
+                    style={{
+                      flex: 1,
+                      fontSize: "13px",
+                      color: COLORS.deepSlate,
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      paddingRight: "7px",
+                      cursor: "pointer",
+                      userSelect: "none",
+                      display: "block",
+                    }}
+                    title="Resep Kopi Tubruk Tradisional & Takaran Pas"
+                  >
+                    Resep Kopi Tubruk Tradisional &amp; Takaran...
+                  </label>
+
+                  <label
+                    htmlFor="popover-history-1-desktop"
+                    aria-label="Opsi Riwayat"
+                    style={{
+                      background: "transparent",
+                      border: "none",
+                      cursor: "pointer",
+                      padding: 4,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      color: COLORS.deepSlate,
+                      borderRadius: "6px",
+                      flexShrink: 0,
+                    }}
+                  >
+                    <IconMoreVertical size={18} color={COLORS.deepSlate} />
+                  </label>
+
+                  <label
+                    htmlFor="popover-history-1-desktop"
+                    className="auth-popover-backdrop"
+                    style={{
+                      display: "none",
+                      position: "fixed",
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      zIndex: 45,
+                      background: "transparent",
+                    }}
+                  />
+
+                  <div className="auth-popover-menu">
+                    <button type="button" className="auth-popover-item">
+                      <IconShare2 size={15} color={COLORS.deepSlate} />
+                      <span>Share Analisis</span>
+                    </button>
+                    <button type="button" className="auth-popover-item">
+                      <IconPin size={15} color={COLORS.deepSlate} />
+                      <span>Pin</span>
+                    </button>
+                    <button type="button" className="auth-popover-item">
+                      <IconPencil size={15} color={COLORS.deepSlate} />
+                      <span>Rename</span>
+                    </button>
+                    <button
+                      type="button"
+                      className="auth-popover-item"
+                      style={{ color: "#EF4444" }}
+                    >
+                      <IconTrash2 size={15} color="#EF4444" />
+                      <span>Delete</span>
+                    </button>
+                  </div>
+                </div>
+
+                {/* Riwayat 2: Panduan Optimasi SEO Teknis Core Web Vitals */}
+                <div
+                  className="auth-history-row history-row-two"
+                  style={{
+                    position: "relative",
+                  }}
+                >
+                  <input
+                    type="checkbox"
+                    id="popover-history-2-desktop"
+                    className="auth-popover-toggle"
+                    style={{ display: "none" }}
+                  />
+
+                  <label
+                    htmlFor={sessionTwoId}
+                    style={{
+                      flex: 1,
+                      fontSize: "13px",
+                      color: COLORS.deepSlate,
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      paddingRight: "7px",
+                      cursor: "pointer",
+                      userSelect: "none",
+                      display: "block",
+                    }}
+                    title="Panduan Optimasi SEO Teknis Core Web Vitals"
+                  >
+                    Panduan Optimasi SEO Teknis Core Web...
+                  </label>
+
+                  <label
+                    htmlFor="popover-history-2-desktop"
+                    aria-label="Opsi Riwayat"
+                    style={{
+                      background: "transparent",
+                      border: "none",
+                      cursor: "pointer",
+                      padding: 4,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      color: COLORS.deepSlate,
+                      borderRadius: "6px",
+                      flexShrink: 0,
+                    }}
+                  >
+                    <IconMoreVertical size={18} color={COLORS.deepSlate} />
+                  </label>
+
+                  <label
+                    htmlFor="popover-history-2-desktop"
+                    className="auth-popover-backdrop"
+                    style={{
+                      display: "none",
+                      position: "fixed",
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      zIndex: 45,
+                      background: "transparent",
+                    }}
+                  />
+
+                  <div className="auth-popover-menu">
+                    <button type="button" className="auth-popover-item">
+                      <IconShare2 size={15} color={COLORS.deepSlate} />
+                      <span>Share Analisis</span>
+                    </button>
+                    <button type="button" className="auth-popover-item">
+                      <IconPin size={15} color={COLORS.deepSlate} />
+                      <span>Pin</span>
+                    </button>
+                    <button type="button" className="auth-popover-item">
+                      <IconPencil size={15} color={COLORS.deepSlate} />
+                      <span>Rename</span>
+                    </button>
+                    <button
+                      type="button"
+                      className="auth-popover-item"
+                      style={{ color: "#EF4444" }}
+                    >
+                      <IconTrash2 size={15} color="#EF4444" />
+                      <span>Delete</span>
+                    </button>
+                  </div>
+                </div>
+
+                {/* Dummy Riwayat 3, 4, 5 (Statis pelengkap Gemini Look) */}
+                {[
+                  { id: "3", title: "Panduan Lengkap Merawat Mobil Listrik..." },
+                  { id: "4", title: "Review Ultrabook Tipis untuk Pemrogram..." },
+                  { id: "5", title: "Analisis Pasar Properti Jabodetabek Q1..." },
+                ].map((item) => (
+                  <div
+                    key={item.id}
+                    className="auth-history-row"
+                    style={{
+                      position: "relative",
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontSize: "13px",
+                        color: COLORS.deepSlate,
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        flex: 1,
+                        paddingRight: "7px",
+                        opacity: 0.85,
+                      }}
+                    >
+                      {item.title}
+                    </span>
+                    <button
+                      type="button"
+                      aria-label="Opsi Riwayat"
+                      style={{
+                        background: "transparent",
+                        border: "none",
+                        cursor: "pointer",
+                        padding: 4,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        color: COLORS.deepSlate,
+                        borderRadius: "6px",
+                        flexShrink: 0,
+                        opacity: 0.7,
+                      }}
+                    >
+                      <IconMoreVertical size={18} color={COLORS.deepSlate} />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </main>
+
+            {/* Footer Sidebar: Profil Pengguna & Settings */}
+            <footer
+              style={{
+                height: "64px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                padding: "0 16px",
+                borderTop: "1px solid rgba(30, 41, 59, 0.08)",
+                background: COLORS.warmCream,
+                flexShrink: 0,
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: "10px", minWidth: 0 }}>
+                <div
+                  style={{
+                    width: "36px",
+                    height: "36px",
+                    borderRadius: "50%",
+                    background: COLORS.mutedSkyBlue,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: "14px",
+                    fontWeight: 700,
+                    color: COLORS.deepSlate,
+                    flexShrink: 0,
+                  }}
+                >
+                  AS
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    minWidth: 0,
+                    overflow: "hidden",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: "13px",
+                      fontWeight: 700,
+                      color: COLORS.deepSlate,
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      maxWidth: "150px",
+                    }}
+                  >
+                    ahmadsaifalmuflihin...
+                  </span>
+                  <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                    <span
+                      style={{
+                        fontSize: "10px",
+                        fontWeight: 700,
+                        background: COLORS.softPeriwinkle,
+                        padding: "1px 6px",
+                        borderRadius: "4px",
+                        color: COLORS.deepSlate,
+                      }}
+                    >
+                      Pro
+                    </span>
+                    <span style={{ fontSize: "11px", color: "rgba(30, 41, 59, 0.6)" }}>
+                      Personal Plan
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                aria-label="Pengaturan"
+                style={{
+                  background: "transparent",
+                  border: "none",
+                  cursor: "pointer",
+                  padding: 8,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  color: COLORS.deepSlate,
+                  borderRadius: "8px",
+                  flexShrink: 0,
+                }}
+              >
+                <IconSettings size={22} color={COLORS.deepSlate} />
+              </button>
+            </footer>
+          </div>
+
+          {/* Desktop Collapsed Mini Rail Content (68px) ala Gemini */}
+          <div
+            className="auth-sidebar-rail-content"
+            style={{
+              width: "68px",
+              height: "100%",
+              display: "none",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "space-between",
+              padding: "12px 0 16px 0",
+              boxSizing: "border-box",
+              flexShrink: 0,
+            }}
+          >
+            {/* Top Icons: Menu Toggle & Analisis Baru & Search */}
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "16px", width: "100%" }}>
+              <label
+                htmlFor={sidebarToggleId}
+                style={{
+                  width: "44px",
+                  height: "44px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                  borderRadius: "12px",
+                  color: COLORS.deepSlate,
+                }}
+                title="Perluas Sidebar"
+              >
+                <IconMenu size={22} color={COLORS.deepSlate} />
+              </label>
+
+              {/* Analisis Baru (Mini Rail) */}
+              <label
+                htmlFor={sessionNewId}
+                style={{
+                  width: "44px",
+                  height: "44px",
+                  borderRadius: "12px",
+                  background: COLORS.warmSand,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                  color: COLORS.deepSlate,
+                }}
+                title="Analisis Baru"
+              >
+                <IconSquarePen size={20} color={COLORS.deepSlate} />
+              </label>
+
+              {/* Search Icon */}
+              <div
+                style={{
+                  width: "44px",
+                  height: "44px",
+                  borderRadius: "12px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                  color: COLORS.deepSlate,
+                }}
+                title="Cari"
+              >
+                <IconSearch size={20} color={COLORS.deepSlate} />
+              </div>
+            </div>
+
+            {/* Bottom Icons: Avatar & Settings */}
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "12px", width: "100%" }}>
+              <div
+                style={{
+                  width: "36px",
+                  height: "36px",
+                  borderRadius: "50%",
+                  background: COLORS.mutedSkyBlue,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: "13px",
+                  fontWeight: 700,
+                  color: COLORS.deepSlate,
+                  cursor: "pointer",
+                }}
+                title="Profil Pengguna: ahmadsaifalmuflihin"
+              >
+                AS
+              </div>
+
+              <button
+                type="button"
+                style={{
+                  width: "44px",
+                  height: "44px",
+                  borderRadius: "12px",
+                  background: "transparent",
+                  border: "none",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                  color: COLORS.deepSlate,
+                }}
+                title="Pengaturan"
+              >
+                <IconSettings size={20} color={COLORS.deepSlate} />
+              </button>
+            </div>
+          </div>
+        </>
+      ) : (
+        <>
+          {/* Mobile Fullscreen Drawer View (Dengan Auto-Close via HTML Labels) */}
+          <header
+            style={{
+              height: "56px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              padding: "0 16px",
+              position: "relative",
+              zIndex: 20,
+              background: COLORS.warmCream,
+              flexShrink: 0,
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <WaskitaLogo width={120} height={26} />
+            </div>
+
+            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+              <button
+                type="button"
+                aria-label="Cari Riwayat"
+                style={{
+                  background: "transparent",
+                  border: "none",
+                  cursor: "pointer",
+                  padding: 6,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  color: COLORS.deepSlate,
+                  borderRadius: "8px",
+                }}
+              >
+                <IconSearch size={20} color={COLORS.deepSlate} />
+              </button>
+
+              <label
+                htmlFor={sidebarToggleId}
+                aria-label="Tutup Sidebar"
+                style={{
+                  background: "transparent",
+                  border: "none",
+                  cursor: "pointer",
+                  padding: 6,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  color: COLORS.deepSlate,
+                  borderRadius: "8px",
+                }}
+                title="Tutup Sidebar"
+              >
+                <IconX size={22} color={COLORS.deepSlate} />
+              </label>
+            </div>
+          </header>
+
+          <div
+            style={{
+              height: "16px",
+              background: `linear-gradient(to bottom, ${COLORS.warmCream} 65%, rgba(247, 244, 235, 0) 100%)`,
+              position: "relative",
+              zIndex: 10,
+              flexShrink: 0,
+              marginTop: "-1px",
+            }}
+          />
+
+          <main
+            style={{
+              flex: 1,
+              padding: "6px 14px 20px 14px",
+              overflowY: "auto",
+              display: "flex",
+              flexDirection: "column",
+              gap: "8px",
+              boxSizing: "border-box",
+            }}
+          >
+            {/* Tombol Analisis Baru Mobile (Memilih sessionNewId sekaligus Auto-Close sidebar) */}
             <label
-              htmlFor={sidebarToggleId}
-              aria-label="Tutup Sidebar"
+              htmlFor={sessionNewId}
+              onClick={() => {
+                const toggle = document.getElementById(sidebarToggleId) as HTMLInputElement | null;
+                if (toggle) toggle.checked = false;
+              }}
+              className="btn-new-analysis"
+              style={{
+                width: "100%",
+                background: COLORS.warmSand,
+                border: "none",
+                borderRadius: "14px",
+                padding: "12px 14px",
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+                fontSize: "13.5px",
+                fontWeight: 700,
+                color: COLORS.deepSlate,
+                cursor: "pointer",
+                textAlign: "left",
+                marginBottom: "10px",
+                boxSizing: "border-box",
+                userSelect: "none",
+              }}
+            >
+              <IconSquarePen size={18} color={COLORS.deepSlate} />
+              <span>Analisis Baru</span>
+            </label>
+
+            <div
+              style={{
+                fontSize: "11px",
+                fontWeight: 700,
+                color: "rgba(30, 41, 59, 0.5)",
+                textTransform: "uppercase",
+                letterSpacing: "0.05em",
+                padding: "0 8px 4px 8px",
+              }}
+            >
+              Riwayat Analisis
+            </div>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
+              {/* Riwayat 1 Mobile */}
+              <div
+                className="auth-history-row history-row-one"
+                style={{
+                  position: "relative",
+                }}
+              >
+                <input
+                  type="checkbox"
+                  id="popover-history-1-mobile"
+                  className="auth-popover-toggle"
+                  style={{ display: "none" }}
+                />
+
+                <label
+                  htmlFor={sessionOneId}
+                  onClick={() => {
+                    const toggle = document.getElementById(sidebarToggleId) as HTMLInputElement | null;
+                    if (toggle) toggle.checked = false;
+                  }}
+                  style={{
+                    flex: 1,
+                    fontSize: "13px",
+                    color: COLORS.deepSlate,
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    paddingRight: "7px",
+                    cursor: "pointer",
+                    userSelect: "none",
+                    display: "block",
+                  }}
+                  title="Resep Kopi Tubruk Tradisional & Takaran Pas"
+                >
+                  Resep Kopi Tubruk Tradisional &amp; Takaran...
+                </label>
+
+                <label
+                  htmlFor="popover-history-1-mobile"
+                  aria-label="Opsi Riwayat"
+                  style={{
+                    background: "transparent",
+                    border: "none",
+                    cursor: "pointer",
+                    padding: 4,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: COLORS.deepSlate,
+                    borderRadius: "6px",
+                    flexShrink: 0,
+                  }}
+                >
+                  <IconMoreVertical size={18} color={COLORS.deepSlate} />
+                </label>
+
+                <label
+                  htmlFor="popover-history-1-mobile"
+                  className="auth-popover-backdrop"
+                  style={{
+                    display: "none",
+                    position: "fixed",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    zIndex: 45,
+                    background: "transparent",
+                  }}
+                />
+
+                <div className="auth-popover-menu">
+                  <button type="button" className="auth-popover-item">
+                    <IconShare2 size={15} color={COLORS.deepSlate} />
+                    <span>Share Analisis</span>
+                  </button>
+                  <button type="button" className="auth-popover-item">
+                    <IconPin size={15} color={COLORS.deepSlate} />
+                    <span>Pin</span>
+                  </button>
+                  <button type="button" className="auth-popover-item">
+                    <IconPencil size={15} color={COLORS.deepSlate} />
+                    <span>Rename</span>
+                  </button>
+                  <button
+                    type="button"
+                    className="auth-popover-item"
+                    style={{ color: "#EF4444" }}
+                  >
+                    <IconTrash2 size={15} color="#EF4444" />
+                    <span>Delete</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Riwayat 2 Mobile */}
+              <div
+                className="auth-history-row history-row-two"
+                style={{
+                  position: "relative",
+                }}
+              >
+                <input
+                  type="checkbox"
+                  id="popover-history-2-mobile"
+                  className="auth-popover-toggle"
+                  style={{ display: "none" }}
+                />
+
+                <label
+                  htmlFor={sessionTwoId}
+                  onClick={() => {
+                    const toggle = document.getElementById(sidebarToggleId) as HTMLInputElement | null;
+                    if (toggle) toggle.checked = false;
+                  }}
+                  style={{
+                    flex: 1,
+                    fontSize: "13px",
+                    color: COLORS.deepSlate,
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    paddingRight: "7px",
+                    cursor: "pointer",
+                    userSelect: "none",
+                    display: "block",
+                  }}
+                  title="Panduan Optimasi SEO Teknis Core Web Vitals"
+                >
+                  Panduan Optimasi SEO Teknis Core Web...
+                </label>
+
+                <label
+                  htmlFor="popover-history-2-mobile"
+                  aria-label="Opsi Riwayat"
+                  style={{
+                    background: "transparent",
+                    border: "none",
+                    cursor: "pointer",
+                    padding: 4,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: COLORS.deepSlate,
+                    borderRadius: "6px",
+                    flexShrink: 0,
+                  }}
+                >
+                  <IconMoreVertical size={18} color={COLORS.deepSlate} />
+                </label>
+
+                <label
+                  htmlFor="popover-history-2-mobile"
+                  className="auth-popover-backdrop"
+                  style={{
+                    display: "none",
+                    position: "fixed",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    zIndex: 45,
+                    background: "transparent",
+                  }}
+                />
+
+                <div className="auth-popover-menu">
+                  <button type="button" className="auth-popover-item">
+                    <IconShare2 size={15} color={COLORS.deepSlate} />
+                    <span>Share Analisis</span>
+                  </button>
+                  <button type="button" className="auth-popover-item">
+                    <IconPin size={15} color={COLORS.deepSlate} />
+                    <span>Pin</span>
+                  </button>
+                  <button type="button" className="auth-popover-item">
+                    <IconPencil size={15} color={COLORS.deepSlate} />
+                    <span>Rename</span>
+                  </button>
+                  <button
+                    type="button"
+                    className="auth-popover-item"
+                    style={{ color: "#EF4444" }}
+                  >
+                    <IconTrash2 size={15} color="#EF4444" />
+                    <span>Delete</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Dummy Riwayat 3, 4, 5 Mobile */}
+              {[
+                { id: "3", title: "Panduan Lengkap Merawat Mobil Listrik..." },
+                { id: "4", title: "Review Ultrabook Tipis untuk Pemrogram..." },
+                { id: "5", title: "Analisis Pasar Properti Jabodetabek Q1..." },
+              ].map((item) => (
+                <div
+                  key={item.id}
+                  className="auth-history-row"
+                  style={{
+                    position: "relative",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: "13px",
+                      color: COLORS.deepSlate,
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      flex: 1,
+                      paddingRight: "7px",
+                      opacity: 0.85,
+                    }}
+                  >
+                    {item.title}
+                  </span>
+                  <button
+                    type="button"
+                    aria-label="Opsi Riwayat"
+                    style={{
+                      background: "transparent",
+                      border: "none",
+                      cursor: "pointer",
+                      padding: 4,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      color: COLORS.deepSlate,
+                      borderRadius: "6px",
+                      flexShrink: 0,
+                      opacity: 0.7,
+                    }}
+                  >
+                    <IconMoreVertical size={18} color={COLORS.deepSlate} />
+                  </button>
+                </div>
+              ))}
+            </div>
+          </main>
+
+          <footer
+            style={{
+              height: "64px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              padding: "0 16px",
+              borderTop: "1px solid rgba(30, 41, 59, 0.08)",
+              background: COLORS.warmCream,
+              flexShrink: 0,
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: "10px", minWidth: 0 }}>
+              <div
+                style={{
+                  width: "36px",
+                  height: "36px",
+                  borderRadius: "50%",
+                  background: COLORS.mutedSkyBlue,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: "14px",
+                  fontWeight: 700,
+                  color: COLORS.deepSlate,
+                  flexShrink: 0,
+                }}
+              >
+                AS
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  minWidth: 0,
+                  overflow: "hidden",
+                }}
+              >
+                <span
+                  style={{
+                    fontSize: "13px",
+                    fontWeight: 700,
+                    color: COLORS.deepSlate,
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    maxWidth: "150px",
+                  }}
+                >
+                  ahmadsaifalmuflihin...
+                </span>
+                <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                  <span
+                    style={{
+                      fontSize: "10px",
+                      fontWeight: 700,
+                      background: COLORS.softPeriwinkle,
+                      padding: "1px 6px",
+                      borderRadius: "4px",
+                      color: COLORS.deepSlate,
+                    }}
+                  >
+                    Pro
+                  </span>
+                  <span style={{ fontSize: "11px", color: "rgba(30, 41, 59, 0.6)" }}>
+                    Personal Plan
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              aria-label="Pengaturan"
               style={{
                 background: "transparent",
                 border: "none",
                 cursor: "pointer",
-                padding: 6,
+                padding: 8,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 color: COLORS.deepSlate,
                 borderRadius: "8px",
-              }}
-              title="Tutup Sidebar"
-            >
-              <IconX size={22} color={COLORS.deepSlate} />
-            </label>
-          )}
-        </div>
-      </header>
-
-      {/* Gradasi Transparan Bawah Header */}
-      <div
-        style={{
-          height: "16px",
-          background: `linear-gradient(to bottom, ${COLORS.warmCream} 65%, rgba(247, 244, 235, 0) 100%)`,
-          position: "relative",
-          zIndex: 10,
-          flexShrink: 0,
-          marginTop: "-1px",
-        }}
-      />
-
-      {/* Konten Tengah (Scrollable Riwayat Analisis Gemini-style) */}
-      <main
-        style={{
-          flex: 1,
-          padding: "6px 14px 20px 14px",
-          overflowY: "auto",
-          display: "flex",
-          flexDirection: "column",
-          gap: "8px",
-          boxSizing: "border-box",
-        }}
-      >
-        {/* Tombol Analisis Baru (Membungkus Radio sessionNewId) */}
-        <label
-          htmlFor={sessionNewId}
-          className="btn-new-analysis"
-          style={{
-            width: "100%",
-            background: COLORS.warmSand,
-            border: "none",
-            borderRadius: "14px",
-            padding: "12px 14px",
-            display: "flex",
-            alignItems: "center",
-            gap: "10px",
-            fontSize: "13.5px",
-            fontWeight: 700,
-            color: COLORS.deepSlate,
-            cursor: "pointer",
-            textAlign: "left",
-            marginBottom: "10px",
-            boxSizing: "border-box",
-            userSelect: "none",
-          }}
-        >
-          <IconSquarePen size={18} color={COLORS.deepSlate} />
-          <span>Analisis Baru</span>
-        </label>
-
-        <div
-          style={{
-            fontSize: "11px",
-            fontWeight: 700,
-            color: "rgba(30, 41, 59, 0.5)",
-            textTransform: "uppercase",
-            letterSpacing: "0.05em",
-            padding: "0 8px 4px 8px",
-          }}
-        >
-          Riwayat Analisis
-        </div>
-
-        {/* Daftar Riwayat Bersih ala Gemini */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-          {/* Riwayat 1: Resep Kopi Tubruk Tradisional */}
-          <div
-            className="auth-history-row history-row-one"
-            style={{
-              position: "relative",
-            }}
-          >
-            {/* Popover toggle checkbox per item */}
-            <input
-              type="checkbox"
-              id="popover-history-1"
-              className="auth-popover-toggle"
-              style={{ display: "none" }}
-            />
-
-            {/* Label utama membungkus judul agar klik item langsung memilih radio sessionOneId */}
-            <label
-              htmlFor={sessionOneId}
-              style={{
-                flex: 1,
-                fontSize: "13px",
-                color: COLORS.deepSlate,
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                paddingRight: "7px",
-                cursor: "pointer",
-                userSelect: "none",
-                display: "block",
-              }}
-              title="Resep Kopi Tubruk Tradisional & Takaran Pas"
-            >
-              Resep Kopi Tubruk Tradisional &amp; Takaran...
-            </label>
-
-            {/* Tombol MoreVertical dengan label membuka popover */}
-            <label
-              htmlFor="popover-history-1"
-              aria-label="Opsi Riwayat"
-              style={{
-                background: "transparent",
-                border: "none",
-                cursor: "pointer",
-                padding: 4,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                color: COLORS.deepSlate,
-                borderRadius: "6px",
                 flexShrink: 0,
               }}
             >
-              <IconMoreVertical size={18} color={COLORS.deepSlate} />
-            </label>
-
-            {/* Backdrop penutup popover jika diklik luar */}
-            <label
-              htmlFor="popover-history-1"
-              className="auth-popover-backdrop"
-              style={{
-                display: "none",
-                position: "fixed",
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                zIndex: 45,
-                background: "transparent",
-              }}
-            />
-
-            {/* Popover Menu 4 Aksi: Share, Pin, Rename, Delete */}
-            <div className="auth-popover-menu">
-              <button type="button" className="auth-popover-item">
-                <IconShare2 size={15} color={COLORS.deepSlate} />
-                <span>Share Analisis</span>
-              </button>
-              <button type="button" className="auth-popover-item">
-                <IconPin size={15} color={COLORS.deepSlate} />
-                <span>Pin</span>
-              </button>
-              <button type="button" className="auth-popover-item">
-                <IconPencil size={15} color={COLORS.deepSlate} />
-                <span>Rename</span>
-              </button>
-              <button
-                type="button"
-                className="auth-popover-item"
-                style={{ color: "#EF4444" }}
-              >
-                <IconTrash2 size={15} color="#EF4444" />
-                <span>Delete</span>
-              </button>
-            </div>
-          </div>
-
-          {/* Riwayat 2: Panduan Optimasi SEO Teknis Core Web Vitals */}
-          <div
-            className="auth-history-row history-row-two"
-            style={{
-              position: "relative",
-            }}
-          >
-            <input
-              type="checkbox"
-              id="popover-history-2"
-              className="auth-popover-toggle"
-              style={{ display: "none" }}
-            />
-
-            <label
-              htmlFor={sessionTwoId}
-              style={{
-                flex: 1,
-                fontSize: "13px",
-                color: COLORS.deepSlate,
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                paddingRight: "7px",
-                cursor: "pointer",
-                userSelect: "none",
-                display: "block",
-              }}
-              title="Panduan Optimasi SEO Teknis Core Web Vitals"
-            >
-              Panduan Optimasi SEO Teknis Core Web...
-            </label>
-
-            <label
-              htmlFor="popover-history-2"
-              aria-label="Opsi Riwayat"
-              style={{
-                background: "transparent",
-                border: "none",
-                cursor: "pointer",
-                padding: 4,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                color: COLORS.deepSlate,
-                borderRadius: "6px",
-                flexShrink: 0,
-              }}
-            >
-              <IconMoreVertical size={18} color={COLORS.deepSlate} />
-            </label>
-
-            <label
-              htmlFor="popover-history-2"
-              className="auth-popover-backdrop"
-              style={{
-                display: "none",
-                position: "fixed",
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                zIndex: 45,
-                background: "transparent",
-              }}
-            />
-
-            <div className="auth-popover-menu">
-              <button type="button" className="auth-popover-item">
-                <IconShare2 size={15} color={COLORS.deepSlate} />
-                <span>Share Analisis</span>
-              </button>
-              <button type="button" className="auth-popover-item">
-                <IconPin size={15} color={COLORS.deepSlate} />
-                <span>Pin</span>
-              </button>
-              <button type="button" className="auth-popover-item">
-                <IconPencil size={15} color={COLORS.deepSlate} />
-                <span>Rename</span>
-              </button>
-              <button
-                type="button"
-                className="auth-popover-item"
-                style={{ color: "#EF4444" }}
-              >
-                <IconTrash2 size={15} color="#EF4444" />
-                <span>Delete</span>
-              </button>
-            </div>
-          </div>
-
-          {/* Dummy Riwayat 3, 4, 5 (Statis pelengkap Gemini Look) */}
-          {[
-            { id: "3", title: "Panduan Lengkap Merawat Mobil Listrik..." },
-            { id: "4", title: "Review Ultrabook Tipis untuk Pemrogram..." },
-            { id: "5", title: "Analisis Pasar Properti Jabodetabek Q1..." },
-          ].map((item) => (
-            <div
-              key={item.id}
-              className="auth-history-row"
-              style={{
-                position: "relative",
-              }}
-            >
-              <span
-                style={{
-                  fontSize: "13px",
-                  color: COLORS.deepSlate,
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  flex: 1,
-                  paddingRight: "7px",
-                  opacity: 0.85,
-                }}
-              >
-                {item.title}
-              </span>
-              <button
-                type="button"
-                aria-label="Opsi Riwayat"
-                style={{
-                  background: "transparent",
-                  border: "none",
-                  cursor: "pointer",
-                  padding: 4,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: COLORS.deepSlate,
-                  borderRadius: "6px",
-                  flexShrink: 0,
-                  opacity: 0.7,
-                }}
-              >
-                <IconMoreVertical size={18} color={COLORS.deepSlate} />
-              </button>
-            </div>
-          ))}
-        </div>
-      </main>
-
-      {/* Footer Sidebar: Profil Pengguna & Settings */}
-      <footer
-        style={{
-          height: "64px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "0 16px",
-          borderTop: "1px solid rgba(30, 41, 59, 0.08)",
-          background: COLORS.warmCream,
-          flexShrink: 0,
-        }}
-      >
-        <div style={{ display: "flex", alignItems: "center", gap: "10px", minWidth: 0 }}>
-          <div
-            style={{
-              width: "36px",
-              height: "36px",
-              borderRadius: "50%",
-              background: COLORS.mutedSkyBlue,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: "14px",
-              fontWeight: 700,
-              color: COLORS.deepSlate,
-              flexShrink: 0,
-            }}
-          >
-            AS
-          </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              minWidth: 0,
-              overflow: "hidden",
-            }}
-          >
-            <span
-              style={{
-                fontSize: "13px",
-                fontWeight: 700,
-                color: COLORS.deepSlate,
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                maxWidth: "150px",
-              }}
-            >
-              ahmadsaifalmuflihin...
-            </span>
-            <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-              <span
-                style={{
-                  fontSize: "10px",
-                  fontWeight: 700,
-                  background: COLORS.softPeriwinkle,
-                  padding: "1px 6px",
-                  borderRadius: "4px",
-                  color: COLORS.deepSlate,
-                }}
-              >
-                Pro
-              </span>
-              <span style={{ fontSize: "11px", color: "rgba(30, 41, 59, 0.6)" }}>
-                Personal Plan
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <button
-          type="button"
-          aria-label="Pengaturan"
-          style={{
-            background: "transparent",
-            border: "none",
-            cursor: "pointer",
-            padding: 8,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            color: COLORS.deepSlate,
-            borderRadius: "8px",
-            flexShrink: 0,
-          }}
-        >
-          <IconSettings size={22} color={COLORS.deepSlate} />
-        </button>
-      </footer>
+              <IconSettings size={22} color={COLORS.deepSlate} />
+            </button>
+          </footer>
+        </>
+      )}
     </aside>
   );
 };
@@ -841,6 +1419,7 @@ export const FloatingComposerDock: React.FC<FloatingComposerDockProps> = ({
 }) => {
   return (
     <div
+      className={isDesktop ? "auth-floating-composer-dock-desktop" : "auth-floating-composer-dock-mobile"}
       style={{
         position: "absolute",
         bottom: 0,
@@ -869,6 +1448,7 @@ export const FloatingComposerDock: React.FC<FloatingComposerDockProps> = ({
           pointerEvents: "auto",
           boxSizing: "border-box",
           border: "1px solid rgba(30, 41, 59, 0.06)",
+          position: "relative",
         }}
       >
         {/* Tombol Plus Opsi Audit */}
