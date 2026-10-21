@@ -792,11 +792,7 @@ export const AuthSidebar: React.FC<AuthSidebarProps> = ({
             {/* Tombol Analisis Baru Mobile (Memilih sessionNewId sekaligus Auto-Close sidebar) */}
             <label
               htmlFor={sessionNewId}
-              onClick={() => {
-                const toggle = document.getElementById(sidebarToggleId) as HTMLInputElement | null;
-                if (toggle) toggle.checked = false;
-              }}
-              className="btn-new-analysis"
+              className="btn-new-analysis auth-mobile-nav-item"
               style={{
                 width: "100%",
                 background: COLORS.warmSand,
@@ -850,10 +846,7 @@ export const AuthSidebar: React.FC<AuthSidebarProps> = ({
 
                 <label
                   htmlFor={sessionOneId}
-                  onClick={() => {
-                    const toggle = document.getElementById(sidebarToggleId) as HTMLInputElement | null;
-                    if (toggle) toggle.checked = false;
-                  }}
+                  className="auth-mobile-nav-item"
                   style={{
                     flex: 1,
                     fontSize: "13px",
@@ -945,10 +938,7 @@ export const AuthSidebar: React.FC<AuthSidebarProps> = ({
 
                 <label
                   htmlFor={sessionTwoId}
-                  onClick={() => {
-                    const toggle = document.getElementById(sidebarToggleId) as HTMLInputElement | null;
-                    if (toggle) toggle.checked = false;
-                  }}
+                  className="auth-mobile-nav-item"
                   style={{
                     flex: 1,
                     fontSize: "13px",
@@ -1165,6 +1155,25 @@ export const AuthSidebar: React.FC<AuthSidebarProps> = ({
               <IconSettings size={22} color={COLORS.deepSlate} />
             </button>
           </footer>
+
+          {/* Script Auto-Close Mobile Sidebar Saat Memilih Sesi / Analisis Baru */}
+          {!isDesktop && (
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `
+                  (function() {
+                    document.addEventListener('click', function(e) {
+                      var el = e.target && e.target.closest ? e.target.closest('.auth-mobile-nav-item') : null;
+                      if (el) {
+                        var toggle = document.getElementById('${sidebarToggleId}');
+                        if (toggle) toggle.checked = false;
+                      }
+                    });
+                  })();
+                `,
+              }}
+            />
+          )}
         </>
       )}
     </aside>
@@ -1182,6 +1191,210 @@ export const AuthHeader: React.FC<AuthHeaderProps> = ({
   sidebarToggleId,
   headerMenuToggleId,
 }) => {
+  const menuPopover = (
+    <div style={{ position: "relative" }}>
+      {/* Tombol Titik Tiga Header */}
+      <label
+        htmlFor={headerMenuToggleId}
+        aria-label="Opsi Lainnya"
+        style={{
+          width: isDesktop ? 36 : 40,
+          height: isDesktop ? 36 : 40,
+          cursor: "pointer",
+          color: COLORS.deepSlate,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          borderRadius: "50%",
+          background: isDesktop ? "rgba(30, 41, 59, 0.05)" : "transparent",
+          transition: "background 0.15s ease",
+        }}
+        title="Opsi Lainnya"
+      >
+        <IconMoreVertical size={20} color={COLORS.deepSlate} />
+      </label>
+
+      {/* Backdrop untuk Menutup Menu Header */}
+      <label
+        htmlFor={headerMenuToggleId}
+        className="auth-header-backdrop"
+        style={{
+          display: "none",
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          zIndex: 40,
+          background: "transparent",
+        }}
+      />
+
+      {/* Dropdown Popover 7 Aksi SVG */}
+      <div
+        className="auth-header-popover"
+        style={{
+          position: "absolute",
+          top: isDesktop ? 42 : 48,
+          right: 0,
+          width: 220,
+          background: "#FFFFFF",
+          borderRadius: 14,
+          boxShadow:
+            "0 10px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.1)",
+          border: `1px solid ${COLORS.warmSand}`,
+          padding: "6px 0",
+          zIndex: 50,
+          display: "none",
+          flexDirection: "column",
+        }}
+      >
+        <button
+          type="button"
+          style={{
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            gap: 10,
+            padding: "9px 14px",
+            background: "none",
+            border: "none",
+            fontSize: "13px",
+            color: COLORS.deepSlate,
+            cursor: "pointer",
+            textAlign: "left",
+          }}
+        >
+          <IconCopy size={15} color="#64748B" /> Salin Ringkasan Hasil
+        </button>
+        <button
+          type="button"
+          style={{
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            gap: 10,
+            padding: "9px 14px",
+            background: "none",
+            border: "none",
+            fontSize: "13px",
+            color: COLORS.deepSlate,
+            cursor: "pointer",
+            textAlign: "left",
+          }}
+        >
+          <IconDownload size={15} color="#64748B" /> Unduh Laporan (.md)
+        </button>
+        <button
+          type="button"
+          style={{
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            gap: 10,
+            padding: "9px 14px",
+            background: "none",
+            border: "none",
+            fontSize: "13px",
+            color: COLORS.deepSlate,
+            cursor: "pointer",
+            textAlign: "left",
+          }}
+        >
+          <IconFileText size={15} color="#64748B" /> Salin Teks Artikel
+        </button>
+        <div style={{ height: 1, background: COLORS.warmSand, margin: "4px 0" }} />
+        <button
+          type="button"
+          style={{
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            gap: 10,
+            padding: "9px 14px",
+            background: "none",
+            border: "none",
+            fontSize: "13px",
+            color: COLORS.deepSlate,
+            cursor: "pointer",
+            textAlign: "left",
+          }}
+        >
+          <IconShare2 size={15} color="#64748B" /> Share Analisis
+        </button>
+        <button
+          type="button"
+          style={{
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            gap: 10,
+            padding: "9px 14px",
+            background: "none",
+            border: "none",
+            fontSize: "13px",
+            color: COLORS.deepSlate,
+            cursor: "pointer",
+            textAlign: "left",
+          }}
+        >
+          <IconPin size={15} color="#64748B" /> Pin Analisis
+        </button>
+        <button
+          type="button"
+          style={{
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            gap: 10,
+            padding: "9px 14px",
+            background: "none",
+            border: "none",
+            fontSize: "13px",
+            color: COLORS.deepSlate,
+            cursor: "pointer",
+            textAlign: "left",
+          }}
+        >
+          <IconPencil size={15} color="#64748B" /> Ganti Judul (Rename)
+        </button>
+        <button
+          type="button"
+          style={{
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            gap: 10,
+            padding: "9px 14px",
+            background: "none",
+            border: "none",
+            fontSize: "13px",
+            color: "#EF4444",
+            cursor: "pointer",
+            textAlign: "left",
+          }}
+        >
+          <IconTrash2 size={15} color="#EF4444" /> Hapus Riwayat
+        </button>
+      </div>
+    </div>
+  );
+
+  if (isDesktop) {
+    return (
+      <div
+        style={{
+          position: "absolute",
+          top: "16px",
+          right: "28px",
+          zIndex: 35,
+        }}
+      >
+        {menuPopover}
+      </div>
+    );
+  }
+
   return (
     <header
       style={{
@@ -1189,7 +1402,7 @@ export const AuthHeader: React.FC<AuthHeaderProps> = ({
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        padding: isDesktop ? "0 24px" : "0 16px",
+        padding: "0 16px",
         position: "relative",
         zIndex: 25,
         background: COLORS.warmCream,
@@ -1199,34 +1412,9 @@ export const AuthHeader: React.FC<AuthHeaderProps> = ({
       }}
     >
       <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-        {!isDesktop && (
-          <label
-            htmlFor={sidebarToggleId}
-            aria-label="Buka Navigasi"
-            style={{
-              padding: 8,
-              cursor: "pointer",
-              color: COLORS.deepSlate,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: "50%",
-            }}
-          >
-            <IconMenu size={22} color={COLORS.deepSlate} />
-          </label>
-        )}
-
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <WaskitaLogo width={124} height={26} />
-        </div>
-      </div>
-
-      <div style={{ position: "relative" }}>
-        {/* Tombol Titik Tiga Header */}
         <label
-          htmlFor={headerMenuToggleId}
-          aria-label="Opsi Lainnya"
+          htmlFor={sidebarToggleId}
+          aria-label="Buka Navigasi"
           style={{
             padding: 8,
             cursor: "pointer",
@@ -1237,173 +1425,15 @@ export const AuthHeader: React.FC<AuthHeaderProps> = ({
             borderRadius: "50%",
           }}
         >
-          <IconMoreVertical size={20} color={COLORS.deepSlate} />
+          <IconMenu size={22} color={COLORS.deepSlate} />
         </label>
 
-        {/* Backdrop untuk Menutup Menu Header */}
-        <label
-          htmlFor={headerMenuToggleId}
-          className="auth-header-backdrop"
-          style={{
-            display: "none",
-            position: "fixed",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            zIndex: 40,
-            background: "transparent",
-          }}
-        />
-
-        {/* Dropdown Popover 7 Aksi SVG */}
-        <div
-          className="auth-header-popover"
-          style={{
-            position: "absolute",
-            top: 48,
-            right: 0,
-            width: 220,
-            background: "#FFFFFF",
-            borderRadius: 14,
-            boxShadow:
-              "0 10px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.1)",
-            border: `1px solid ${COLORS.warmSand}`,
-            padding: "6px 0",
-            zIndex: 50,
-            display: "none",
-            flexDirection: "column",
-          }}
-        >
-          <button
-            type="button"
-            style={{
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-              gap: 10,
-              padding: "9px 14px",
-              background: "none",
-              border: "none",
-              fontSize: "13px",
-              color: COLORS.deepSlate,
-              cursor: "pointer",
-              textAlign: "left",
-            }}
-          >
-            <IconCopy size={15} color="#64748B" /> Salin Ringkasan Hasil
-          </button>
-          <button
-            type="button"
-            style={{
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-              gap: 10,
-              padding: "9px 14px",
-              background: "none",
-              border: "none",
-              fontSize: "13px",
-              color: COLORS.deepSlate,
-              cursor: "pointer",
-              textAlign: "left",
-            }}
-          >
-            <IconDownload size={15} color="#64748B" /> Unduh Laporan (.md)
-          </button>
-          <button
-            type="button"
-            style={{
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-              gap: 10,
-              padding: "9px 14px",
-              background: "none",
-              border: "none",
-              fontSize: "13px",
-              color: COLORS.deepSlate,
-              cursor: "pointer",
-              textAlign: "left",
-            }}
-          >
-            <IconFileText size={15} color="#64748B" /> Salin Teks Artikel
-          </button>
-          <div style={{ height: 1, background: COLORS.warmSand, margin: "4px 0" }} />
-          <button
-            type="button"
-            style={{
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-              gap: 10,
-              padding: "9px 14px",
-              background: "none",
-              border: "none",
-              fontSize: "13px",
-              color: COLORS.deepSlate,
-              cursor: "pointer",
-              textAlign: "left",
-            }}
-          >
-            <IconShare2 size={15} color="#64748B" /> Share Analisis
-          </button>
-          <button
-            type="button"
-            style={{
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-              gap: 10,
-              padding: "9px 14px",
-              background: "none",
-              border: "none",
-              fontSize: "13px",
-              color: COLORS.deepSlate,
-              cursor: "pointer",
-              textAlign: "left",
-            }}
-          >
-            <IconPin size={15} color="#64748B" /> Pin Analisis
-          </button>
-          <button
-            type="button"
-            style={{
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-              gap: 10,
-              padding: "9px 14px",
-              background: "none",
-              border: "none",
-              fontSize: "13px",
-              color: COLORS.deepSlate,
-              cursor: "pointer",
-              textAlign: "left",
-            }}
-          >
-            <IconPencil size={15} color="#64748B" /> Ganti Judul (Rename)
-          </button>
-          <button
-            type="button"
-            style={{
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-              gap: 10,
-              padding: "9px 14px",
-              background: "none",
-              border: "none",
-              fontSize: "13px",
-              color: "#EF4444",
-              cursor: "pointer",
-              textAlign: "left",
-            }}
-          >
-            <IconTrash2 size={15} color="#EF4444" /> Hapus Riwayat
-          </button>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <WaskitaLogo width={124} height={26} />
         </div>
       </div>
+
+      {menuPopover}
     </header>
   );
 };
@@ -1438,78 +1468,105 @@ export const FloatingComposerDock: React.FC<FloatingComposerDockProps> = ({
         style={{
           width: "100%",
           maxWidth: isDesktop ? "800px" : "100%",
-          background: COLORS.warmSand,
-          borderRadius: 28,
-          padding: "6px 8px 6px 12px",
           display: "flex",
+          flexDirection: "column",
           alignItems: "center",
-          gap: 10,
-          boxShadow: "0 8px 24px rgba(30, 41, 59, 0.12)",
-          pointerEvents: "auto",
           boxSizing: "border-box",
-          border: "1px solid rgba(30, 41, 59, 0.06)",
-          position: "relative",
         }}
       >
-        {/* Tombol Plus Opsi Audit */}
-        <label
-          htmlFor={plusToggleId}
-          aria-label="Tambah Opsi"
+        <div
           style={{
-            width: 38,
-            height: 38,
-            borderRadius: "50%",
-            background: COLORS.mutedSkyBlue,
+            width: "100%",
+            background: COLORS.warmSand,
+            borderRadius: 28,
+            padding: "6px 8px 6px 12px",
             display: "flex",
             alignItems: "center",
-            justifyContent: "center",
-            cursor: "pointer",
-            flexShrink: 0,
-            color: COLORS.deepSlate,
-          }}
-          title="Opsi Audit & Masukan"
-        >
-          <IconPlus size={20} color={COLORS.deepSlate} />
-        </label>
-
-        {/* Input Textarea / Placeholder */}
-        <textarea
-          rows={1}
-          placeholder="Ketik atau tempel naskah..."
-          defaultValue=""
-          style={{
-            flex: 1,
-            border: "none",
-            background: "transparent",
-            fontSize: "13.5px",
-            color: COLORS.deepSlate,
-            resize: "none",
-            outline: "none",
-            padding: "8px 0",
-            fontFamily: "inherit",
-          }}
-        />
-
-        {/* Tombol Kirim / Panah Kanan */}
-        <button
-          type="button"
-          aria-label="Kirim Revisi"
-          style={{
-            width: 38,
-            height: 38,
-            borderRadius: "50%",
-            background: COLORS.softPeriwinkle,
-            border: "none",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            cursor: "pointer",
-            flexShrink: 0,
-            color: COLORS.deepSlate,
+            gap: 10,
+            boxShadow: "0 8px 24px rgba(30, 41, 59, 0.12)",
+            pointerEvents: "auto",
+            boxSizing: "border-box",
+            border: "1px solid rgba(30, 41, 59, 0.06)",
+            position: "relative",
           }}
         >
-          <IconArrowRight size={20} color={COLORS.deepSlate} />
-        </button>
+          {/* Tombol Plus Opsi Audit */}
+          <label
+            htmlFor={plusToggleId}
+            aria-label="Tambah Opsi"
+            style={{
+              width: 38,
+              height: 38,
+              borderRadius: "50%",
+              background: COLORS.mutedSkyBlue,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              cursor: "pointer",
+              flexShrink: 0,
+              color: COLORS.deepSlate,
+            }}
+            title="Opsi Audit & Masukan"
+          >
+            <IconPlus size={20} color={COLORS.deepSlate} />
+          </label>
+
+          {/* Input Textarea / Placeholder */}
+          <textarea
+            rows={1}
+            placeholder="Ketik atau tempel naskah..."
+            defaultValue=""
+            style={{
+              flex: 1,
+              border: "none",
+              background: "transparent",
+              fontSize: "13.5px",
+              color: COLORS.deepSlate,
+              resize: "none",
+              outline: "none",
+              padding: "8px 0",
+              fontFamily: "inherit",
+            }}
+          />
+
+          {/* Tombol Kirim / Panah Kanan */}
+          <button
+            type="button"
+            aria-label="Kirim Revisi"
+            style={{
+              width: 38,
+              height: 38,
+              borderRadius: "50%",
+              background: COLORS.softPeriwinkle,
+              border: "none",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              cursor: "pointer",
+              flexShrink: 0,
+              color: COLORS.deepSlate,
+            }}
+          >
+            <IconArrowRight size={20} color={COLORS.deepSlate} />
+          </button>
+        </div>
+
+        {!isDesktop && (
+          <p
+            style={{
+              fontSize: "10px",
+              color: "rgba(30, 41, 59, 0.6)",
+              textAlign: "center",
+              marginTop: "8px",
+              marginBottom: 0,
+              lineHeight: 1.4,
+              padding: "0 8px",
+              pointerEvents: "auto",
+            }}
+          >
+            Ketentuan Layanan dan Kebijakan Privasi Waskita berlaku. Waskita menyajikan panduan audit pra-publikasi untuk evaluasi draf artikel web.
+          </p>
+        )}
       </div>
     </div>
   );

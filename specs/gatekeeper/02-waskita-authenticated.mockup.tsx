@@ -364,13 +364,13 @@ const DesktopAuthenticatedScreen: React.FC = () => {
           isDesktop={true}
           plusToggleId={PLUS_TOGGLE_ID_DESKTOP}
         />
-      </div>
 
-      {/* Centered Modal Popover Card untuk Opsi Audit Desktop */}
-      <AuditOptionsOverlay
-        toggleId={PLUS_TOGGLE_ID_DESKTOP}
-        isDesktop={true}
-      />
+        {/* Popover Opsi Audit Desktop Mengembang ke Kanan di dalam Kolom 2 Workspace */}
+        <AuditOptionsOverlay
+          toggleId={PLUS_TOGGLE_ID_DESKTOP}
+          isDesktop={true}
+        />
+      </div>
     </div>
   );
 };
