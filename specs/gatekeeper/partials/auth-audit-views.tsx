@@ -813,7 +813,7 @@ Wajib sertakan poin penting berikut:
           </div>
         </section>
 
-        {/* Seksi 2: Peningkatan Metrik & Topik Gain */}
+        {/* Seksi 2: Metrik Stilometri & Leksikal */}
         <section
           style={{
             background: "transparent",
@@ -824,10 +824,10 @@ Wajib sertakan poin penting berikut:
           }}
         >
           <h3 style={{ fontSize: "15px", fontWeight: 700, margin: "0 0 4px 0", color: COLORS.deepSlate }}>
-            Peningkatan Metrik &amp; Topik Gain
+            Metrik Stilometri &amp; Leksikal
           </h3>
           <p style={{ fontSize: "12px", color: "rgba(30, 41, 59, 0.65)", margin: "0 0 14px 0" }}>
-            Optimalisasi leksikal dan semantik pasca revisi
+            Optimalisasi leksikal dan kemiripan semantik pasca revisi
           </p>
 
           <div
@@ -836,7 +836,6 @@ Wajib sertakan poin penting berikut:
               gridTemplateColumns: isDesktop ? "1fr 1fr" : undefined,
               flexDirection: isDesktop ? undefined : "column",
               gap: "14px",
-              marginBottom: "16px",
             }}
           >
             <div>
@@ -889,9 +888,27 @@ Wajib sertakan poin penting berikut:
               </div>
             </div>
           </div>
+        </section>
+
+        {/* Seksi 3: Celah Topik · Information Gain Terpenuhi */}
+        <section
+          style={{
+            background: "transparent",
+            border: "none",
+            borderRadius: 0,
+            padding: "20px 0",
+            borderBottom: "1px solid rgba(30, 41, 59, 0.1)",
+          }}
+        >
+          <h3 style={{ fontSize: "15px", fontWeight: 700, margin: "0 0 4px 0", color: COLORS.deepSlate }}>
+            Celah Topik · Information Gain Terpenuhi
+          </h3>
+          <p style={{ fontSize: "12px", color: "rgba(30, 41, 59, 0.65)", margin: "0 0 12px 0" }}>
+            Seluruh defisit topik telah teratasi dengan penambahan entitas spesifik
+          </p>
 
           <div>
-            <span style={{ fontSize: "12px", fontWeight: 700, color: "#059669", display: "block", marginBottom: "6px" }}>
+            <span style={{ fontSize: "12px", fontWeight: 700, color: "#059669", display: "block", marginBottom: "8px" }}>
               Δ gain Terpenuhi:
             </span>
             <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
