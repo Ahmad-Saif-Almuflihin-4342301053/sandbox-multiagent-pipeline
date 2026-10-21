@@ -1,4 +1,4 @@
-# TECHNICAL BLUEPRINT & UX SPECIFICATION (REVISED V3.2 — COMPLETE DESKTOP & MOBILE GEMINI STANDARD): WASKITA
+# TECHNICAL BLUEPRINT & UX SPECIFICATION (REVISED V3.3 — DESKTOP POSITIONING: CENTERED HERO VS FLOATING BOTTOM DOCK): WASKITA
 
 > **Dokumen Resmi Handover:** System Analyst / Lead Architect (Chat 1) $\rightarrow$ DevOps & GitHub Dispatcher (Chat 2)  
 > **Standar Rekayasa Wajib:** `docs/PZN_VIBE_ENGINEERING_STANDARD.md` (Kurikulum Eko Kurniawan Khannedy / PZN)  
@@ -10,69 +10,60 @@
 
 ---
 
-## 🎨 1. TATA KONTRAK UX TERBARU (REVISI V3.2)
+## 🎨 1. PERBEDAAN POSISI FIELD INPUT DI DESKTOP: BELUM ADA HASIL VS SUDAH ADA HASIL
 
-### A. Layar 1 (Guest Workspace)
-1. **Hero Bersih Ala Gemini:**
-   * Di atas judul CTA: **Logo Resmi Waskita** (`<WaskitaLogo width={isDesktop ? 160 : 130} height={isDesktop ? 34 : 28} />`) dengan `marginBottom: "20px"`.
-   * Judul CTA: HANYA **`Segera Periksa, ARTIKELMU!`** (tebal, tanpa paragraf deskripsi kecil).
-2. **Disclaimer Ketentuan Layanan & Privasi (Khusus Mode Belum Login):**
-   * Di bawah kapsul input dock bawah, tambahkan teks disclaimer:
-     > *"Ketentuan Layanan dan Kebijakan Privasi Waskita berlaku. Waskita adalah AI pra-terbit dan dapat membuat kekeliruan."*
-   * Gaya: `fontSize: "11px"`, `color: "rgba(30, 41, 59, 0.6)"`, `textAlign: "center"`, `marginTop: "8px"`.
-   * *(Pada mode Sudah Login, teks ini TIDAK ADA / tetap bersih).*
+Sesuai referensi resmi Google Gemini Desktop:
 
----
-
-### B. Layar 2 (Blok Analisis 2 Revisi Siap Terbit 85%)
-* **DILARANG DISUNAT! Blok Analisis 2 Wajib Menampilkan Seluruh 6 Seksi Lengkap di dalam SATU Background Utuh `#D4E5F2`:**
-  1. **Status Kelayakan:** CDS 85% Siap Terbit, SemiCircleGauge 85% hijau, pesan kelulusan standar 75%.
-  2. **Peningkatan Metrik Stilometri:** VSM `0.36` dan MATTR `0.74` dengan bar hijau.
-  3. **Celah Topik & Information Gain:** Chip $\Delta_{\text{gain}}$ (`Suhu Presisi 92°C`, `Rasio Takaran 1:15`, `Robusta Dampit`, `Pemanis Aren Alami`).
-  4. **Naskah Terkurasi & Anotasi:** Draf naskah revisi ber-stabilo hijau (`#BBF7D0`) pada poin-poin penutup defisit + legenda & catatan kelulusan.
-  5. **Overview Editorial Publikasi:** Ringkasan editorial bahwa artikel siap publish + tombol *Salin Ringkasan Editorial*.
-  6. **Referensi SERP · Top 3 Google:** 3 kartu kompetitor acuan Google.
+### A. Kondisi Belum Ada Hasil (Empty / Hero State — Layar 1 & State "Analisis Baru" di Layar 2)
+* **Posisi Field Input di DESKTOP: BERADA DI TENGAH LAYAR (CENTERED STACK):**
+  - Di layar Desktop, ketika belum ada artikel yang dianalisis, tata letaknya mengalir terpusat vertikal di tengah layar (*vertical center*):
+    1. **Logo Resmi Waskita** (`<WaskitaLogo width={160} height={34} />`) dengan jarak bawah `24px`.
+    2. Judul Hero: HANYA **`Segera Periksa, ARTIKELMU!`** (font tebal `36px`, tanpa deskripsi kecil).
+    3. **Field Pengisian Kapsul Input:** Tepat berada di bawah judul hero dengan lebar `maxWidth: "760px"`, `width: "100%"`, latar `#E9DFCA`, bulat `28px` (ada tombol bulat `+`, textarea *"Ketik atau tempel naskah..."*, dan tombol panah kanan).
+    4. **Teks Disclaimer Privasi:** Tepat di bawah kapsul tengah tersebut:
+       > *"Ketentuan Layanan dan Kebijakan Privasi Waskita berlaku. Waskita adalah AI pra-terbit dan dapat membuat kekeliruan."*
+  - *(Pada viewport Mobile, kapsul tetap menempel melayang di bawah layar `16px`).*
 
 ---
 
-### C. Sidebar Mobile Auto-Close (Mobile UX)
-* Di viewport mobile (`390x844`): Ketika pengguna memencet salah satu item riwayat atau tombol *"Analisis Baru"*, sidebar mobile **OTOMATIS TERTUTUP (*slide out*)** dan layar langsung menampilkan data riwayat yang dipilih, tanpa harus memencet tombol silang `X` lagi.
+### B. Kondisi Sudah Ada Hasil Analisis (Active Audit Stream — Layar 2 Riwayat 1 & 2)
+* **Posisi Field Input di DESKTOP: BERADA DI BAWAH LAYAR (MELAYANG / FLOATING DOCK):**
+  - Ketika sudah ada hasil analisis (Blok Analisis 1 CDS 70%, Bubble Revisi, Blok Analisis 2 CDS 85%):
+    1. Area tengah menjadi **kanvas scrollable** (`overflowY: "auto"`) yang menampilkan hasil analisis lengkap.
+    2. **Field Pengisian Kapsul Input:** Pindah ke **BAWAH LAYAR MELAYANG PERMANEN (*FLOATING DOCK*)** (`position: "absolute", bottom: "20px", left: "50%", transform: "translateX(-50%)"`, `maxWidth: "800px"`, `width: "calc(100% - 48px)"`, `zIndex: 40`).
+    3. **Popup Opsi Audit Tombol Plus (`+`) di Desktop:** Ketika tombol `+` di dock bawah dipencet, menu popover muncul **mengambang tepat di atas tombol `+`** (`position: "absolute", bottom: "68px", left: "0"`, `width: "420px"`, `borderRadius: "20px"`, `background: "#F7F4EB"`, `boxShadow: "0 12px 32px rgba(30,41,59,0.15)"`) **TANPA menggelapkan seluruh layar dengan backdrop hitam!**
 
 ---
 
-### D. Desktop Sidebar Collapsible (Mini Rail vs Expanded Ala Gemini Gambar 1 & 4)
-* Di layar desktop (`1440x900`), sidebar bisa di-buka dan di-tutup secara fleksibel:
-  * **Saat Open (Expanded `width: 280px`):** Menampilkan penuh Logo Waskita, tombol `Analisis Baru`, daftar riwayat/info card, serta footer nama user & plan.
-  * **Saat Closed (Collapsed Mini Rail `width: 68px`):**
-    - Sidebar menciut ke mini rail selebar `68px`.
-    - Bagian atas hanya menampilkan ikon: Tombol Burger/Toggle + Ikon `Analisis Baru` (ikon pena tanpa teks) + Ikon `Search`.
-    - Bagian bawah hanya menampilkan ikon: Profil avatar bulat (`AS`) + Ikon `Settings`.
-    - Area kerja utama (kanan) otomatis melebar mengisi ruang yang tersedia.
+## 🎨 2. RINGKASAN TATA KONTRAK LAINNYA (V3.3)
+
+1. **Layar 2 (Blok Analisis 2 Siap Terbit 85%):**
+   * **Wajib LENGKAP seluruh 6 seksi** di dalam SATU background utuh `#D4E5F2`:
+     1) Status Kelayakan 85% Siap Terbit (Gauge hijau).
+     2) Peningkatan Metrik Stilometri (VSM 0.36 & MATTR 0.74).
+     3) Celah Topik $\Delta_{\text{gain}}$ terpenuhi (4 chip hijau).
+     4) Naskah Revisi Terkurasi Ber-anotasi Stabilo Hijau (`#BBF7D0`) + catatan kelulusan.
+     5) Overview Editorial Publikasi & Salin Ringkasan.
+     6) Referensi SERP · Top 3 Google (3 kartu artikel kompetitor).
+2. **Sidebar Mobile Auto-Close:**
+   * Di viewport mobile (`390x844`), saat pengguna memencet salah satu item riwayat di sidebar (atau tombol *"Analisis Baru"*), sidebar mobile **otomatis menutup (*slide out*)** dan layar langsung menampilkan data riwayat yang dipilih tanpa harus memencet tombol silang `X` lagi.
+3. **Desktop Sidebar Collapsible (Mini Rail vs Expanded):**
+   * Di desktop, sidebar bisa di-toggle antara **Expanded (`280px`)** dan **Collapsed Mini Rail (`68px`)** yang hanya menampilkan ikon Analisis Baru, Search, Profil, dan Settings ala Gemini.
 
 ---
 
-### E. Desktop Tombol Plus Popover (Ala Gemini Gambar 5 — TANPA Fullscreen Dark Opacity)
-* Di layar desktop (`1440x900`):
-  * **DILARANG** menampilkan popup di tengah layar dengan backdrop gelap pekat yang menutupi seluruh halaman!
-  * **Wajib berupa Popover Menu Mengambang** yang menempel tepat di atas tombol `+` kapsul composer (`position: "absolute", bottom: "72px", left: "0"`, `width: "420px"`, `borderRadius: "20px"`, `background: "#F7F4EB"`, `boxShadow: "0 12px 32px rgba(30,41,59,0.15)"`, `border: "1px solid #E9DFCA"`).
-  * Di dalamnya memuat Unggah Dokumen, Kueri Target, dan 4 Range Slider Volume-Style.
-  * Backdrop hanya berupa overlay transparan tipis penangkap klik untuk menutup popover.
+## 🛠️ PEMBAGIAN TUGAS SUB-WORKER (PARALEL)
 
----
+* **Sub-Worker 1A (Folder: `worker-1`):**
+  - Perbaiki `guest-workspace.tsx` (Desktop: Hero + Kapsul input berada di **TENGAH LAYAR** terpusat vertikal, diikuti disclaimer privasi di bawahnya. Mobile: Hero di tengah, kapsul di bawah).
+  - Perbaiki `shared-ui.tsx` (Popover Desktop `+` menempel di atas kapsul input tanpa fullscreen dark backdrop).
+  - Perbaiki `guest-sidebar.tsx` & `01-waskita-guest.mockup.tsx` (Desktop sidebar collapsible ke mini rail 68px).
 
-## 🛠️ PEMBAGIAN EKSEKUSI PARALEL
-
-1. **Sub-Worker 1A (Folder: `worker-1`):**
-   * Perbaiki `specs/gatekeeper/partials/guest-workspace.tsx` (Hero Waskita Logo + Judul bersih + Disclaimer Privasi di bawah kapsul input).
-   * Perbaiki `specs/gatekeeper/partials/shared-ui.tsx` (Popover Desktop `+` menempel di atas kapsul input tanpa fullscreen dark backdrop).
-   * Perbaiki `specs/gatekeeper/partials/guest-sidebar.tsx` & `specs/gatekeeper/01-waskita-guest.mockup.tsx` (Desktop sidebar collapsible ke mini-rail 68px).
-
-2. **Sub-Worker 2A & 2B (Folder: `worker-2`):**
-   * Perbaiki `specs/gatekeeper/partials/auth-audit-views.tsx` (Blok Analisis 2 LENGKAP 6 seksi dalam background `#D4E5F2`, tidak disunat!).
-   * Perbaiki `specs/gatekeeper/partials/auth-sidebar-header.tsx` & `specs/gatekeeper/02-waskita-authenticated.mockup.tsx`:
-     - Mobile sidebar auto-close saat riwayat dipencet.
-     - Desktop sidebar collapsible ke mini-rail 68px (ikon pena & search di atas, avatar & settings di bawah).
-     - Desktop tombol `+` popover menempel di atas composer tanpa dark opacity screen.
-
-3. **Worker 3 (QA):**
-   - Validasi `npx mokly check --strict` dan audit visual browser di `http://127.0.0.1:4174` (cek mobile & desktop).
+* **Sub-Worker 2A & 2B (Folder: `worker-2`):**
+  - Perbaiki `auth-audit-views.tsx`:
+    * Lengkapi Blok Analisis 2 dengan seluruh 6 seksi lengkap di dalam 1 background `#D4E5F2`.
+    * Di `NewAnalysisEmptyView`: di Desktop, posisikan kapsul input di **TENGAH LAYAR** di bawah hero "Segera Periksa, ARTIKELMU!".
+  - Perbaiki `auth-sidebar-header.tsx` & `02-waskita-authenticated.mockup.tsx`:
+    * Di Active Stream (Riwayat 1 & 2): posisikan kapsul input di **BAWAH LAYAR MELAYANG PERMANEN (*FLOATING DOCK*)**.
+    * Auto-close sidebar mobile saat riwayat dipencet.
+    * Collapsible desktop sidebar ke mini rail 68px.
