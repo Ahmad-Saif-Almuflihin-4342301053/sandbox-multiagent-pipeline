@@ -1,3 +1,4 @@
+node_modules
 node_modules/
 .mokly-cache/
 .mokly-export-reservations/
@@ -5,3 +6,4 @@ node_modules/
 .context/
 __pycache__/
 *.pyc
+
