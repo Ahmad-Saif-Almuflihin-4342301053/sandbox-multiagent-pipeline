@@ -99,14 +99,33 @@ const DesktopGuestView: React.FC = () => {
         boxSizing: "border-box",
       }}
     >
-      {/* Pure CSS State Machine Checkbox for Plus Overlay */}
+      {/* Pure CSS State Machine Checkboxes for Sidebar Collapse & Plus Overlay */}
+      <input
+        type="checkbox"
+        id={SIDEBAR_TOGGLE_ID}
+        style={{ display: "none" }}
+      />
       <input
         type="checkbox"
         id={PLUS_TOGGLE_ID}
         style={{ display: "none" }}
       />
 
-      {/* Kolom 1: Persistent Left Sidebar 280px */}
+      <style>
+        {`
+          #${SIDEBAR_TOGGLE_ID}:checked ~ .guest-sidebar-desktop {
+            width: 68px !important;
+          }
+          #${SIDEBAR_TOGGLE_ID}:checked ~ .guest-sidebar-desktop .guest-sidebar-expanded-content {
+            display: none !important;
+          }
+          #${SIDEBAR_TOGGLE_ID}:checked ~ .guest-sidebar-desktop .guest-sidebar-rail-content {
+            display: flex !important;
+          }
+        `}
+      </style>
+
+      {/* Kolom 1: Collapsible Left Sidebar (Expanded 280px / Mini Rail 68px) */}
       <GuestSidebar
         isDesktop={true}
         sidebarToggleId={SIDEBAR_TOGGLE_ID}
@@ -131,7 +150,7 @@ const DesktopGuestView: React.FC = () => {
         />
       </div>
 
-      {/* Centered Modal / Popover Opsi Audit */}
+      {/* Popover Opsi Audit Desktop */}
       <AuditOptionsOverlay
         toggleId={PLUS_TOGGLE_ID}
         isDesktop={true}
