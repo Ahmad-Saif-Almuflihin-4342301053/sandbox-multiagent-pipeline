@@ -1759,13 +1759,13 @@ export const NewAnalysisEmptyView: React.FC<AuditStreamProps> = ({
       style={{
         flex: 1,
         width: "100%",
-        minHeight: isDesktop ? "100vh" : "100%",
-        height: isDesktop ? "100vh" : "auto",
+        minHeight: "100%",
+        height: "100%",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        padding: isDesktop ? "0 32px 48px 32px" : "0 24px 120px 24px",
+        padding: isDesktop ? "0 32px 48px 32px" : "0 24px 96px 24px",
         textAlign: "center",
         maxWidth: isDesktop ? "760px" : "100%",
         margin: "0 auto",
@@ -1872,21 +1872,6 @@ export const NewAnalysisEmptyView: React.FC<AuditStreamProps> = ({
               <IconArrowRight size={20} color={COLORS.deepSlate} />
             </button>
           </div>
-
-          {/* Teks Disclaimer Privasi Resmi */}
-          <p
-            style={{
-              fontSize: "11px",
-              color: "rgba(30, 41, 59, 0.6)",
-              textAlign: "center",
-              marginTop: "14px",
-              marginBottom: 0,
-              lineHeight: 1.5,
-              maxWidth: "600px",
-            }}
-          >
-            Ketentuan Layanan dan Kebijakan Privasi Waskita berlaku. Waskita menyajikan panduan audit pra-publikasi untuk evaluasi draf artikel web.
-          </p>
         </div>
       )}
     </div>
