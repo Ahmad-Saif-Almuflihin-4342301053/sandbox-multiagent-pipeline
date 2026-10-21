@@ -1,0 +1,364 @@
+import React from "react";
+import { defineScreen } from "@mokly/mokly";
+import { COLORS, AuditOptionsOverlay } from "./partials/shared-ui";
+import {
+  AuthSidebar,
+  AuthHeader,
+  FloatingComposerDock,
+} from "./partials/auth-sidebar-header";
+import {
+  HistoryOneAuditStream,
+  HistoryTwoAuditStream,
+  NewAnalysisEmptyView,
+} from "./partials/auth-audit-views";
+
+// CSS State Machine Identifiers
+const SIDEBAR_TOGGLE_ID_MOBILE = "auth-sidebar-toggle-mobile";
+const SIDEBAR_TOGGLE_ID_DESKTOP = "auth-sidebar-toggle-desktop";
+const HEADER_MENU_TOGGLE_ID_MOBILE = "auth-header-menu-toggle-mobile";
+const HEADER_MENU_TOGGLE_ID_DESKTOP = "auth-header-menu-toggle-desktop";
+const PLUS_TOGGLE_ID_MOBILE = "auth-plus-toggle-mobile";
+const PLUS_TOGGLE_ID_DESKTOP = "auth-plus-toggle-desktop";
+
+// Session Radio State Identifiers
+const ACTIVE_SESSION_RADIO_NAME_MOBILE = "active-session-mobile";
+const ACTIVE_SESSION_RADIO_NAME_DESKTOP = "active-session-desktop";
+const SESSION_NEW_MOBILE = "session-new-mobile";
+const SESSION_ONE_MOBILE = "session-one-mobile";
+const SESSION_TWO_MOBILE = "session-two-mobile";
+
+const SESSION_NEW_DESKTOP = "session-new-desktop";
+const SESSION_ONE_DESKTOP = "session-one-desktop";
+const SESSION_TWO_DESKTOP = "session-two-desktop";
+
+/**
+ * Mobile View (390x844 Form Factor):
+ * - 100% height, flex column, overflow hidden
+ * - Off-canvas Drawer Sidebar (100% width)
+ * - Main content with scrollable audit stream & pure CSS view switcher
+ * - Floating bottom input capsule at bottom: 0, zIndex: 40
+ * - Bottom sheet 58vh for Plus button options
+ */
+const MobileAuthenticatedScreen: React.FC = () => {
+  return (
+    <div
+      style={{
+        width: "100%",
+        height: "100vh",
+        overflow: "hidden",
+        position: "relative",
+        background: COLORS.warmCream,
+        display: "flex",
+        flexDirection: "column",
+        boxSizing: "border-box",
+      }}
+    >
+      {/* State Machine Inputs */}
+      <input
+        type="checkbox"
+        id={SIDEBAR_TOGGLE_ID_MOBILE}
+        style={{ display: "none" }}
+      />
+      <input
+        type="checkbox"
+        id={HEADER_MENU_TOGGLE_ID_MOBILE}
+        style={{ display: "none" }}
+      />
+      <input
+        type="checkbox"
+        id={PLUS_TOGGLE_ID_MOBILE}
+        style={{ display: "none" }}
+      />
+
+      {/* Session State Radio Inputs (Default: session-one checked) */}
+      <input
+        type="radio"
+        name={ACTIVE_SESSION_RADIO_NAME_MOBILE}
+        id={SESSION_ONE_MOBILE}
+        defaultChecked
+        style={{ display: "none" }}
+      />
+      <input
+        type="radio"
+        name={ACTIVE_SESSION_RADIO_NAME_MOBILE}
+        id={SESSION_TWO_MOBILE}
+        style={{ display: "none" }}
+      />
+      <input
+        type="radio"
+        name={ACTIVE_SESSION_RADIO_NAME_MOBILE}
+        id={SESSION_NEW_MOBILE}
+        style={{ display: "none" }}
+      />
+
+      <style>
+        {`
+          /* Sidebar Mobile Drawer Animation */
+          #${SIDEBAR_TOGGLE_ID_MOBILE}:checked ~ .auth-sidebar-mobile {
+            transform: translateX(0) !important;
+          }
+          #${SIDEBAR_TOGGLE_ID_MOBILE}:checked ~ .auth-sidebar-backdrop-mobile {
+            display: block !important;
+          }
+
+          /* Header Popover Menu Toggle */
+          #${HEADER_MENU_TOGGLE_ID_MOBILE}:checked ~ * .auth-header-popover {
+            display: flex !important;
+          }
+          #${HEADER_MENU_TOGGLE_ID_MOBILE}:checked ~ * .auth-header-backdrop {
+            display: block !important;
+          }
+
+          /* Active Session View Switching in Mobile */
+          .mobile-view-session-1,
+          .mobile-view-session-2,
+          .mobile-view-session-new {
+            display: none;
+            width: 100%;
+          }
+
+          #${SESSION_ONE_MOBILE}:checked ~ main .mobile-view-session-1 {
+            display: block !important;
+          }
+          #${SESSION_TWO_MOBILE}:checked ~ main .mobile-view-session-2 {
+            display: block !important;
+          }
+          #${SESSION_NEW_MOBILE}:checked ~ main .mobile-view-session-new {
+            display: block !important;
+          }
+        `}
+      </style>
+
+      {/* Header dengan Burger dan Titik Tiga 7 Aksi */}
+      <AuthHeader
+        isDesktop={false}
+        sidebarToggleId={SIDEBAR_TOGGLE_ID_MOBILE}
+        headerMenuToggleId={HEADER_MENU_TOGGLE_ID_MOBILE}
+      />
+
+      {/* Scrollable Main Analysis Canvas (Padded at bottom for floating dock) */}
+      <main
+        style={{
+          flex: 1,
+          overflowY: "auto",
+          position: "relative",
+          display: "flex",
+          flexDirection: "column",
+          boxSizing: "border-box",
+        }}
+      >
+        <div className="mobile-view-session-1">
+          <HistoryOneAuditStream isDesktop={false} />
+        </div>
+        <div className="mobile-view-session-2">
+          <HistoryTwoAuditStream isDesktop={false} />
+        </div>
+        <div className="mobile-view-session-new">
+          <NewAnalysisEmptyView isDesktop={false} />
+        </div>
+      </main>
+
+      {/* Floating Composer Dock (100% MELAYANG PERMANEN) */}
+      <FloatingComposerDock
+        isDesktop={false}
+        plusToggleId={PLUS_TOGGLE_ID_MOBILE}
+      />
+
+      {/* Mobile Drawer Backdrop */}
+      <label
+        htmlFor={SIDEBAR_TOGGLE_ID_MOBILE}
+        className="auth-sidebar-backdrop-mobile"
+        style={{
+          display: "none",
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: "rgba(15, 23, 42, 0.4)",
+          backdropFilter: "blur(2px)",
+          zIndex: 55,
+          cursor: "pointer",
+        }}
+        title="Tutup Menu"
+      />
+
+      {/* Mobile Off-canvas Drawer (100% fullscreen width) */}
+      <AuthSidebar
+        isDesktop={false}
+        sidebarToggleId={SIDEBAR_TOGGLE_ID_MOBILE}
+        activeSessionRadioName={ACTIVE_SESSION_RADIO_NAME_MOBILE}
+        sessionNewId={SESSION_NEW_MOBILE}
+        sessionOneId={SESSION_ONE_MOBILE}
+        sessionTwoId={SESSION_TWO_MOBILE}
+      />
+
+      {/* Popup Opsi Audit & Masukan (Bottom Sheet 58vh) */}
+      <AuditOptionsOverlay
+        toggleId={PLUS_TOGGLE_ID_MOBILE}
+        isDesktop={false}
+      />
+    </div>
+  );
+};
+
+/**
+ * Desktop View (1440x900 Widescreen 2-Column Layout):
+ * - Root Container: flex row, 100vh, overflow hidden
+ * - Left Column: Persistent Sidebar (280px, borderRight: 1px solid #E9DFCA)
+ * - Right Column: Workspace flex 1, header atas, main content terpusat maxWidth 840px margin 0 auto
+ * - Floating Composer Dock: maxWidth 800px terpusat di bawah kolom kanan
+ * - Popup Plus: Centered Popover Card (width 480px, maxHeight 75vh, borderRadius 24px)
+ */
+const DesktopAuthenticatedScreen: React.FC = () => {
+  return (
+    <div
+      style={{
+        width: "100%",
+        height: "100vh",
+        overflow: "hidden",
+        position: "relative",
+        background: COLORS.warmCream,
+        display: "flex",
+        flexDirection: "row",
+        boxSizing: "border-box",
+      }}
+    >
+      {/* State Machine Inputs */}
+      <input
+        type="checkbox"
+        id={HEADER_MENU_TOGGLE_ID_DESKTOP}
+        style={{ display: "none" }}
+      />
+      <input
+        type="checkbox"
+        id={PLUS_TOGGLE_ID_DESKTOP}
+        style={{ display: "none" }}
+      />
+
+      {/* Session State Radio Inputs (Default: session-one checked) */}
+      <input
+        type="radio"
+        name={ACTIVE_SESSION_RADIO_NAME_DESKTOP}
+        id={SESSION_ONE_DESKTOP}
+        defaultChecked
+        style={{ display: "none" }}
+      />
+      <input
+        type="radio"
+        name={ACTIVE_SESSION_RADIO_NAME_DESKTOP}
+        id={SESSION_TWO_DESKTOP}
+        style={{ display: "none" }}
+      />
+      <input
+        type="radio"
+        name={ACTIVE_SESSION_RADIO_NAME_DESKTOP}
+        id={SESSION_NEW_DESKTOP}
+        style={{ display: "none" }}
+      />
+
+      <style>
+        {`
+          /* Header Popover Menu Toggle Desktop */
+          #${HEADER_MENU_TOGGLE_ID_DESKTOP}:checked ~ * .auth-header-popover {
+            display: flex !important;
+          }
+          #${HEADER_MENU_TOGGLE_ID_DESKTOP}:checked ~ * .auth-header-backdrop {
+            display: block !important;
+          }
+
+          /* Active Session View Switching in Desktop */
+          .desktop-view-session-1,
+          .desktop-view-session-2,
+          .desktop-view-session-new {
+            display: none;
+            width: 100%;
+          }
+
+          #${SESSION_ONE_DESKTOP}:checked ~ * .desktop-view-session-1 {
+            display: block !important;
+          }
+          #${SESSION_TWO_DESKTOP}:checked ~ * .desktop-view-session-2 {
+            display: block !important;
+          }
+          #${SESSION_NEW_DESKTOP}:checked ~ * .desktop-view-session-new {
+            display: block !important;
+          }
+        `}
+      </style>
+
+      {/* Kolom Kiri: Persistent Left Sidebar (280px) */}
+      <AuthSidebar
+        isDesktop={true}
+        sidebarToggleId={SIDEBAR_TOGGLE_ID_DESKTOP}
+        activeSessionRadioName={ACTIVE_SESSION_RADIO_NAME_DESKTOP}
+        sessionNewId={SESSION_NEW_DESKTOP}
+        sessionOneId={SESSION_ONE_DESKTOP}
+        sessionTwoId={SESSION_TWO_DESKTOP}
+      />
+
+      {/* Kolom Kanan: Workspace Utama */}
+      <div
+        style={{
+          flex: 1,
+          height: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          position: "relative",
+          overflow: "hidden",
+          boxSizing: "border-box",
+        }}
+      >
+        {/* Header Desktop dengan Tombol Titik Tiga 7 Aksi */}
+        <AuthHeader
+          isDesktop={true}
+          sidebarToggleId={SIDEBAR_TOGGLE_ID_DESKTOP}
+          headerMenuToggleId={HEADER_MENU_TOGGLE_ID_DESKTOP}
+        />
+
+        {/* Scrollable Main Content (Area Baca Terpusat maxWidth 840px) */}
+        <main
+          style={{
+            flex: 1,
+            overflowY: "auto",
+            position: "relative",
+            display: "flex",
+            flexDirection: "column",
+            boxSizing: "border-box",
+          }}
+        >
+          <div className="desktop-view-session-1">
+            <HistoryOneAuditStream isDesktop={true} />
+          </div>
+          <div className="desktop-view-session-2">
+            <HistoryTwoAuditStream isDesktop={true} />
+          </div>
+          <div className="desktop-view-session-new">
+            <NewAnalysisEmptyView isDesktop={true} />
+          </div>
+        </main>
+
+        {/* Floating Composer Dock Terpusat di Bawah Kolom Kanan */}
+        <FloatingComposerDock
+          isDesktop={true}
+          plusToggleId={PLUS_TOGGLE_ID_DESKTOP}
+        />
+      </div>
+
+      {/* Centered Modal Popover Card untuk Opsi Audit Desktop */}
+      <AuditOptionsOverlay
+        toggleId={PLUS_TOGGLE_ID_DESKTOP}
+        isDesktop={true}
+      />
+    </div>
+  );
+};
+
+export default defineScreen({
+  title: "02. Waskita - Mode Terautentikasi (Sudah Login)",
+  description:
+    "Antarmuka Waskita V3.0 mode terautentikasi (sudah login): Sidebar riwayat Gemini-style interaktif yang dapat memindahkan alur analisis saat diklik, header dengan menu popover 7 aksi, floating composer dock permanen, dan tata letak responsif sejati untuk Mobile (390x844) dan Widescreen Desktop (1440x900).",
+  relatedDocs: [],
+  mobile: <MobileAuthenticatedScreen />,
+  desktop: <DesktopAuthenticatedScreen />,
+});
