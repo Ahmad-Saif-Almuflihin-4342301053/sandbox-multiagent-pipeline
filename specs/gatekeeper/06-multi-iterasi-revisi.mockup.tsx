@@ -261,6 +261,21 @@ const IconCheckCircle2: React.FC<{ size?: number; color?: string }> = ({ size = 
   </svg>
 );
 
+const IconCheck: React.FC<{ size?: number; color?: string }> = ({ size = 16, color = "currentColor" }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke={color}
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <polyline points="20 6 9 17 4 12" />
+  </svg>
+);
+
 // Semi-Circle Radial Gauge Component
 const SemiCircleGauge: React.FC<{ score: number; threshold: number; color?: string }> = ({
   score,
@@ -995,9 +1010,13 @@ const MultiIterasiRevisiScreen: React.FC = () => {
                       borderRadius: 9999,
                       fontSize: "11px",
                       fontWeight: 600,
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: 4,
                     }}
                   >
-                    ✓ {tag}
+                    <IconCheck size={12} color="#065F46" />
+                    <span>{tag}</span>
                   </span>
                 ))}
               </div>
