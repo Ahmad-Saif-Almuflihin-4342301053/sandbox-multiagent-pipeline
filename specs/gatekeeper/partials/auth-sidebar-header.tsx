@@ -28,6 +28,9 @@ export interface AuthSidebarProps {
   sessionOneId: string;
   sessionTwoId: string;
   closeDrawerTargetId?: string;
+  drawerFromOneId?: string;
+  drawerFromTwoId?: string;
+  drawerFromNewId?: string;
 }
 
 export const AuthSidebar: React.FC<AuthSidebarProps> = ({
@@ -38,6 +41,9 @@ export const AuthSidebar: React.FC<AuthSidebarProps> = ({
   sessionOneId,
   sessionTwoId,
   closeDrawerTargetId,
+  drawerFromOneId,
+  drawerFromTwoId,
+  drawerFromNewId,
 }) => {
   return (
     <aside
@@ -165,19 +171,27 @@ export const AuthSidebar: React.FC<AuthSidebarProps> = ({
           }
 
           /* Active session indicator styling via external radio checks */
-          #${sessionOneId}:checked ~ * .history-row-one {
-            background-color: ${COLORS.warmSand};
-            font-weight: 700;
-          }
-          #${sessionTwoId}:checked ~ * .history-row-two {
-            background-color: ${COLORS.warmSand};
-            font-weight: 700;
-          }
-          #${sessionNewId}:checked ~ * .btn-new-analysis {
+          #${sessionOneId}:checked ~ * .history-row-one,
+          #drawer-from-1:checked ~ * .history-row-one,
+          #session-one-desktop:checked ~ * .history-row-one {
             background-color: ${COLORS.warmSand} !important;
             font-weight: 700 !important;
           }
-          #${sessionNewId}:checked ~ * .btn-new-analysis-rail {
+          #${sessionTwoId}:checked ~ * .history-row-two,
+          #drawer-from-2:checked ~ * .history-row-two,
+          #session-two-desktop:checked ~ * .history-row-two {
+            background-color: ${COLORS.warmSand} !important;
+            font-weight: 700 !important;
+          }
+          #${sessionNewId}:checked ~ * .btn-new-analysis,
+          #drawer-from-new:checked ~ * .btn-new-analysis,
+          #session-new-desktop:checked ~ * .btn-new-analysis {
+            background-color: ${COLORS.warmSand} !important;
+            font-weight: 700 !important;
+          }
+          #${sessionNewId}:checked ~ * .btn-new-analysis-rail,
+          #drawer-from-new:checked ~ * .btn-new-analysis-rail,
+          #session-new-desktop:checked ~ * .btn-new-analysis-rail {
             background-color: ${COLORS.warmSand} !important;
           }
         `}
@@ -764,8 +778,50 @@ export const AuthSidebar: React.FC<AuthSidebarProps> = ({
                 <IconSearch size={20} color={COLORS.deepSlate} />
               </button>
 
+              {/* Context-aware Close X buttons for Mobile Drawer */}
               <label
-                htmlFor={isDesktop ? sidebarToggleId : (closeDrawerTargetId || sessionOneId)}
+                htmlFor={sessionOneId}
+                className="auth-close-1"
+                aria-label="Tutup Sidebar"
+                style={{
+                  background: "transparent",
+                  border: "none",
+                  cursor: "pointer",
+                  padding: 6,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  color: COLORS.deepSlate,
+                  borderRadius: "8px",
+                }}
+                title="Tutup Sidebar"
+              >
+                <IconX size={22} color={COLORS.deepSlate} />
+              </label>
+
+              <label
+                htmlFor={sessionTwoId}
+                className="auth-close-2"
+                aria-label="Tutup Sidebar"
+                style={{
+                  background: "transparent",
+                  border: "none",
+                  cursor: "pointer",
+                  padding: 6,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  color: COLORS.deepSlate,
+                  borderRadius: "8px",
+                }}
+                title="Tutup Sidebar"
+              >
+                <IconX size={22} color={COLORS.deepSlate} />
+              </label>
+
+              <label
+                htmlFor={sessionNewId}
+                className="auth-close-new"
                 aria-label="Tutup Sidebar"
                 style={{
                   background: "transparent",
@@ -1165,12 +1221,18 @@ export interface AuthHeaderProps {
   isDesktop?: boolean;
   sidebarToggleId: string;
   headerMenuToggleId: string;
+  drawerFromOneId?: string;
+  drawerFromTwoId?: string;
+  drawerFromNewId?: string;
 }
 
 export const AuthHeader: React.FC<AuthHeaderProps> = ({
   isDesktop = false,
   sidebarToggleId,
   headerMenuToggleId,
+  drawerFromOneId,
+  drawerFromTwoId,
+  drawerFromNewId,
 }) => {
   const menuPopover = (
     <div style={{ position: "relative" }}>
@@ -1393,8 +1455,44 @@ export const AuthHeader: React.FC<AuthHeaderProps> = ({
       }}
     >
       <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+        {/* Context-aware Hamburger labels */}
         <label
-          htmlFor={sidebarToggleId}
+          htmlFor={drawerFromOneId || sidebarToggleId}
+          className="auth-burger-1"
+          aria-label="Buka Navigasi"
+          style={{
+            padding: 8,
+            cursor: "pointer",
+            color: COLORS.deepSlate,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            borderRadius: "50%",
+          }}
+        >
+          <IconMenu size={22} color={COLORS.deepSlate} />
+        </label>
+
+        <label
+          htmlFor={drawerFromTwoId || sidebarToggleId}
+          className="auth-burger-2"
+          aria-label="Buka Navigasi"
+          style={{
+            padding: 8,
+            cursor: "pointer",
+            color: COLORS.deepSlate,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            borderRadius: "50%",
+          }}
+        >
+          <IconMenu size={22} color={COLORS.deepSlate} />
+        </label>
+
+        <label
+          htmlFor={drawerFromNewId || sidebarToggleId}
+          className="auth-burger-new"
           aria-label="Buka Navigasi"
           style={{
             padding: 8,
