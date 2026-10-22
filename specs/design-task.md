@@ -1,4 +1,4 @@
-# TECHNICAL BLUEPRINT & UX SPECIFICATION (REVISED V3.3 — DESKTOP POSITIONING: CENTERED HERO VS FLOATING BOTTOM DOCK): WASKITA
+# TECHNICAL BLUEPRINT & UX SPECIFICATION (REVISED V3.4 — MINIMALIST SIDEBAR CLEANUP & NATIVE UNIFIED RADIO AUTO-CLOSE): WASKITA
 
 > **Dokumen Resmi Handover:** System Analyst / Lead Architect (Chat 1) $\rightarrow$ DevOps & GitHub Dispatcher (Chat 2)  
 > **Standar Rekayasa Wajib:** `docs/PZN_VIBE_ENGINEERING_STANDARD.md` (Kurikulum Eko Kurniawan Khannedy / PZN)  
@@ -10,60 +10,92 @@
 
 ---
 
-## 🎨 1. PERBEDAAN POSISI FIELD INPUT DI DESKTOP: BELUM ADA HASIL VS SUDAH ADA HASIL
+## 🎨 1. PERBAIKAN KRUSIAL SIDEBAR & INTERAKSI MOBILE (REVISI V3.4)
 
-Sesuai referensi resmi Google Gemini Desktop:
-
-### A. Kondisi Belum Ada Hasil (Empty / Hero State — Layar 1 & State "Analisis Baru" di Layar 2)
-* **Posisi Field Input di DESKTOP: BERADA DI TENGAH LAYAR (CENTERED STACK):**
-  - Di layar Desktop, ketika belum ada artikel yang dianalisis, tata letaknya mengalir terpusat vertikal di tengah layar (*vertical center*):
-    1. **Logo Resmi Waskita** (`<WaskitaLogo width={160} height={34} />`) dengan jarak bawah `24px`.
-    2. Judul Hero: HANYA **`Segera Periksa, ARTIKELMU!`** (font tebal `36px`, tanpa deskripsi kecil).
-    3. **Field Pengisian Kapsul Input:** Tepat berada di bawah judul hero dengan lebar `maxWidth: "760px"`, `width: "100%"`, latar `#E9DFCA`, bulat `28px` (ada tombol bulat `+`, textarea *"Ketik atau tempel naskah..."*, dan tombol panah kanan).
-    4. **Teks Disclaimer Privasi:** Tepat di bawah kapsul tengah tersebut:
-       > *"Ketentuan Layanan dan Kebijakan Privasi Waskita berlaku. Waskita adalah AI pra-terbit dan dapat membuat kekeliruan."*
-  - *(Pada viewport Mobile, kapsul tetap menempel melayang di bawah layar `16px`).*
+### A. Bersihkan Tombol "Analisis Baru" (DILARANG Background Tebal & DILARANG Border Hitam!)
+* **Masalah:** Sebelumnya tombol *"Analisis Baru"* diberi background `#E9DFCA` permanen meskipun belum dipencet, dan saat dipencet muncul `box-shadow` border hitam tebal yang terlihat kaku dan tidak profesional.
+* **Standar Baru (Sesuai Desain Modern Gemini/ChatGPT):**
+  - **Kondisi Default (Belum Dipencet):** `background: "transparent"`, border tipis elegan `border: "1px solid rgba(30, 41, 59, 0.15)"`, `borderRadius: "9999px"`, `padding: "10px 16px"`, warna teks `#1E293B`, `display: "flex"`, `alignItems: "center"`, `gap: "10px"`.
+  - **Kondisi Aktif (Saat Dipencet):** Beri background lembut `background: "#E9DFCA"` dengan teks `fontWeight: 700`. **DILARANG KERAS menggunakan `box-shadow: 0 0 0 2px` atau outline border hitam tebal! HAPUS BORDER HITAMNYA!**
+  - Berlaku sama di Layar 01 (Guest) dan Layar 02 (Authenticated), baik di viewport Desktop maupun Mobile.
 
 ---
 
-### B. Kondisi Sudah Ada Hasil Analisis (Active Audit Stream — Layar 2 Riwayat 1 & 2)
-* **Posisi Field Input di DESKTOP: BERADA DI BAWAH LAYAR (MELAYANG / FLOATING DOCK):**
-  - Ketika sudah ada hasil analisis (Blok Analisis 1 CDS 70%, Bubble Revisi, Blok Analisis 2 CDS 85%):
-    1. Area tengah menjadi **kanvas scrollable** (`overflowY: "auto"`) yang menampilkan hasil analisis lengkap.
-    2. **Field Pengisian Kapsul Input:** Pindah ke **BAWAH LAYAR MELAYANG PERMANEN (*FLOATING DOCK*)** (`position: "absolute", bottom: "20px", left: "50%", transform: "translateX(-50%)"`, `maxWidth: "800px"`, `width: "calc(100% - 48px)"`, `zIndex: 40`).
-    3. **Popup Opsi Audit Tombol Plus (`+`) di Desktop:** Ketika tombol `+` di dock bawah dipencet, menu popover muncul **mengambang tepat di atas tombol `+`** (`position: "absolute", bottom: "68px", left: "0"`, `width: "420px"`, `borderRadius: "20px"`, `background: "#F7F4EB"`, `boxShadow: "0 12px 32px rgba(30,41,59,0.15)"`) **TANPA menggelapkan seluruh layar dengan backdrop hitam!**
+### B. Bersihkan Pengingat "Masuk untuk menyimpan riwayat analisis Anda" (Layar 01 Guest)
+* **Masalah:** Diberi kotak kartu raksasa ber-background `#E9DFCA` yang merusak estetika sidebar.
+* **Standar Baru:**
+  - **HAPUS KOTAK BACKGROUND `#E9DFCA`!**
+  - Tampilkan sebagai baris teks bersih tanpa background (`background: "transparent"`):
+    - Ikon `IconInfo` kecil (`size={18}`, `color: "rgba(30, 41, 59, 0.6)"`).
+    - Teks: Kata **"Masuk"** diberi garis bawah (*underline*) atau titik bawah (*dotted underline*) sebagai penanda tautan interaktif:
+      ```tsx
+      <div style={{ display: "flex", alignItems: "center", gap: "10px", padding: "8px 12px", color: "rgba(30, 41, 59, 0.75)", fontSize: "13px", lineHeight: "18px" }}>
+        <IconInfo size={18} color="rgba(30, 41, 59, 0.6)" />
+        <div>
+          <span style={{ textDecoration: "underline", textUnderlineOffset: "3px", fontWeight: 700, color: COLORS.deepSlate, cursor: "pointer" }}>
+            Masuk
+          </span>{" "}
+          untuk menyimpan riwayat analisis Anda
+        </div>
+      </div>
+      ```
 
 ---
 
-## 🎨 2. RINGKASAN TATA KONTRAK LAINNYA (V3.3)
+### C. Implementasi Mutlak Unified Radio Auto-Close Sidebar Mobile (Layar 02)
+* **Akar Masalah Mengapa Kemarin Gagal:**
+  Di `02-waskita-authenticated.mockup.tsx`, drawer masih memakai `checkbox` terpisah (`#auth-sidebar-toggle-mobile`), sedangkan riwayat hanya mentarget `radio` sesi. Karena checkbox tidak pernah dimatikan saat riwayat diklik, sidebar tetap terbuka!
+* **Solusi Baku (Pure CSS Native 100% Pasti Berhasil):**
+  Satukan state drawer dan state sesi mobile ke dalam **1 kelompok radio tunggal** (`name="mobile-nav-flow"`):
+  ```tsx
+  {/* State Mesin Navigasi Mobile Terpadu */}
+  <input type="radio" name="mobile-nav-flow" id="view-session-1" defaultChecked style={{ display: "none" }} />
+  <input type="radio" name="mobile-nav-flow" id="view-session-2" style={{ display: "none" }} />
+  <input type="radio" name="mobile-nav-flow" id="view-session-new" style={{ display: "none" }} />
+  <input type="radio" name="mobile-nav-flow" id="view-drawer-open" style={{ display: "none" }} />
+  ```
+  - **Buka Sidebar:** Tombol Burger di header mentarget `<label htmlFor="view-drawer-open">`.
+  - **Pilih Riwayat di Sidebar:**
+    - Tombol Analisis Baru mentarget `<label htmlFor="view-session-new">`.
+    - Riwayat 1 mentarget `<label htmlFor="view-session-1">`.
+    - Riwayat 2 mentarget `<label htmlFor="view-session-2">`.
+    - Tombol silang `X` & Backdrop mentarget `<label htmlFor="view-session-1">` (menutup drawer).
+  - **Aturan CSS di `<style>`:**
+    ```css
+    /* Buka drawer HANYA saat view-drawer-open aktif */
+    #view-drawer-open:checked ~ .auth-sidebar-mobile {
+      transform: translateX(0) !important;
+    }
+    #view-drawer-open:checked ~ .auth-sidebar-backdrop-mobile {
+      display: block !important;
+    }
 
-1. **Layar 2 (Blok Analisis 2 Siap Terbit 85%):**
-   * **Wajib LENGKAP seluruh 6 seksi** di dalam SATU background utuh `#D4E5F2`:
-     1) Status Kelayakan 85% Siap Terbit (Gauge hijau).
-     2) Peningkatan Metrik Stilometri (VSM 0.36 & MATTR 0.74).
-     3) Celah Topik $\Delta_{\text{gain}}$ terpenuhi (4 chip hijau).
-     4) Naskah Revisi Terkurasi Ber-anotasi Stabilo Hijau (`#BBF7D0`) + catatan kelulusan.
-     5) Overview Editorial Publikasi & Salin Ringkasan.
-     6) Referensi SERP · Top 3 Google (3 kartu artikel kompetitor).
-2. **Sidebar Mobile Auto-Close:**
-   * Di viewport mobile (`390x844`), saat pengguna memencet salah satu item riwayat di sidebar (atau tombol *"Analisis Baru"*), sidebar mobile **otomatis menutup (*slide out*)** dan layar langsung menampilkan data riwayat yang dipilih tanpa harus memencet tombol silang `X` lagi.
-3. **Desktop Sidebar Collapsible (Mini Rail vs Expanded):**
-   * Di desktop, sidebar bisa di-toggle antara **Expanded (`280px`)** dan **Collapsed Mini Rail (`68px`)** yang hanya menampilkan ikon Analisis Baru, Search, Profil, dan Settings ala Gemini.
+    /* Konten Sesi yang Ditampilkan */
+    #view-session-1:checked ~ main .mobile-view-session-1 { display: block !important; }
+    #view-session-2:checked ~ main .mobile-view-session-2 { display: block !important; }
+    #view-session-new:checked ~ main .mobile-view-session-new { display: flex !important; }
+    ```
+  - **Hasil:** Begitu Riwayat 2 atau Analisis Baru dipencet, radio aktif otomatis berpindah dari `view-drawer-open` ke `view-session-2` $\rightarrow$ **drawer OTOMATIS TERTUTUP (slide-out) seketika**, dan layar langsung menampilkan data riwayat yang dipilih!
 
 ---
 
-## 🛠️ PEMBAGIAN TUGAS SUB-WORKER (PARALEL)
+## 🛠️ PEMBAGIAN EKSEKUSI PARALEL
 
-* **Sub-Worker 1A (Folder: `worker-1`):**
-  - Perbaiki `guest-workspace.tsx` (Desktop: Hero + Kapsul input berada di **TENGAH LAYAR** terpusat vertikal, diikuti disclaimer privasi di bawahnya. Mobile: Hero di tengah, kapsul di bawah).
-  - Perbaiki `shared-ui.tsx` (Popover Desktop `+` menempel di atas kapsul input tanpa fullscreen dark backdrop).
-  - Perbaiki `guest-sidebar.tsx` & `01-waskita-guest.mockup.tsx` (Desktop sidebar collapsible ke mini rail 68px).
+1. **Sub-Worker 1A (Folder: `worker-1`):**
+   * Edit `specs/gatekeeper/partials/guest-sidebar.tsx`:
+     - Ubah tombol *"Analisis Baru"* menjadi transparan dengan border tipis `borderRadius: 9999px` (tanpa background `#E9DFCA`).
+     - Hapus background kotak kartu `#E9DFCA` pada *"Masuk untuk menyimpan riwayat analisis Anda"*, jadikan teks bersih dengan kata *"Masuk"* bergaris bawah (*underline*).
 
-* **Sub-Worker 2A & 2B (Folder: `worker-2`):**
-  - Perbaiki `auth-audit-views.tsx`:
-    * Lengkapi Blok Analisis 2 dengan seluruh 6 seksi lengkap di dalam 1 background `#D4E5F2`.
-    * Di `NewAnalysisEmptyView`: di Desktop, posisikan kapsul input di **TENGAH LAYAR** di bawah hero "Segera Periksa, ARTIKELMU!".
-  - Perbaiki `auth-sidebar-header.tsx` & `02-waskita-authenticated.mockup.tsx`:
-    * Di Active Stream (Riwayat 1 & 2): posisikan kapsul input di **BAWAH LAYAR MELAYANG PERMANEN (*FLOATING DOCK*)**.
-    * Auto-close sidebar mobile saat riwayat dipencet.
-    * Collapsible desktop sidebar ke mini rail 68px.
+2. **Sub-Worker 2A & 2B (Folder: `worker-2`):**
+   * Edit `specs/gatekeeper/partials/auth-sidebar-header.tsx`:
+     - Ubah tombol *"Analisis Baru"* default menjadi transparan ber-border tipis `borderRadius: 9999px`.
+     - HAPUS `box-shadow: 0 0 0 2px` (border hitam) saat aktif.
+     - Di mobile sidebar, pastikan tombol Analisis Baru mentarget `view-session-new`, Riwayat 1 mentarget `view-session-1`, Riwayat 2 mentarget `view-session-2`, dan tombol `X` mentarget `view-session-1`.
+   * Edit `specs/gatekeeper/02-waskita-authenticated.mockup.tsx`:
+     - Terapkan grup radio `mobile-nav-flow` (`view-session-1`, `view-session-2`, `view-session-new`, `view-drawer-open`) dan CSS rules yang mengendalikan drawer dan konten sesi.
+
+3. **Worker 3 (QA):**
+   * Validasi `npx mokly check --strict`.
+   * Buka browser di `http://127.0.0.1:4174`:
+     - Layar 01: Verifikasi Analisis Baru transparan dan teks Masuk bergaris bawah tanpa kotak kartu.
+     - Layar 02: Verifikasi Analisis Baru tanpa border hitam, dan tes klik Riwayat di mobile apakah sidebar OTOMATIS TERTUTUP seketika!
