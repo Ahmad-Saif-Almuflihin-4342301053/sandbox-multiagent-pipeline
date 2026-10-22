@@ -1,4 +1,4 @@
-# TECHNICAL BLUEPRINT & UX SPECIFICATION (REVISED V3.7 — CSS SPECIFICITY & SINGLE CONTEXT-AWARE ICON FIX): WASKITA
+# TECHNICAL BLUEPRINT & UX SPECIFICATION (REVISED V3.8 — EXPANDED SIDEBAR HISTORY & PINNED SCROLL TEST): WASKITA
 
 > **Dokumen Resmi Handover:** System Analyst / Lead Architect (Chat 1) $\rightarrow$ DevOps & GitHub Dispatcher (Chat 2)  
 > **Standar Rekayasa Wajib:** `docs/PZN_VIBE_ENGINEERING_STANDARD.md` (Kurikulum Eko Kurniawan Khannedy / PZN)  
@@ -9,59 +9,54 @@
 
 ---
 
-## 🚨 1. AUDIT FORENSIK: MENGAPA TOMBOL SILANG '✕' DAN HAMBURGER '☰' MUNCUL 3 KALI BERJEJER?
+## 🎯 1. KEBUTUHAN PENGUJIAN: SCROLL RIWAYAT INDEPENDEN (PINNED HEADER & FOOTER)
 
-* **Bukan Keterbatasan Mokly:**
-  Mokly me-render React, HTML, dan CSS murni di dalam iframe browser. Segala perilaku visual tunduk pada standar CSS browser murni.
-* **Akar Masalah (CSS Specificity Conflict):**
-  Untuk mendukung *Context-Aware State Persistence* (agar buka-tutup drawer tetap mengingat sesi aktif pengguna), Worker memasang 3 tombol target:
-  - Tombol 1: Untuk Sesi Kopi Tubruk (`auth-close-1` & `auth-burger-1`)
-  - Tombol 2: Untuk Sesi SEO Teknis (`auth-close-2` & `auth-burger-2`)
-  - Tombol New: Untuk Sesi Analisis Baru (`auth-close-new` & `auth-burger-new`)
-  
-  **Kecerobohan Worker:**
-  1. Di `specs/gatekeeper/partials/auth-sidebar-header.tsx`, Worker menuliskan properti `display: "flex"` langsung di dalam **inline style** JSX masing-masing `<label>`.
-  2. Di `specs/gatekeeper/02-waskita-authenticated.mockup.tsx`, Worker menulis aturan:
-     `.auth-burger-1, .auth-burger-2, .auth-burger-new { display: none; }`
-     `.auth-close-1, .auth-close-2, .auth-close-new { display: none; }`
-     **tanpa `!important`**.
-  3. Berdasarkan aturan CSS Specificity: **Inline style selalu menang melawan CSS class selector**. Akibatnya, perintah `display: none` diabaikan oleh browser, dan ketiga tombol muncul berjejer sekaligus (`☰ ☰ ☰` dan `✕ ✕ ✕`).
+Pengguna ingin menguji pengalaman *scrolling* riwayat analisis di dalam Sidebar (baik versi Desktop maupun Mobile Drawer) agar berperilaku persis seperti ChatGPT/Gemini:
+1. **Header Sidebar Tetap Terkunci (*Pinned Top*):** Logo Waskita, toggle collapse/close, dan tombol pencarian tidak boleh ikut tergulung ke atas saat riwayat di-scroll.
+2. **Footer Sidebar Tetap Terkunci (*Pinned Bottom*):** Profil pengguna (`AS`, Plan Pro) dan tombol pengaturan (`Settings`) tidak boleh terdorong atau hilang saat riwayat di-scroll.
+3. **Kontainer Riwayat (*Independent Scroll*):** Hanya kontainer daftar riwayat di tengah yang memiliki `overflow-y: auto`, `min-height: 0`, dan `flex: 1`, lengkap dengan efek fade halus di bawah header.
 
 ---
 
-## 🎯 2. PERBAIKAN DETERMINISTIK (SURGICAL FIX)
+## 📋 2. PENAMBAHAN ITEM RIWAYAT REALISTIS (TOTAL 11 ITEM)
 
-1. **Hapus Inline `display: "flex"` di `specs/gatekeeper/partials/auth-sidebar-header.tsx`:**
-   - Pada baris 791, 811, 831 (elemen `.auth-close-1`, `.auth-close-2`, `.auth-close-new`): Hapus `display: "flex",`.
-   - Pada baris 1467, 1484, 1501 (elemen `.auth-burger-1`, `.auth-burger-2`, `.auth-burger-new`): Hapus `display: "flex",`.
+Di `specs/gatekeeper/partials/auth-sidebar-header.tsx`, tambahkan daftar dummy riwayat berikut di bawah Riwayat 1 dan 2 (berlaku untuk Desktop dan Mobile):
 
-2. **Pertegas Rules CSS di `specs/gatekeeper/02-waskita-authenticated.mockup.tsx`:**
-   ```css
-   /* Context-aware Hamburger Menu in Mobile Header */
-   .auth-burger-1, .auth-burger-2, .auth-burger-new { display: none !important; }
-   #${VIEW_SESSION_1}:checked ~ * .auth-burger-1,
-   #${DRAWER_FROM_1}:checked ~ * .auth-burger-1 { display: flex !important; }
+```tsx
+const DUMMY_HISTORY_ITEMS = [
+  { id: "3", title: "Panduan Lengkap Merawat Mobil Listrik di Cuaca Ekstrem..." },
+  { id: "4", title: "Review Ultrabook Tipis untuk Pemrogram & UI Designer..." },
+  { id: "5", title: "Analisis Pasar Properti Jabodetabek Kuartal Pertama..." },
+  { id: "6", title: "Strategi Konten Evergreen untuk Traffic Organik..." },
+  { id: "7", title: "Daftar Rekomendasi Framework Web Modern Startup..." },
+  { id: "8", title: "Eksplorasi Arsitektur Multi-Agent Pipeline Dev..." },
+  { id: "9", title: "Panduan Typography & Skala Modular Redaksi AI..." },
+  { id: "10", title: "Penerapan VSM Cosine Similarity Audit Redaksi..." },
+  { id: "11", title: "Benchmark Efisiensi Energi Cloud vs On-Premise..." },
+  { id: "12", title: "Tips Penulisan Headline Click-Worthy Tanpa Clickbait..." },
+  { id: "13", title: "Evaluasi Core Web Vitals LCP & INP Blog Editorial..." },
+];
+```
 
-   #${VIEW_SESSION_2}:checked ~ * .auth-burger-2,
-   #${DRAWER_FROM_2}:checked ~ * .auth-burger-2 { display: flex !important; }
-
-   #${VIEW_SESSION_NEW}:checked ~ * .auth-burger-new,
-   #${DRAWER_FROM_NEW}:checked ~ * .auth-burger-new { display: flex !important; }
-
-   /* Context-aware Close X in Mobile Drawer Header */
-   .auth-close-1, .auth-close-2, .auth-close-new { display: none !important; }
-   #${VIEW_SESSION_1}:checked ~ * .auth-close-1,
-   #${DRAWER_FROM_1}:checked ~ * .auth-close-1 { display: flex !important; }
-
-   #${VIEW_SESSION_2}:checked ~ * .auth-close-2,
-   #${DRAWER_FROM_2}:checked ~ * .auth-close-2 { display: flex !important; }
-
-   #${VIEW_SESSION_NEW}:checked ~ * .auth-close-new,
-   #${DRAWER_FROM_NEW}:checked ~ * .auth-close-new { display: flex !important; }
-   ```
+Pastikan elemen `<main>` pembungkus riwayat memiliki gaya:
+```tsx
+style={{
+  flex: 1,
+  minHeight: 0,
+  padding: "6px 14px 20px 14px",
+  overflowY: "auto",
+  display: "flex",
+  flexDirection: "column",
+  gap: "8px",
+  boxSizing: "border-box",
+}}
+```
 
 ---
 
-## 🛠️ INSTRUKSI DISPATCH DEVOPS (CUKUP SURGICAL WORKER-1)
+## 🛠️ INSTRUKSI DISPATCH DEVOPS (FAST-TRACK SURGICAL WORKER-1)
 
-DevOps cukup menginstruksikan Worker 1 untuk menerapkan perubahan bedah di 2 file di atas. Setelah di-merge, hanya **SATU** tombol hamburger yang tampak di header, dan hanya **SATU** tombol '✕' yang tampak di drawer sidebar sesuai sesi yang sedang aktif.
+Tugaskan Worker 1 untuk memperbarui `specs/gatekeeper/partials/auth-sidebar-header.tsx`:
+1. Tambahkan item riwayat di atas pada bagian Desktop dan Mobile.
+2. Pastikan properti `minHeight: 0` aktif pada elemen `<main>` pembungkus riwayat.
+3. Verifikasi `npx @mokly/mokly check --strict`, commit `feat(gatekeeper): expand sidebar history items for independent scroll test (#42)`, dan merge langsung ke `main`.
