@@ -110,9 +110,9 @@ export const GuestSidebar: React.FC<GuestSidebarProps> = ({
               <div
                 style={{
                   width: "100%",
-                  background: COLORS.warmSand,
-                  border: "none",
-                  borderRadius: "14px",
+                  background: "transparent",
+                  border: "1px solid rgba(30, 41, 59, 0.15)",
+                  borderRadius: "9999px",
                   padding: "12px 16px",
                   display: "flex",
                   alignItems: "center",
@@ -129,31 +129,27 @@ export const GuestSidebar: React.FC<GuestSidebarProps> = ({
                 <span>Analisis Baru</span>
               </div>
 
-              {/* Kartu Info 'Masuk untuk menyimpan riwayat analisis Anda' */}
+              {/* Teks Info 'Masuk untuk menyimpan riwayat analisis Anda' */}
               <div
                 style={{
-                  background: COLORS.warmSand,
-                  borderRadius: "16px",
-                  padding: "14px 16px",
-                  display: "flex",
-                  alignItems: "flex-start",
-                  gap: "12px",
-                  boxSizing: "border-box",
+                  fontSize: "13px",
+                  lineHeight: "18px",
+                  color: "rgba(30, 41, 59, 0.75)",
+                  fontWeight: 500,
+                  padding: "0 6px",
                 }}
               >
-                <div style={{ flexShrink: 0, marginTop: "2px" }}>
-                  <IconInfo size={20} color={COLORS.deepSlate} />
-                </div>
-                <div
+                <span
                   style={{
-                    fontSize: "13px",
-                    lineHeight: "18px",
+                    textDecoration: "underline",
+                    fontWeight: 700,
                     color: COLORS.deepSlate,
-                    fontWeight: 500,
+                    cursor: "pointer",
                   }}
                 >
-                  Masuk untuk menyimpan riwayat analisis Anda
-                </div>
+                  Masuk
+                </span>{" "}
+                untuk menyimpan riwayat analisis Anda
               </div>
             </main>
 
@@ -246,8 +242,9 @@ export const GuestSidebar: React.FC<GuestSidebarProps> = ({
                 style={{
                   width: "44px",
                   height: "44px",
-                  borderRadius: "12px",
-                  background: COLORS.warmSand,
+                  borderRadius: "50%",
+                  background: "transparent",
+                  border: "1px solid rgba(30, 41, 59, 0.15)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -372,9 +369,9 @@ export const GuestSidebar: React.FC<GuestSidebarProps> = ({
               htmlFor={sidebarToggleId}
               style={{
                 width: "100%",
-                background: COLORS.warmSand,
-                border: "none",
-                borderRadius: "14px",
+                background: "transparent",
+                border: "1px solid rgba(30, 41, 59, 0.15)",
+                borderRadius: "9999px",
                 padding: "12px 16px",
                 display: "flex",
                 alignItems: "center",
@@ -391,30 +388,27 @@ export const GuestSidebar: React.FC<GuestSidebarProps> = ({
               <span>Analisis Baru</span>
             </label>
 
+            {/* Teks Info 'Masuk untuk menyimpan riwayat analisis Anda' */}
             <div
               style={{
-                background: COLORS.warmSand,
-                borderRadius: "16px",
-                padding: "14px 16px",
-                display: "flex",
-                alignItems: "flex-start",
-                gap: "12px",
-                boxSizing: "border-box",
+                fontSize: "13px",
+                lineHeight: "18px",
+                color: "rgba(30, 41, 59, 0.75)",
+                fontWeight: 500,
+                padding: "0 6px",
               }}
             >
-              <div style={{ flexShrink: 0, marginTop: "2px" }}>
-                <IconInfo size={20} color={COLORS.deepSlate} />
-              </div>
-              <div
+              <span
                 style={{
-                  fontSize: "13px",
-                  lineHeight: "18px",
+                  textDecoration: "underline",
+                  fontWeight: 700,
                   color: COLORS.deepSlate,
-                  fontWeight: 500,
+                  cursor: "pointer",
                 }}
               >
-                Masuk untuk menyimpan riwayat analisis Anda
-              </div>
+                Masuk
+              </span>{" "}
+              untuk menyimpan riwayat analisis Anda
             </div>
           </main>
 

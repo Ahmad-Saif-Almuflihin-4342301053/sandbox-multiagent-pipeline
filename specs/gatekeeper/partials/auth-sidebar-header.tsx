@@ -133,9 +133,6 @@ export const AuthSidebar: React.FC<AuthSidebarProps> = ({
             background-color: ${COLORS.warmSand};
             font-weight: 700;
           }
-          #${sessionNewId}:checked ~ * .btn-new-analysis {
-            box-shadow: 0 0 0 2px ${COLORS.deepSlate};
-          }
         `}
       </style>
 
@@ -234,10 +231,10 @@ export const AuthSidebar: React.FC<AuthSidebarProps> = ({
                 className="btn-new-analysis"
                 style={{
                   width: "100%",
-                  background: COLORS.warmSand,
-                  border: "none",
-                  borderRadius: "14px",
-                  padding: "12px 14px",
+                  background: "transparent",
+                  border: "1px solid rgba(30, 41, 59, 0.15)",
+                  borderRadius: "9999px",
+                  padding: "12px 16px",
                   display: "flex",
                   alignItems: "center",
                   gap: "10px",
@@ -636,8 +633,9 @@ export const AuthSidebar: React.FC<AuthSidebarProps> = ({
                 style={{
                   width: "44px",
                   height: "44px",
-                  borderRadius: "12px",
-                  background: COLORS.warmSand,
+                  borderRadius: "50%",
+                  background: "transparent",
+                  border: "1px solid rgba(30, 41, 59, 0.15)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -797,10 +795,10 @@ export const AuthSidebar: React.FC<AuthSidebarProps> = ({
               className="btn-new-analysis auth-mobile-nav-item"
               style={{
                 width: "100%",
-                background: COLORS.warmSand,
-                border: "none",
-                borderRadius: "14px",
-                padding: "12px 14px",
+                background: "transparent",
+                border: "1px solid rgba(30, 41, 59, 0.15)",
+                borderRadius: "9999px",
+                padding: "12px 16px",
                 display: "flex",
                 alignItems: "center",
                 gap: "10px",
