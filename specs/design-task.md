@@ -1,4 +1,4 @@
-# TECHNICAL BLUEPRINT & UX SPECIFICATION (REVISED V3.6 — DESKTOP PLUS POPOVER FIX & CONTEXT PERSISTENCE): WASKITA
+# TECHNICAL BLUEPRINT & UX SPECIFICATION (REVISED V3.7 — CSS SPECIFICITY & SINGLE CONTEXT-AWARE ICON FIX): WASKITA
 
 > **Dokumen Resmi Handover:** System Analyst / Lead Architect (Chat 1) $\rightarrow$ DevOps & GitHub Dispatcher (Chat 2)  
 > **Standar Rekayasa Wajib:** `docs/PZN_VIBE_ENGINEERING_STANDARD.md` (Kurikulum Eko Kurniawan Khannedy / PZN)  
@@ -9,48 +9,59 @@
 
 ---
 
-## 🚨 1. ROOT CAUSE AUDIT: MENGAPA TOMBOL PLUS DI DESKTOP TIDAK MUNCUL SAAT DIPENCET?
+## 🚨 1. AUDIT FORENSIK: MENGAPA TOMBOL SILANG '✕' DAN HAMBURGER '☰' MUNCUL 3 KALI BERJEJER?
 
-Berdasarkan audit forensik DOM:
-* **Penyebab Utama (Duplicate Input ID Bug):**
-  Komponen `<AuditOptionsOverlay toggleId={...} />` di `specs/gatekeeper/partials/shared-ui.tsx` (baris 515) **sudah merender sendiri** `<input type="checkbox" id={toggleId} />` di dalamnya.
-  Namun, file mockup parent (`01-waskita-guest.mockup.tsx` dan `02-waskita-authenticated.mockup.tsx`) **merender ulang** `<input type="checkbox" id={...} />` dengan ID yang sama persis di baris paling atas file!
-* **Akibatnya:**
-  Ketika pengguna memencet `<label htmlFor={toggleId}>` pada tombol `+`, browser secara otomatis mengaktifkan **elemen `<input>` pertama** (yang kosong di atas file parent), sedangkan elemen `<input>` kedua yang berada di dalam `AuditOptionsOverlay` (yang mengendalikan CSS popover) **tidak pernah aktif**! Akibatnya popover tidak pernah terbuka!
-* **Perbaikan Deterministik:**
-  1. Hapus deklarasi `<input type="checkbox" id={PLUS_TOGGLE_ID...}>` duplikat dari file parent (`01-waskita-guest.mockup.tsx` dan `02-waskita-authenticated.mockup.tsx`).
-  2. Di `specs/gatekeeper/partials/shared-ui.tsx`, atur posisi Popover Desktop agar **sejajar dengan tombol `+` kapsul composer dan mengembang ke kanan (ke tengah konten, TANPA menutupi sidebar kiri)**:
-     ```tsx
-     // Desktop Popover Menu (mengembang ke kanan / tengah konten)
-     position: "absolute",
-     bottom: "84px",
-     left: "max(32px, calc(50% - 380px))", // Sejajar tombol + kapsul input terpusat
-     width: "460px",
-     maxWidth: "calc(100% - 64px)",
-     maxHeight: "520px",
-     background: COLORS.warmCream,
-     borderRadius: "20px",
-     boxShadow: "0 16px 40px rgba(30, 41, 59, 0.18)",
-     border: "1px solid rgba(30, 41, 59, 0.1)",
-     zIndex: 100,
-     ```
+* **Bukan Keterbatasan Mokly:**
+  Mokly me-render React, HTML, dan CSS murni di dalam iframe browser. Segala perilaku visual tunduk pada standar CSS browser murni.
+* **Akar Masalah (CSS Specificity Conflict):**
+  Untuk mendukung *Context-Aware State Persistence* (agar buka-tutup drawer tetap mengingat sesi aktif pengguna), Worker memasang 3 tombol target:
+  - Tombol 1: Untuk Sesi Kopi Tubruk (`auth-close-1` & `auth-burger-1`)
+  - Tombol 2: Untuk Sesi SEO Teknis (`auth-close-2` & `auth-burger-2`)
+  - Tombol New: Untuk Sesi Analisis Baru (`auth-close-new` & `auth-burger-new`)
+  
+  **Kecerobohan Worker:**
+  1. Di `specs/gatekeeper/partials/auth-sidebar-header.tsx`, Worker menuliskan properti `display: "flex"` langsung di dalam **inline style** JSX masing-masing `<label>`.
+  2. Di `specs/gatekeeper/02-waskita-authenticated.mockup.tsx`, Worker menulis aturan:
+     `.auth-burger-1, .auth-burger-2, .auth-burger-new { display: none; }`
+     `.auth-close-1, .auth-close-2, .auth-close-new { display: none; }`
+     **tanpa `!important`**.
+  3. Berdasarkan aturan CSS Specificity: **Inline style selalu menang melawan CSS class selector**. Akibatnya, perintah `display: none` diabaikan oleh browser, dan ketiga tombol muncul berjejer sekaligus (`☰ ☰ ☰` dan `✕ ✕ ✕`).
 
 ---
 
-## 🎯 2. KONTRAK CONTEXT-AWARE STATE PERSISTENCE (SIDEBAR MOBILE)
+## 🎯 2. PERBAIKAN DETERMINISTIK (SURGICAL FIX)
 
-* **Masalah:** Saat di Sesi 2 (SEO Teknis), membuka dan menutup sidebar me-reset kembali ke Sesi 1 (Kopi Tubruk), dan baris riwayat yang aktif tidak mendapatkan penanda highlight.
-* **Solusi Baku:**
-  - Sesi 1: Burger header mentarget `drawer-from-1`, tombol `X`/backdrop mentarget `s1`. Riwayat 1 ter-highlight `#E9DFCA`.
-  - Sesi 2: Burger header mentarget `drawer-from-2`, tombol `X`/backdrop mentarget `s2`. Riwayat 2 ter-highlight `#E9DFCA` (TIDAK RESET ke Sesi 1!).
-  - Sesi New: Burger header mentarget `drawer-from-new`, tombol `X`/backdrop mentarget `snew`. Analisis Baru ter-highlight `#E9DFCA`.
-  - Memilih item riwayat lain di dalam drawer langsung menutup drawer dan berganti ke sesi yang dipilih.
+1. **Hapus Inline `display: "flex"` di `specs/gatekeeper/partials/auth-sidebar-header.tsx`:**
+   - Pada baris 791, 811, 831 (elemen `.auth-close-1`, `.auth-close-2`, `.auth-close-new`): Hapus `display: "flex",`.
+   - Pada baris 1467, 1484, 1501 (elemen `.auth-burger-1`, `.auth-burger-2`, `.auth-burger-new`): Hapus `display: "flex",`.
+
+2. **Pertegas Rules CSS di `specs/gatekeeper/02-waskita-authenticated.mockup.tsx`:**
+   ```css
+   /* Context-aware Hamburger Menu in Mobile Header */
+   .auth-burger-1, .auth-burger-2, .auth-burger-new { display: none !important; }
+   #${VIEW_SESSION_1}:checked ~ * .auth-burger-1,
+   #${DRAWER_FROM_1}:checked ~ * .auth-burger-1 { display: flex !important; }
+
+   #${VIEW_SESSION_2}:checked ~ * .auth-burger-2,
+   #${DRAWER_FROM_2}:checked ~ * .auth-burger-2 { display: flex !important; }
+
+   #${VIEW_SESSION_NEW}:checked ~ * .auth-burger-new,
+   #${DRAWER_FROM_NEW}:checked ~ * .auth-burger-new { display: flex !important; }
+
+   /* Context-aware Close X in Mobile Drawer Header */
+   .auth-close-1, .auth-close-2, .auth-close-new { display: none !important; }
+   #${VIEW_SESSION_1}:checked ~ * .auth-close-1,
+   #${DRAWER_FROM_1}:checked ~ * .auth-close-1 { display: flex !important; }
+
+   #${VIEW_SESSION_2}:checked ~ * .auth-close-2,
+   #${DRAWER_FROM_2}:checked ~ * .auth-close-2 { display: flex !important; }
+
+   #${VIEW_SESSION_NEW}:checked ~ * .auth-close-new,
+   #${DRAWER_FROM_NEW}:checked ~ * .auth-close-new { display: flex !important; }
+   ```
 
 ---
 
-## 🛠️ SURGICAL FIX (CUKUP 1 WORKER TUNGGAL DI `worker-1`)
+## 🛠️ INSTRUKSI DISPATCH DEVOPS (CUKUP SURGICAL WORKER-1)
 
-DevOps cukup menugaskan 1 worker saja di folder `worker-1` untuk memperbarui:
-1. `specs/gatekeeper/partials/shared-ui.tsx` (posisi popover desktop `left: "max(32px, calc(50% - 380px))"`, bottom: 84px, mengembang ke kanan/tengah).
-2. `specs/gatekeeper/01-waskita-guest.mockup.tsx` (hapus duplikasi input checkbox plus).
-3. `specs/gatekeeper/02-waskita-authenticated.mockup.tsx` & `auth-sidebar-header.tsx` (hapus duplikasi input checkbox plus, terapkan context-aware state persistence).
+DevOps cukup menginstruksikan Worker 1 untuk menerapkan perubahan bedah di 2 file di atas. Setelah di-merge, hanya **SATU** tombol hamburger yang tampak di header, dan hanya **SATU** tombol '✕' yang tampak di drawer sidebar sesuai sesi yang sedang aktif.
