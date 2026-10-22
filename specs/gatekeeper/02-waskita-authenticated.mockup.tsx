@@ -160,7 +160,7 @@ const MobileAuthenticatedScreen: React.FC = () => {
           }
 
           /* Context-aware Hamburger Menu in Mobile Header */
-          .auth-burger-1, .auth-burger-2, .auth-burger-new { display: none; }
+          .auth-burger-1, .auth-burger-2, .auth-burger-new { display: none !important; }
           #${VIEW_SESSION_1}:checked ~ * .auth-burger-1,
           #${DRAWER_FROM_1}:checked ~ * .auth-burger-1 { display: flex !important; }
 
@@ -171,7 +171,7 @@ const MobileAuthenticatedScreen: React.FC = () => {
           #${DRAWER_FROM_NEW}:checked ~ * .auth-burger-new { display: flex !important; }
 
           /* Context-aware Close X in Mobile Drawer Header */
-          .auth-close-1, .auth-close-2, .auth-close-new { display: none; }
+          .auth-close-1, .auth-close-2, .auth-close-new { display: none !important; }
           #${VIEW_SESSION_1}:checked ~ * .auth-close-1,
           #${DRAWER_FROM_1}:checked ~ * .auth-close-1 { display: flex !important; }
 
