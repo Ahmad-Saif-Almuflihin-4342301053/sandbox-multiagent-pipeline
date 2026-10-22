@@ -33,6 +33,20 @@ export interface AuthSidebarProps {
   drawerFromNewId?: string;
 }
 
+const DUMMY_HISTORY_ITEMS = [
+  { id: "3", title: "Panduan Lengkap Merawat Mobil Listrik di Cuaca Ekstrem..." },
+  { id: "4", title: "Review Ultrabook Tipis untuk Pemrogram & UI Designer..." },
+  { id: "5", title: "Analisis Pasar Properti Jabodetabek Kuartal Pertama..." },
+  { id: "6", title: "Strategi Konten Evergreen untuk Traffic Organik..." },
+  { id: "7", title: "Daftar Rekomendasi Framework Web Modern Startup..." },
+  { id: "8", title: "Eksplorasi Arsitektur Multi-Agent Pipeline Dev..." },
+  { id: "9", title: "Panduan Typography & Skala Modular Redaksi AI..." },
+  { id: "10", title: "Penerapan VSM Cosine Similarity Audit Redaksi..." },
+  { id: "11", title: "Benchmark Efisiensi Energi Cloud vs On-Premise..." },
+  { id: "12", title: "Tips Penulisan Headline Click-Worthy Tanpa Clickbait..." },
+  { id: "13", title: "Evaluasi Core Web Vitals LCP & INP Blog Editorial..." },
+];
+
 export const AuthSidebar: React.FC<AuthSidebarProps> = ({
   isDesktop = false,
   sidebarToggleId,
@@ -278,6 +292,7 @@ export const AuthSidebar: React.FC<AuthSidebarProps> = ({
             <main
               style={{
                 flex: 1,
+                minHeight: 0,
                 padding: "6px 14px 20px 14px",
                 overflowY: "auto",
                 display: "flex",
@@ -492,12 +507,8 @@ export const AuthSidebar: React.FC<AuthSidebarProps> = ({
                   </div>
                 </div>
 
-                {/* Dummy Riwayat 3, 4, 5 (Statis pelengkap Gemini Look) */}
-                {[
-                  { id: "3", title: "Panduan Lengkap Merawat Mobil Listrik..." },
-                  { id: "4", title: "Review Ultrabook Tipis untuk Pemrogram..." },
-                  { id: "5", title: "Analisis Pasar Properti Jabodetabek Q1..." },
-                ].map((item) => (
+                {/* Dummy Riwayat 3 s.d. 13 (Pelengkap Gemini Look & Scroll Test) */}
+                {DUMMY_HISTORY_ITEMS.map((item) => (
                   <div
                     key={item.id}
                     className="auth-history-row"
@@ -852,6 +863,7 @@ export const AuthSidebar: React.FC<AuthSidebarProps> = ({
           <main
             style={{
               flex: 1,
+              minHeight: 0,
               padding: "6px 14px 20px 14px",
               overflowY: "auto",
               display: "flex",
@@ -1067,12 +1079,8 @@ export const AuthSidebar: React.FC<AuthSidebarProps> = ({
                 </div>
               </div>
 
-              {/* Dummy Riwayat 3, 4, 5 Mobile */}
-              {[
-                { id: "3", title: "Panduan Lengkap Merawat Mobil Listrik..." },
-                { id: "4", title: "Review Ultrabook Tipis untuk Pemrogram..." },
-                { id: "5", title: "Analisis Pasar Properti Jabodetabek Q1..." },
-              ].map((item) => (
+              {/* Dummy Riwayat 3 s.d. 13 Mobile (Pelengkap Gemini Look & Scroll Test) */}
+              {DUMMY_HISTORY_ITEMS.map((item) => (
                 <div
                   key={item.id}
                   className="auth-history-row"
