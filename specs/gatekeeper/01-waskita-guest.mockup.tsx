@@ -27,11 +27,6 @@ const MobileGuestView: React.FC = () => {
         id={SIDEBAR_TOGGLE_ID}
         style={{ display: "none" }}
       />
-      <input
-        type="checkbox"
-        id={PLUS_TOGGLE_ID}
-        style={{ display: "none" }}
-      />
 
       <style>
         {`
@@ -99,15 +94,10 @@ const DesktopGuestView: React.FC = () => {
         boxSizing: "border-box",
       }}
     >
-      {/* Pure CSS State Machine Checkboxes for Sidebar Collapse & Plus Overlay */}
+      {/* Pure CSS State Machine Checkboxes for Sidebar Collapse */}
       <input
         type="checkbox"
         id={SIDEBAR_TOGGLE_ID}
-        style={{ display: "none" }}
-      />
-      <input
-        type="checkbox"
-        id={PLUS_TOGGLE_ID}
         style={{ display: "none" }}
       />
 
