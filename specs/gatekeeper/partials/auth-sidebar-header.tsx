@@ -124,6 +124,46 @@ export const AuthSidebar: React.FC<AuthSidebarProps> = ({
             display: block !important;
           }
 
+          /* Button Analisis Baru Base & Hover Styles */
+          .btn-new-analysis {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 12px;
+            border-radius: 12px;
+            font-size: 13.5px;
+            font-weight: 500;
+            color: ${COLORS.deepSlate};
+            cursor: pointer;
+            text-align: left;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            user-select: none;
+            transition: background 0.15s ease;
+            border: none;
+            background-color: transparent;
+          }
+          .btn-new-analysis:hover {
+            background-color: ${COLORS.mutedSkyBlue};
+          }
+          .btn-new-analysis-rail {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background-color: transparent;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: ${COLORS.deepSlate};
+            transition: background 0.15s ease;
+          }
+          .btn-new-analysis-rail:hover {
+            background-color: ${COLORS.mutedSkyBlue};
+          }
+
           /* Active session indicator styling via external radio checks */
           #${sessionOneId}:checked ~ * .history-row-one {
             background-color: ${COLORS.warmSand};
@@ -139,10 +179,6 @@ export const AuthSidebar: React.FC<AuthSidebarProps> = ({
           }
           #${sessionNewId}:checked ~ * .btn-new-analysis-rail {
             background-color: ${COLORS.warmSand} !important;
-          }
-          .btn-new-analysis:hover,
-          .btn-new-analysis-rail:hover {
-            background-color: ${COLORS.mutedSkyBlue};
           }
         `}
       </style>
@@ -240,25 +276,6 @@ export const AuthSidebar: React.FC<AuthSidebarProps> = ({
               <label
                 htmlFor={sessionNewId}
                 className="btn-new-analysis"
-                style={{
-                  width: "100%",
-                  background: "transparent",
-                  border: "none",
-                  borderRadius: "12px",
-                  padding: "9px 12px",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "10px",
-                  fontSize: "13.5px",
-                  fontWeight: 500,
-                  color: COLORS.deepSlate,
-                  cursor: "pointer",
-                  textAlign: "left",
-                  marginBottom: "10px",
-                  boxSizing: "border-box",
-                  userSelect: "none",
-                  transition: "background 0.15s ease",
-                }}
               >
                 <IconSquarePen size={18} color={COLORS.deepSlate} />
                 <span>Analisis Baru</span>
@@ -643,19 +660,6 @@ export const AuthSidebar: React.FC<AuthSidebarProps> = ({
               <label
                 htmlFor={sessionNewId}
                 className="btn-new-analysis-rail"
-                style={{
-                  width: "44px",
-                  height: "44px",
-                  borderRadius: "12px",
-                  background: "transparent",
-                  border: "none",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  cursor: "pointer",
-                  color: COLORS.deepSlate,
-                  transition: "background 0.15s ease",
-                }}
                 title="Analisis Baru"
               >
                 <IconSquarePen size={20} color={COLORS.deepSlate} />
@@ -807,25 +811,6 @@ export const AuthSidebar: React.FC<AuthSidebarProps> = ({
             <label
               htmlFor={sessionNewId}
               className="btn-new-analysis auth-mobile-nav-item"
-              style={{
-                width: "100%",
-                background: "transparent",
-                border: "none",
-                borderRadius: "12px",
-                padding: "9px 12px",
-                display: "flex",
-                alignItems: "center",
-                gap: "10px",
-                fontSize: "13.5px",
-                fontWeight: 500,
-                color: COLORS.deepSlate,
-                cursor: "pointer",
-                textAlign: "left",
-                marginBottom: "10px",
-                boxSizing: "border-box",
-                userSelect: "none",
-                transition: "background 0.15s ease",
-              }}
             >
               <IconSquarePen size={18} color={COLORS.deepSlate} />
               <span>Analisis Baru</span>
