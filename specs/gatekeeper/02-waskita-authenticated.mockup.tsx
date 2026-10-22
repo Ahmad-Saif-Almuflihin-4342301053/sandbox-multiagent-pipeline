@@ -13,20 +13,21 @@ import {
 } from "./partials/auth-audit-views";
 
 // CSS State Machine Identifiers
-const SIDEBAR_TOGGLE_ID_MOBILE = "auth-sidebar-toggle-mobile";
 const SIDEBAR_TOGGLE_ID_DESKTOP = "auth-sidebar-toggle-desktop";
 const HEADER_MENU_TOGGLE_ID_MOBILE = "auth-header-menu-toggle-mobile";
 const HEADER_MENU_TOGGLE_ID_DESKTOP = "auth-header-menu-toggle-desktop";
 const PLUS_TOGGLE_ID_MOBILE = "auth-plus-toggle-mobile";
 const PLUS_TOGGLE_ID_DESKTOP = "auth-plus-toggle-desktop";
 
-// Session Radio State Identifiers
-const ACTIVE_SESSION_RADIO_NAME_MOBILE = "active-session-mobile";
-const ACTIVE_SESSION_RADIO_NAME_DESKTOP = "active-session-desktop";
-const SESSION_NEW_MOBILE = "session-new-mobile";
-const SESSION_ONE_MOBILE = "session-one-mobile";
-const SESSION_TWO_MOBILE = "session-two-mobile";
+// Unified Mobile Navigation Flow State Machine Identifiers
+const MOBILE_NAV_FLOW = "mobile-nav-flow";
+const VIEW_SESSION_1 = "view-session-1";
+const VIEW_SESSION_2 = "view-session-2";
+const VIEW_SESSION_NEW = "view-session-new";
+const VIEW_DRAWER_OPEN = "view-drawer-open";
 
+// Desktop Session Radio State Identifiers
+const ACTIVE_SESSION_RADIO_NAME_DESKTOP = "active-session-desktop";
 const SESSION_NEW_DESKTOP = "session-new-desktop";
 const SESSION_ONE_DESKTOP = "session-one-desktop";
 const SESSION_TWO_DESKTOP = "session-two-desktop";
@@ -56,11 +57,6 @@ const MobileAuthenticatedScreen: React.FC = () => {
       {/* State Machine Inputs */}
       <input
         type="checkbox"
-        id={SIDEBAR_TOGGLE_ID_MOBILE}
-        style={{ display: "none" }}
-      />
-      <input
-        type="checkbox"
         id={HEADER_MENU_TOGGLE_ID_MOBILE}
         style={{ display: "none" }}
       />
@@ -70,34 +66,40 @@ const MobileAuthenticatedScreen: React.FC = () => {
         style={{ display: "none" }}
       />
 
-      {/* Session State Radio Inputs (Default: session-one checked) */}
+      {/* Unified Mobile Navigation Flow Radio Inputs */}
       <input
         type="radio"
-        name={ACTIVE_SESSION_RADIO_NAME_MOBILE}
-        id={SESSION_ONE_MOBILE}
+        name={MOBILE_NAV_FLOW}
+        id={VIEW_SESSION_1}
         defaultChecked
         style={{ display: "none" }}
       />
       <input
         type="radio"
-        name={ACTIVE_SESSION_RADIO_NAME_MOBILE}
-        id={SESSION_TWO_MOBILE}
+        name={MOBILE_NAV_FLOW}
+        id={VIEW_SESSION_2}
         style={{ display: "none" }}
       />
       <input
         type="radio"
-        name={ACTIVE_SESSION_RADIO_NAME_MOBILE}
-        id={SESSION_NEW_MOBILE}
+        name={MOBILE_NAV_FLOW}
+        id={VIEW_SESSION_NEW}
+        style={{ display: "none" }}
+      />
+      <input
+        type="radio"
+        name={MOBILE_NAV_FLOW}
+        id={VIEW_DRAWER_OPEN}
         style={{ display: "none" }}
       />
 
       <style>
         {`
           /* Sidebar Mobile Drawer Animation */
-          #${SIDEBAR_TOGGLE_ID_MOBILE}:checked ~ .auth-sidebar-mobile {
+          #${VIEW_DRAWER_OPEN}:checked ~ .auth-sidebar-mobile {
             transform: translateX(0) !important;
           }
-          #${SIDEBAR_TOGGLE_ID_MOBILE}:checked ~ .auth-sidebar-backdrop-mobile {
+          #${VIEW_DRAWER_OPEN}:checked ~ .auth-sidebar-backdrop-mobile {
             display: block !important;
           }
 
@@ -117,18 +119,19 @@ const MobileAuthenticatedScreen: React.FC = () => {
             width: 100%;
           }
 
-          #${SESSION_ONE_MOBILE}:checked ~ main .mobile-view-session-1 {
+          #${VIEW_SESSION_1}:checked ~ main .mobile-view-session-1,
+          #${VIEW_DRAWER_OPEN}:checked ~ main .mobile-view-session-1 {
             display: block !important;
           }
-          #${SESSION_TWO_MOBILE}:checked ~ main .mobile-view-session-2 {
+          #${VIEW_SESSION_2}:checked ~ main .mobile-view-session-2 {
             display: block !important;
           }
-          #${SESSION_NEW_MOBILE}:checked ~ main {
+          #${VIEW_SESSION_NEW}:checked ~ main {
             display: flex !important;
             flex-direction: column !important;
             height: calc(100vh - 56px) !important;
           }
-          #${SESSION_NEW_MOBILE}:checked ~ main .mobile-view-session-new {
+          #${VIEW_SESSION_NEW}:checked ~ main .mobile-view-session-new {
             display: flex !important;
             flex-direction: column !important;
             flex: 1 !important;
@@ -138,10 +141,10 @@ const MobileAuthenticatedScreen: React.FC = () => {
         `}
       </style>
 
-      {/* Header dengan Burger dan Titik Tiga 7 Aksi */}
+      {/* Header dengan Burger (mentarget view-drawer-open) dan Titik Tiga 7 Aksi */}
       <AuthHeader
         isDesktop={false}
-        sidebarToggleId={SIDEBAR_TOGGLE_ID_MOBILE}
+        sidebarToggleId={VIEW_DRAWER_OPEN}
         headerMenuToggleId={HEADER_MENU_TOGGLE_ID_MOBILE}
       />
 
@@ -173,9 +176,9 @@ const MobileAuthenticatedScreen: React.FC = () => {
         plusToggleId={PLUS_TOGGLE_ID_MOBILE}
       />
 
-      {/* Mobile Drawer Backdrop */}
+      {/* Mobile Drawer Backdrop (mentarget view-session-1 untuk auto-close) */}
       <label
-        htmlFor={SIDEBAR_TOGGLE_ID_MOBILE}
+        htmlFor={VIEW_SESSION_1}
         className="auth-sidebar-backdrop-mobile"
         style={{
           display: "none",
@@ -195,11 +198,12 @@ const MobileAuthenticatedScreen: React.FC = () => {
       {/* Mobile Off-canvas Drawer (100% fullscreen width) */}
       <AuthSidebar
         isDesktop={false}
-        sidebarToggleId={SIDEBAR_TOGGLE_ID_MOBILE}
-        activeSessionRadioName={ACTIVE_SESSION_RADIO_NAME_MOBILE}
-        sessionNewId={SESSION_NEW_MOBILE}
-        sessionOneId={SESSION_ONE_MOBILE}
-        sessionTwoId={SESSION_TWO_MOBILE}
+        sidebarToggleId={VIEW_DRAWER_OPEN}
+        closeDrawerTargetId={VIEW_SESSION_1}
+        activeSessionRadioName={MOBILE_NAV_FLOW}
+        sessionNewId={VIEW_SESSION_NEW}
+        sessionOneId={VIEW_SESSION_1}
+        sessionTwoId={VIEW_SESSION_2}
       />
 
       {/* Popup Opsi Audit & Masukan (Bottom Sheet 58vh) */}

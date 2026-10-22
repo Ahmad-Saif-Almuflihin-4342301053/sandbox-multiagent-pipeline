@@ -27,6 +27,7 @@ export interface AuthSidebarProps {
   sessionNewId: string;
   sessionOneId: string;
   sessionTwoId: string;
+  closeDrawerTargetId?: string;
 }
 
 export const AuthSidebar: React.FC<AuthSidebarProps> = ({
@@ -36,6 +37,7 @@ export const AuthSidebar: React.FC<AuthSidebarProps> = ({
   sessionNewId,
   sessionOneId,
   sessionTwoId,
+  closeDrawerTargetId,
 }) => {
   return (
     <aside
@@ -747,7 +749,7 @@ export const AuthSidebar: React.FC<AuthSidebarProps> = ({
               </button>
 
               <label
-                htmlFor={sidebarToggleId}
+                htmlFor={isDesktop ? sidebarToggleId : (closeDrawerTargetId || sessionOneId)}
                 aria-label="Tutup Sidebar"
                 style={{
                   background: "transparent",
@@ -1155,39 +1157,6 @@ export const AuthSidebar: React.FC<AuthSidebarProps> = ({
               <IconSettings size={22} color={COLORS.deepSlate} />
             </button>
           </footer>
-
-          {/* Script Auto-Close Mobile Sidebar Saat Memilih Sesi / Analisis Baru */}
-          {!isDesktop && (
-            <script
-              dangerouslySetInnerHTML={{
-                __html: `
-                  (function() {
-                    function handleNavClose(e) {
-                      if (e.target.closest('.auth-popover-menu') || e.target.closest('[aria-label="Opsi Riwayat"]')) {
-                        return;
-                      }
-                      var trigger = e.target.closest('.btn-new-analysis') || 
-                                    e.target.closest('.history-row-one') || 
-                                    e.target.closest('.history-row-two') || 
-                                    e.target.closest('.auth-mobile-nav-item');
-                      if (trigger) {
-                        var sessionLabel = trigger.querySelector('label[for^="session-"]');
-                        if (sessionLabel && e.target !== sessionLabel && !sessionLabel.contains(e.target)) {
-                          sessionLabel.click();
-                        }
-                        var toggle = document.getElementById('${sidebarToggleId}');
-                        if (toggle) {
-                          toggle.checked = false;
-                        }
-                      }
-                    }
-                    document.addEventListener('click', handleNavClose, true);
-                    document.addEventListener('touchend', handleNavClose, true);
-                  })();
-                `,
-              }}
-            />
-          )}
         </>
       )}
     </aside>
