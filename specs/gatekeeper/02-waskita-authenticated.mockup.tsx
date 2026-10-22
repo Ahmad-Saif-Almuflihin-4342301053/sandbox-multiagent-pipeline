@@ -64,11 +64,6 @@ const MobileAuthenticatedScreen: React.FC = () => {
         id={HEADER_MENU_TOGGLE_ID_MOBILE}
         style={{ display: "none" }}
       />
-      <input
-        type="checkbox"
-        id={PLUS_TOGGLE_ID_MOBILE}
-        style={{ display: "none" }}
-      />
 
       {/* Unified Mobile Navigation Flow Radio Inputs */}
       <input
@@ -332,11 +327,6 @@ const DesktopAuthenticatedScreen: React.FC = () => {
       <input
         type="checkbox"
         id={HEADER_MENU_TOGGLE_ID_DESKTOP}
-        style={{ display: "none" }}
-      />
-      <input
-        type="checkbox"
-        id={PLUS_TOGGLE_ID_DESKTOP}
         style={{ display: "none" }}
       />
 

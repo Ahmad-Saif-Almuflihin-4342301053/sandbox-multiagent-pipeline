@@ -582,11 +582,11 @@ export const AuditOptionsOverlay: React.FC<{
           isDesktop
             ? {
                 position: "absolute",
-                bottom: "76px",
-                left: "24px",
-                width: "420px",
-                maxWidth: "calc(100% - 48px)",
-                maxHeight: "480px",
+                bottom: "84px",
+                left: "max(32px, calc(50% - 380px))",
+                width: "460px",
+                maxWidth: "calc(100% - 64px)",
+                maxHeight: "520px",
                 background: COLORS.warmCream,
                 borderRadius: "20px",
                 zIndex: 100,
