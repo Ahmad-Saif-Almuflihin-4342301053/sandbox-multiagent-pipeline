@@ -87,3 +87,18 @@ Jika ditemukan bug atau ketidaksesuaian pada hasil kerja salah satu Sub-Worker:
 - **Aturan Eksekusi Worktree Mandiri:** Ketika Sub-Worker memiliki folder fisik terpisah (`worker-1` vs `worker-2`), DevOps **WAJIB** mengeksekusinya secara **PARALEL (bersamaan di latar belakang / background task)** menggunakan tab terminal masing-masing atau perintah asynchronous, **BUKAN** menunggu satu sub-worker selesai baru mulai memproses yang lain.
 - **Prinsip Gelombang Non-Blokir (Non-Blocking Waves):**
   - Jika Sub-Worker 1B sedang bekerja di `worker-1`, Sub-Worker 2A **HARUS** langsung di-dispatch di `worker-2` pada saat yang sama.
+
+
+---
+
+## 6. Model Configuration Matrix & Fast-Track (Surgical) Protocol
+
+### A. Matriks Pemilihan Model Otomatis (`dispatch_workers.sh`)
+* **Worker 1 & Worker 2 (Coder / Implementer):** Menggunakan `gemini-3.8-flash-low` (`--effort low`). Cepat, hemat token, dan fokus pada eksekusi kode.
+* **Worker 3 (Senior QA Reviewer):** Menggunakan **`gemini-4-argon-high` (`--effort high`)** agar memiliki daya nalar kritis untuk menangkap bug logika navigasi dan celah UI. Jika kuota Argon habis, otomatis fallback ke **`gemini-3.8-flash-high`**.
+
+### B. Protokol Fast-Track / Surgical Fix (Bypass QA untuk Revisi Minor)
+Untuk perbaikan minor (seperti ubah warna, perbaiki typo, atau surgical CSS fix):
+1. **Dilarang memanggil seluruh 3 worker.**
+2. Cukup panggil **Worker 1 saja** (`./dispatch_workers.sh <issue> surgical`).
+3. **Bypass QA Worker 3:** DevOps (Chat 2) bertindak langsung sebagai reviewer tunggal, mengecek tampilan visual di browser `http://127.0.0.1:4174`, dan langsung me-merge ke `main`.
