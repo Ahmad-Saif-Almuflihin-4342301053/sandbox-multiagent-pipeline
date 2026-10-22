@@ -107,8 +107,8 @@ export const AuthSidebar: React.FC<AuthSidebarProps> = ({
             right: 12px;
             top: 38px;
             width: 170px;
-            background: #FFFFFF;
-            border: 1px solid rgba(30, 41, 59, 0.12);
+            background: var(--waskita-surface-white, #FFFFFF);
+            border: 1px solid var(--waskita-border, rgba(30, 41, 59, 0.12));
             border-radius: 12px;
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
             padding: 6px;
@@ -280,7 +280,7 @@ export const AuthSidebar: React.FC<AuthSidebarProps> = ({
             <div
               style={{
                 height: "16px",
-                background: `linear-gradient(to bottom, ${COLORS.warmCream} 65%, rgba(247, 244, 235, 0) 100%)`,
+                background: `linear-gradient(to bottom, ${COLORS.warmCream} 65%, transparent 100%)`,
                 position: "relative",
                 zIndex: 10,
                 flexShrink: 0,
@@ -852,7 +852,7 @@ export const AuthSidebar: React.FC<AuthSidebarProps> = ({
           <div
             style={{
               height: "16px",
-              background: `linear-gradient(to bottom, ${COLORS.warmCream} 65%, rgba(247, 244, 235, 0) 100%)`,
+              background: `linear-gradient(to bottom, ${COLORS.warmCream} 65%, transparent 100%)`,
               position: "relative",
               zIndex: 10,
               flexShrink: 0,
@@ -1286,7 +1286,7 @@ export const AuthHeader: React.FC<AuthHeaderProps> = ({
           top: isDesktop ? 42 : 48,
           right: 0,
           width: 220,
-          background: "#FFFFFF",
+          background: "var(--waskita-surface-white, #FFFFFF)",
           borderRadius: 14,
           boxShadow:
             "0 10px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.1)",
@@ -1537,7 +1537,7 @@ export const FloatingComposerDock: React.FC<FloatingComposerDockProps> = ({
         left: 0,
         right: 0,
         padding: isDesktop ? "16px 24px 24px 24px" : "12px 14px 16px 14px",
-        background: `linear-gradient(to top, ${COLORS.warmCream} 80%, rgba(247, 244, 235, 0) 100%)`,
+        background: `linear-gradient(to top, ${COLORS.warmCream} 80%, transparent 100%)`,
         zIndex: 40,
         pointerEvents: "none",
         boxSizing: "border-box",
