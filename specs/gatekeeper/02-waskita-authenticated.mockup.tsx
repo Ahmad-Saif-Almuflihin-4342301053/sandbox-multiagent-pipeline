@@ -19,12 +19,16 @@ const HEADER_MENU_TOGGLE_ID_DESKTOP = "auth-header-menu-toggle-desktop";
 const PLUS_TOGGLE_ID_MOBILE = "auth-plus-toggle-mobile";
 const PLUS_TOGGLE_ID_DESKTOP = "auth-plus-toggle-desktop";
 
-// Unified Mobile Navigation Flow State Machine Identifiers
+// Unified Context-Aware Mobile Navigation Flow State Machine Identifiers
 const MOBILE_NAV_FLOW = "mobile-nav-flow";
 const VIEW_SESSION_1 = "view-session-1";
 const VIEW_SESSION_2 = "view-session-2";
 const VIEW_SESSION_NEW = "view-session-new";
-const VIEW_DRAWER_OPEN = "view-drawer-open";
+
+// Context-Aware Drawer Open Radios (Preserves Current Active Session)
+const DRAWER_FROM_1 = "drawer-from-1";
+const DRAWER_FROM_2 = "drawer-from-2";
+const DRAWER_FROM_NEW = "drawer-from-new";
 
 // Desktop Session Radio State Identifiers
 const ACTIVE_SESSION_RADIO_NAME_DESKTOP = "active-session-desktop";
@@ -86,20 +90,38 @@ const MobileAuthenticatedScreen: React.FC = () => {
         id={VIEW_SESSION_NEW}
         style={{ display: "none" }}
       />
+
+      {/* Context-Aware Drawer Open Radios */}
       <input
         type="radio"
         name={MOBILE_NAV_FLOW}
-        id={VIEW_DRAWER_OPEN}
+        id={DRAWER_FROM_1}
+        style={{ display: "none" }}
+      />
+      <input
+        type="radio"
+        name={MOBILE_NAV_FLOW}
+        id={DRAWER_FROM_2}
+        style={{ display: "none" }}
+      />
+      <input
+        type="radio"
+        name={MOBILE_NAV_FLOW}
+        id={DRAWER_FROM_NEW}
         style={{ display: "none" }}
       />
 
       <style>
         {`
-          /* Sidebar Mobile Drawer Animation */
-          #${VIEW_DRAWER_OPEN}:checked ~ .auth-sidebar-mobile {
+          /* Sidebar Mobile Drawer Animation (Opens for any context-aware drawer state) */
+          #${DRAWER_FROM_1}:checked ~ .auth-sidebar-mobile,
+          #${DRAWER_FROM_2}:checked ~ .auth-sidebar-mobile,
+          #${DRAWER_FROM_NEW}:checked ~ .auth-sidebar-mobile {
             transform: translateX(0) !important;
           }
-          #${VIEW_DRAWER_OPEN}:checked ~ .auth-sidebar-backdrop-mobile {
+          #${DRAWER_FROM_1}:checked ~ .auth-sidebar-backdrop-mobile-1,
+          #${DRAWER_FROM_2}:checked ~ .auth-sidebar-backdrop-mobile-2,
+          #${DRAWER_FROM_NEW}:checked ~ .auth-sidebar-backdrop-mobile-new {
             display: block !important;
           }
 
@@ -120,32 +142,60 @@ const MobileAuthenticatedScreen: React.FC = () => {
           }
 
           #${VIEW_SESSION_1}:checked ~ main .mobile-view-session-1,
-          #${VIEW_DRAWER_OPEN}:checked ~ main .mobile-view-session-1 {
+          #${DRAWER_FROM_1}:checked ~ main .mobile-view-session-1 {
             display: block !important;
           }
-          #${VIEW_SESSION_2}:checked ~ main .mobile-view-session-2 {
+          #${VIEW_SESSION_2}:checked ~ main .mobile-view-session-2,
+          #${DRAWER_FROM_2}:checked ~ main .mobile-view-session-2 {
             display: block !important;
           }
-          #${VIEW_SESSION_NEW}:checked ~ main {
+          #${VIEW_SESSION_NEW}:checked ~ main,
+          #${DRAWER_FROM_NEW}:checked ~ main {
             display: flex !important;
             flex-direction: column !important;
             height: calc(100vh - 56px) !important;
           }
-          #${VIEW_SESSION_NEW}:checked ~ main .mobile-view-session-new {
+          #${VIEW_SESSION_NEW}:checked ~ main .mobile-view-session-new,
+          #${DRAWER_FROM_NEW}:checked ~ main .mobile-view-session-new {
             display: flex !important;
             flex-direction: column !important;
             flex: 1 !important;
             height: 100% !important;
             min-height: 100% !important;
           }
+
+          /* Context-aware Hamburger Menu in Mobile Header */
+          .auth-burger-1, .auth-burger-2, .auth-burger-new { display: none; }
+          #${VIEW_SESSION_1}:checked ~ * .auth-burger-1,
+          #${DRAWER_FROM_1}:checked ~ * .auth-burger-1 { display: flex !important; }
+
+          #${VIEW_SESSION_2}:checked ~ * .auth-burger-2,
+          #${DRAWER_FROM_2}:checked ~ * .auth-burger-2 { display: flex !important; }
+
+          #${VIEW_SESSION_NEW}:checked ~ * .auth-burger-new,
+          #${DRAWER_FROM_NEW}:checked ~ * .auth-burger-new { display: flex !important; }
+
+          /* Context-aware Close X in Mobile Drawer Header */
+          .auth-close-1, .auth-close-2, .auth-close-new { display: none; }
+          #${VIEW_SESSION_1}:checked ~ * .auth-close-1,
+          #${DRAWER_FROM_1}:checked ~ * .auth-close-1 { display: flex !important; }
+
+          #${VIEW_SESSION_2}:checked ~ * .auth-close-2,
+          #${DRAWER_FROM_2}:checked ~ * .auth-close-2 { display: flex !important; }
+
+          #${VIEW_SESSION_NEW}:checked ~ * .auth-close-new,
+          #${DRAWER_FROM_NEW}:checked ~ * .auth-close-new { display: flex !important; }
         `}
       </style>
 
-      {/* Header dengan Burger (mentarget view-drawer-open) dan Titik Tiga 7 Aksi */}
+      {/* Header dengan Burger Context-Aware dan Titik Tiga 7 Aksi */}
       <AuthHeader
         isDesktop={false}
-        sidebarToggleId={VIEW_DRAWER_OPEN}
+        sidebarToggleId={DRAWER_FROM_1}
         headerMenuToggleId={HEADER_MENU_TOGGLE_ID_MOBILE}
+        drawerFromOneId={DRAWER_FROM_1}
+        drawerFromTwoId={DRAWER_FROM_2}
+        drawerFromNewId={DRAWER_FROM_NEW}
       />
 
       {/* Scrollable Main Analysis Canvas (Padded at bottom for floating dock) */}
@@ -176,10 +226,44 @@ const MobileAuthenticatedScreen: React.FC = () => {
         plusToggleId={PLUS_TOGGLE_ID_MOBILE}
       />
 
-      {/* Mobile Drawer Backdrop (mentarget view-session-1 untuk auto-close) */}
+      {/* Mobile Drawer Backdrops (Context-aware: closes back to active session) */}
       <label
         htmlFor={VIEW_SESSION_1}
-        className="auth-sidebar-backdrop-mobile"
+        className="auth-sidebar-backdrop-mobile-1"
+        style={{
+          display: "none",
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: "rgba(15, 23, 42, 0.4)",
+          backdropFilter: "blur(2px)",
+          zIndex: 55,
+          cursor: "pointer",
+        }}
+        title="Tutup Menu"
+      />
+      <label
+        htmlFor={VIEW_SESSION_2}
+        className="auth-sidebar-backdrop-mobile-2"
+        style={{
+          display: "none",
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: "rgba(15, 23, 42, 0.4)",
+          backdropFilter: "blur(2px)",
+          zIndex: 55,
+          cursor: "pointer",
+        }}
+        title="Tutup Menu"
+      />
+      <label
+        htmlFor={VIEW_SESSION_NEW}
+        className="auth-sidebar-backdrop-mobile-new"
         style={{
           display: "none",
           position: "fixed",
@@ -198,12 +282,14 @@ const MobileAuthenticatedScreen: React.FC = () => {
       {/* Mobile Off-canvas Drawer (100% fullscreen width) */}
       <AuthSidebar
         isDesktop={false}
-        sidebarToggleId={VIEW_DRAWER_OPEN}
-        closeDrawerTargetId={VIEW_SESSION_1}
+        sidebarToggleId={DRAWER_FROM_1}
         activeSessionRadioName={MOBILE_NAV_FLOW}
         sessionNewId={VIEW_SESSION_NEW}
         sessionOneId={VIEW_SESSION_1}
         sessionTwoId={VIEW_SESSION_2}
+        drawerFromOneId={DRAWER_FROM_1}
+        drawerFromTwoId={DRAWER_FROM_2}
+        drawerFromNewId={DRAWER_FROM_NEW}
       />
 
       {/* Popup Opsi Audit & Masukan (Bottom Sheet 58vh) */}
