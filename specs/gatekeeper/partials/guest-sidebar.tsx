@@ -69,7 +69,7 @@ export const GuestSidebar: React.FC<GuestSidebarProps> = ({
                 alignItems: "center",
                 justifyContent: "space-between",
                 padding: "0 16px",
-                borderBottom: "1px solid rgba(30, 41, 59, 0.06)",
+                borderBottom: "1px solid var(--waskita-border, rgba(30, 41, 59, 0.06))",
                 flexShrink: 0,
                 boxSizing: "border-box",
               }}
@@ -134,7 +134,7 @@ export const GuestSidebar: React.FC<GuestSidebarProps> = ({
                 style={{
                   fontSize: "13px",
                   lineHeight: "18px",
-                  color: "rgba(30, 41, 59, 0.75)",
+                  color: "var(--waskita-text-muted, rgba(30, 41, 59, 0.75))",
                   fontWeight: 500,
                   padding: "0 6px",
                 }}
@@ -161,7 +161,7 @@ export const GuestSidebar: React.FC<GuestSidebarProps> = ({
                 alignItems: "center",
                 justifyContent: "space-between",
                 padding: "0 18px",
-                borderTop: "1px solid rgba(30, 41, 59, 0.06)",
+                borderTop: "1px solid var(--waskita-border, rgba(30, 41, 59, 0.06))",
                 flexShrink: 0,
                 boxSizing: "border-box",
               }}
@@ -325,7 +325,7 @@ export const GuestSidebar: React.FC<GuestSidebarProps> = ({
               alignItems: "center",
               justifyContent: "space-between",
               padding: "0 16px",
-              borderBottom: "1px solid rgba(30, 41, 59, 0.06)",
+              borderBottom: "1px solid var(--waskita-border, rgba(30, 41, 59, 0.06))",
               flexShrink: 0,
               boxSizing: "border-box",
             }}
@@ -393,7 +393,7 @@ export const GuestSidebar: React.FC<GuestSidebarProps> = ({
               style={{
                 fontSize: "13px",
                 lineHeight: "18px",
-                color: "rgba(30, 41, 59, 0.75)",
+                color: "var(--waskita-text-muted, rgba(30, 41, 59, 0.75))",
                 fontWeight: 500,
                 padding: "0 6px",
               }}
@@ -419,7 +419,7 @@ export const GuestSidebar: React.FC<GuestSidebarProps> = ({
               alignItems: "center",
               justifyContent: "space-between",
               padding: "0 18px",
-              borderTop: "1px solid rgba(30, 41, 59, 0.06)",
+              borderTop: "1px solid var(--waskita-border, rgba(30, 41, 59, 0.06))",
               flexShrink: 0,
               boxSizing: "border-box",
             }}

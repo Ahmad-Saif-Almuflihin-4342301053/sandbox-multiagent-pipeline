@@ -314,7 +314,7 @@ export const AuthSidebar: React.FC<AuthSidebarProps> = ({
                 style={{
                   fontSize: "11px",
                   fontWeight: 700,
-                  color: "rgba(30, 41, 59, 0.5)",
+                  color: "var(--waskita-text-subtle, rgba(30, 41, 59, 0.54))",
                   textTransform: "uppercase",
                   letterSpacing: "0.05em",
                   padding: "0 8px 4px 8px",
@@ -562,7 +562,7 @@ export const AuthSidebar: React.FC<AuthSidebarProps> = ({
                 alignItems: "center",
                 justifyContent: "space-between",
                 padding: "0 16px",
-                borderTop: "1px solid rgba(30, 41, 59, 0.08)",
+                borderTop: "1px solid var(--waskita-border, rgba(30, 41, 59, 0.08))",
                 background: COLORS.warmCream,
                 flexShrink: 0,
               }}
@@ -619,7 +619,7 @@ export const AuthSidebar: React.FC<AuthSidebarProps> = ({
                     >
                       Pro
                     </span>
-                    <span style={{ fontSize: "11px", color: "rgba(30, 41, 59, 0.6)" }}>
+                    <span style={{ fontSize: "11px", color: "var(--waskita-text-muted, rgba(30, 41, 59, 0.68))" }}>
                       Personal Plan
                     </span>
                   </div>
@@ -885,7 +885,7 @@ export const AuthSidebar: React.FC<AuthSidebarProps> = ({
               style={{
                 fontSize: "11px",
                 fontWeight: 700,
-                color: "rgba(30, 41, 59, 0.5)",
+                color: "var(--waskita-text-subtle, rgba(30, 41, 59, 0.54))",
                 textTransform: "uppercase",
                 letterSpacing: "0.05em",
                 padding: "0 8px 4px 8px",
@@ -1133,7 +1133,7 @@ export const AuthSidebar: React.FC<AuthSidebarProps> = ({
               alignItems: "center",
               justifyContent: "space-between",
               padding: "0 16px",
-              borderTop: "1px solid rgba(30, 41, 59, 0.08)",
+              borderTop: "1px solid var(--waskita-border, rgba(30, 41, 59, 0.08))",
               background: COLORS.warmCream,
               flexShrink: 0,
             }}
@@ -1190,7 +1190,7 @@ export const AuthSidebar: React.FC<AuthSidebarProps> = ({
                   >
                     Pro
                   </span>
-                  <span style={{ fontSize: "11px", color: "rgba(30, 41, 59, 0.6)" }}>
+                  <span style={{ fontSize: "11px", color: "var(--waskita-text-muted, rgba(30, 41, 59, 0.68))" }}>
                     Personal Plan
                   </span>
                 </div>
@@ -1313,7 +1313,7 @@ export const AuthHeader: React.FC<AuthHeaderProps> = ({
             textAlign: "left",
           }}
         >
-          <IconCopy size={15} color="#64748B" /> Salin Ringkasan Hasil
+          <IconCopy size={15} color="var(--waskita-text-muted, #64748B)" /> Salin Ringkasan Hasil
         </button>
         <button
           type="button"
@@ -1331,7 +1331,7 @@ export const AuthHeader: React.FC<AuthHeaderProps> = ({
             textAlign: "left",
           }}
         >
-          <IconDownload size={15} color="#64748B" /> Unduh Laporan (.md)
+          <IconDownload size={15} color="var(--waskita-text-muted, #64748B)" /> Unduh Laporan (.md)
         </button>
         <button
           type="button"
@@ -1349,7 +1349,7 @@ export const AuthHeader: React.FC<AuthHeaderProps> = ({
             textAlign: "left",
           }}
         >
-          <IconFileText size={15} color="#64748B" /> Salin Teks Artikel
+          <IconFileText size={15} color="var(--waskita-text-muted, #64748B)" /> Salin Teks Artikel
         </button>
         <div style={{ height: 1, background: COLORS.warmSand, margin: "4px 0" }} />
         <button
@@ -1368,7 +1368,7 @@ export const AuthHeader: React.FC<AuthHeaderProps> = ({
             textAlign: "left",
           }}
         >
-          <IconShare2 size={15} color="#64748B" /> Share Analisis
+          <IconShare2 size={15} color="var(--waskita-text-muted, #64748B)" /> Share Analisis
         </button>
         <button
           type="button"
@@ -1386,7 +1386,7 @@ export const AuthHeader: React.FC<AuthHeaderProps> = ({
             textAlign: "left",
           }}
         >
-          <IconPin size={15} color="#64748B" /> Pin Analisis
+          <IconPin size={15} color="var(--waskita-text-muted, #64748B)" /> Pin Analisis
         </button>
         <button
           type="button"
@@ -1404,7 +1404,7 @@ export const AuthHeader: React.FC<AuthHeaderProps> = ({
             textAlign: "left",
           }}
         >
-          <IconPencil size={15} color="#64748B" /> Ganti Judul (Rename)
+          <IconPencil size={15} color="var(--waskita-text-muted, #64748B)" /> Ganti Judul (Rename)
         </button>
         <button
           type="button"
@@ -1454,7 +1454,7 @@ export const AuthHeader: React.FC<AuthHeaderProps> = ({
         position: "relative",
         zIndex: 25,
         background: COLORS.warmCream,
-        borderBottom: "1px solid rgba(30, 41, 59, 0.08)",
+        borderBottom: "1px solid var(--waskita-border, rgba(30, 41, 59, 0.08))",
         flexShrink: 0,
         boxSizing: "border-box",
       }}

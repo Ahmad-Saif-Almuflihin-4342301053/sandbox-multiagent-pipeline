@@ -1,4 +1,4 @@
-# TECHNICAL BLUEPRINT & UX SPECIFICATION (REVISED V4.0 — DUAL-THEME LIGHT & DARK MODE WITH OFFICIAL DARK LOGO): WASKITA
+# TECHNICAL BLUEPRINT & UX SPECIFICATION (REVISED V4.1 — DARK MODE CONTRAST, WARM CREAM LOGO, & SEMANTIC TOKENS): WASKITA
 
 > **Dokumen Resmi Handover:** System Analyst / Lead Architect (Chat 1) $\rightarrow$ DevOps & GitHub Dispatcher (Chat 2)  
 > **Standar Rekayasa Wajib:** `docs/PZN_VIBE_ENGINEERING_STANDARD.md` (Kurikulum Eko Kurniawan Khannedy / PZN)  
@@ -9,53 +9,37 @@
 
 ---
 
-## 🌙 1. ARSITEKTUR RESMI DUAL-THEME (LIGHT & DARK MODE) DI MOKLY
+## 🌙 1. AUDIT & PERBAIKAN DARK MODE (V4.1)
 
-Mokly mendukung *dual color scheme* native (`light` dan `dark`) tanpa merusak arsitektur komponen dengan pendekatan **CSS Variables**:
+Berdasarkan inspeksi perbandingan langsung Mode Terang vs Mode Gelap:
 
-1. **Konfigurasi Katalog (`mokly.config.ts`):**
-   ```ts
-   import { defineConfig } from "@mokly/mokly";
+1. **Logo Waskita di Mode Gelap Menggunakan Warm Cream (`#F7F4EB`):**
+   * `--waskita-logo-fill` pada `data-theme="dark"` diset ke **`#F7F4EB`** (*Warm Cream* khas Waskita), menciptakan inversi editorial yang elegan di atas kanvas gelap `#0B1120`.
+   * Di Mode Terang, logo tetap menggunakan Emerald `#10B981`.
 
-   export default defineConfig({
-     colorSchemes: ["light", "dark"],
-     mockupsDir: "specs/generated",
-     renderer: "specs/renderer.tsx",
-   });
-   ```
+2. **Perbaikan Teks Sekunder yang Sebelumnya Hilang/Terkamuflase di Mode Gelap:**
+   * **Akar Masalah:** Sebelumnya, sub-judul (`CDS: 70%`, `HASIL ANALISIS #1`, `10:15 WIB`, `(Maks 0.60)`, `(Min 0.55)`, `RIWAYAT ANALISIS`, `Personal Plan`) menggunakan warna statis `rgba(30, 41, 59, 0.55)` s/d `0.65`. Karena `rgb(30, 41, 59)` adalah kode RGB dari `#1E293B`, teks tersebut memiliki kontras **0%** di atas kartu gelap `#1E293B` sehingga tampak hilang/kosong!
+   * **Solusi:** Seluruh teks sekunder, *caption*, *track* progress bar, dan garis pembatas kini dipetakan ke variabel semantik:
+     - `--waskita-text-body`: `#334155` (Light) $\rightarrow$ `#CBD5E1` (Dark)
+     - `--waskita-text-muted`: `rgba(30, 41, 59, 0.68)` (Light) $\rightarrow$ `#94A3B8` (Dark)
+     - `--waskita-text-subtle`: `rgba(30, 41, 59, 0.54)` (Light) $\rightarrow$ `#78879E` (Dark)
+     - `--waskita-track`: `rgba(30, 41, 59, 0.12)` (Light) $\rightarrow$ `rgba(247, 244, 235, 0.14)` (Dark)
+     - `--waskita-border`: `rgba(30, 41, 59, 0.1)` (Light) $\rightarrow$ `rgba(247, 244, 235, 0.1)` (Dark)
 
-2. **Custom Document Renderer (`specs/renderer.tsx`):**
-   Mokly menyuntikkan `data-theme={input.colorScheme}` ke elemen `<body>`, sehingga variabel CSS otomatis aktif sesuai mode yang dipilih di toolbar Mokly (`☾ Dark` vs `☀ Light`):
-   * **Mode Terang (`data-theme="light"`):**
-     - `--waskita-bg: #F7F4EB` (*Warm Cream*)
-     - `--waskita-card: #E9DFCA` (*Warm Sand*)
-     - `--waskita-audit-bg: #D4E5F2` (*Soft Ice Blue*)
-     - `--waskita-accent-subtle: #C0D5E5` (*Muted Sky Blue*)
-     - `--waskita-accent-primary: #C0CEE8` (*Soft Periwinkle*)
-     - `--waskita-text: #1E293B` (*Deep Slate*)
-     - `--waskita-logo-fill: #10B981` (*Emerald-500*)
-   * **Mode Gelap (`data-theme="dark"`):**
-     - `--waskita-bg: #0F172A` (*Midnight Slate* pekat, ramah mata)
-     - `--waskita-card: #1E293B` (*Deep Slate* untuk kapsul dock, sidebar drawer, dan kartu popover)
-     - `--waskita-audit-bg: #1E293B` (*Kesatuan latar blok audit*)
-     - `--waskita-accent-subtle: #334155` (*Slate-700* untuk border halus & tombol sekunder)
-     - `--waskita-accent-primary: #0284C7` (*Sky-600* kontras untuk tombol aksi dan badge Pro)
-     - `--waskita-text: #F8FAFC` (*Slate-50* teks putih terang tajam)
-     - `--waskita-logo-fill: #34D399` (*Emerald-400* — Logo malam resmi dari `assets/logo/logo-waskita-dark.svg`!)
-
----
-
-## 🎨 2. PENGAPLIKASIAN LOGO MALAM RESMI (`WaskitaLogo`)
-
-Komponen `WaskitaLogo` di `specs/gatekeeper/partials/shared-ui.tsx` menggunakan `fill="var(--waskita-logo-fill, #10B981)"`.
-* Di Mode Siang: Logo otomatis berwarna **Emerald `#10B981`** (kontras tinggi di atas krem).
-* Di Mode Malam: Logo otomatis menyala menjadi **Emerald Pastel Cerah `#34D399`** persis sesuai file `assets/logo/logo-waskita-dark.svg`!
-
----
-
-## 📜 3. VERIFIKASI BUILD & OUTPUT MOKLY
-Eksekusi `npx @mokly/mokly check --strict` menghasilkan **11 file valid** mencakup seluruh varian:
-* `index.mobile.html` & `index.mobile.dark.html`
-* `index.desktop.html` & `index.desktop.dark.html`
-
-Saat pengguna mengubah switch **`☾ Dark >`** di toolbar Mokly, halaman Waskita otomatis bertransisi ke Mode Gelap secara instan!
+3. **Harmonisasi Badge Status ("Perlu Revisi", "Siap Terbit"), Chip Defisit/Gain, & Stabilo Naskah:**
+   * **Akar Masalah:** Di Mode Gelap, warna latar pastel solid berbasis putih (`#FEF3C7`, `#FEE2E2`, `#D1FAE5`) dan kotak kode putih `rgba(255,255,255,0.7)` terlihat mencolok seperti tempelan stiker yang tidak menyatu dengan kartu gelap.
+   * **Solusi (Translucent Tinted Dark Surfaces):**
+     - **Badge "Perlu Revisi" (Amber):**
+       - Light: bg `#FEF3C7`, text `#B45309`
+       - Dark: bg `rgba(245, 158, 11, 0.16)`, text `#FCD34D`, border `rgba(245, 158, 11, 0.35)`
+     - **Chip Defisit (Rose/Coral):**
+       - Light: bg `#FEE2E2`, text `#991B1B`
+       - Dark: bg `rgba(239, 68, 68, 0.16)`, text `#FCA5A5`, border `rgba(239, 68, 68, 0.35)`
+     - **Badge "Siap Terbit" & Chip Gain (Emerald):**
+       - Light: bg `#D1FAE5`, text `#065F46`
+       - Dark: bg `rgba(16, 185, 129, 0.16)`, text `#6EE7B7`, border `rgba(16, 185, 129, 0.35)`
+     - **Stabilo Anotasi 4-Warna (`<mark>`):**
+       - Di Mode Gelap menggunakan *translucent glow* (`0.22` opacity) dengan teks pastel cerah (`#FEF08A`, `#FECACA`, `#BFDBFE`, `#BBF7D0`) sehingga menyatu mulus dengan latar kartu audit gelap `#131C2E`.
+     - **Kotak Prompt (`prompt-bantuan.txt`):**
+       - Light: `rgba(255, 255, 255, 0.72)`
+       - Dark: `rgba(11, 17, 32, 0.65)` (*Recessed Dark Terminal*)

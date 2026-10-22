@@ -62,7 +62,7 @@ export const GuestWorkspace: React.FC<GuestWorkspaceProps> = ({
             alignItems: "center",
             justifyContent: "space-between",
             padding: "0 16px",
-            borderBottom: "1px solid rgba(30, 41, 59, 0.06)",
+            borderBottom: "1px solid var(--waskita-border, rgba(30, 41, 59, 0.06))",
             flexShrink: 0,
             background: COLORS.warmCream,
             zIndex: 10,
@@ -230,7 +230,7 @@ export const GuestWorkspace: React.FC<GuestWorkspaceProps> = ({
           <p
             style={{
               fontSize: "11px",
-              color: "rgba(30, 41, 59, 0.6)",
+              color: "var(--waskita-text-muted, rgba(30, 41, 59, 0.6))",
               textAlign: "center",
               marginTop: "14px",
               marginBottom: 0,
@@ -369,7 +369,7 @@ export const GuestWorkspace: React.FC<GuestWorkspaceProps> = ({
             <p
               style={{
                 fontSize: "10px",
-                color: "rgba(30, 41, 59, 0.6)",
+                color: "var(--waskita-text-muted, rgba(30, 41, 59, 0.6))",
                 textAlign: "center",
                 marginTop: "10px",
                 marginBottom: 0,

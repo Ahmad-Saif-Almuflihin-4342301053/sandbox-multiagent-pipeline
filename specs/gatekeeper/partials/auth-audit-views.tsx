@@ -51,7 +51,7 @@ export const HistoryOneAuditStream: React.FC<AuditStreamProps> = ({ isDesktop = 
           padding: "10px 16px",
           fontSize: "13px",
           lineHeight: 1.45,
-          border: "1px solid rgba(30, 41, 59, 0.08)",
+          border: "1px solid var(--waskita-border, rgba(30, 41, 59, 0.08))",
           boxShadow: "0 2px 8px rgba(30, 41, 59, 0.03)",
         }}
       >
@@ -63,7 +63,7 @@ export const HistoryOneAuditStream: React.FC<AuditStreamProps> = ({ isDesktop = 
         style={{
           background: COLORS.softIceBlue,
           borderRadius: "24px",
-          border: "1px solid rgba(192, 213, 229, 0.9)",
+          border: "1px solid var(--waskita-audit-border, rgba(192, 213, 229, 0.9))",
           padding: isDesktop ? "24px 28px" : "20px 18px",
           boxShadow: "0 4px 16px rgba(30, 41, 59, 0.05)",
           color: COLORS.deepSlate,
@@ -77,21 +77,21 @@ export const HistoryOneAuditStream: React.FC<AuditStreamProps> = ({ isDesktop = 
             justifyContent: "space-between",
             marginBottom: "14px",
             paddingBottom: "10px",
-            borderBottom: "1px dashed rgba(30, 41, 59, 0.15)",
+            borderBottom: "1px dashed var(--waskita-border-strong, rgba(30, 41, 59, 0.15))",
           }}
         >
           <span
             style={{
               fontSize: "11px",
               fontWeight: 800,
-              color: "rgba(30, 41, 59, 0.7)",
+              color: "var(--waskita-text-muted, rgba(30, 41, 59, 0.7))",
               textTransform: "uppercase",
               letterSpacing: "0.5px",
             }}
           >
             Hasil Analisis #1
           </span>
-          <span style={{ fontSize: "11px", color: "rgba(30, 41, 59, 0.55)" }}>10:15 WIB</span>
+          <span style={{ fontSize: "11px", color: "var(--waskita-text-subtle, rgba(30, 41, 59, 0.55))" }}>10:15 WIB</span>
         </div>
 
         {/* Seksi 1: Status Kelayakan (CDS 70% Amber, threshold 75) */}
@@ -101,7 +101,7 @@ export const HistoryOneAuditStream: React.FC<AuditStreamProps> = ({ isDesktop = 
             border: "none",
             borderRadius: 0,
             padding: "0 0 20px 0",
-            borderBottom: "1px solid rgba(30, 41, 59, 0.1)",
+            borderBottom: "1px solid var(--waskita-border, rgba(30, 41, 59, 0.1))",
           }}
         >
           <div
@@ -116,14 +116,15 @@ export const HistoryOneAuditStream: React.FC<AuditStreamProps> = ({ isDesktop = 
               <h2 style={{ fontSize: "17px", fontWeight: 700, margin: 0, color: COLORS.deepSlate }}>
                 Status Kelayakan
               </h2>
-              <p style={{ fontSize: "12px", color: "rgba(30, 41, 59, 0.65)", margin: "2px 0 0 0" }}>
+              <p style={{ fontSize: "12px", color: "var(--waskita-text-muted, rgba(30, 41, 59, 0.65))", margin: "2px 0 0 0" }}>
                 CDS: 70% (Ambang Standar: 75%)
               </p>
             </div>
             <span
               style={{
-                background: "#FEF3C7",
-                color: "#B45309",
+                background: "var(--waskita-amber-bg, #FEF3C7)",
+                color: "var(--waskita-amber-text, #B45309)",
+                border: "1px solid var(--waskita-amber-border, transparent)",
                 padding: "4px 12px",
                 borderRadius: "9999px",
                 fontSize: "12px",
@@ -144,14 +145,14 @@ export const HistoryOneAuditStream: React.FC<AuditStreamProps> = ({ isDesktop = 
               display: "flex",
               alignItems: "flex-start",
               gap: "8px",
-              color: "#92400E",
+              color: "var(--waskita-amber-body, #92400E)",
               fontSize: "12.5px",
               lineHeight: 1.5,
               marginTop: "8px",
             }}
           >
             <div style={{ flexShrink: 0, marginTop: "2px" }}>
-              <IconAlertCircle size={16} color="#D97706" />
+              <IconAlertCircle size={16} color="var(--waskita-amber-text, #D97706)" />
             </div>
             <div>
               Skor <strong>70%</strong> belum mencapai ambang standar lolos <strong>75%</strong>.
@@ -167,13 +168,13 @@ export const HistoryOneAuditStream: React.FC<AuditStreamProps> = ({ isDesktop = 
             border: "none",
             borderRadius: 0,
             padding: "20px 0",
-            borderBottom: "1px solid rgba(30, 41, 59, 0.1)",
+            borderBottom: "1px solid var(--waskita-border, rgba(30, 41, 59, 0.1))",
           }}
         >
           <h3 style={{ fontSize: "15px", fontWeight: 700, margin: "0 0 4px 0", color: COLORS.deepSlate }}>
             Metrik Stilometri &amp; Leksikal
           </h3>
-          <p style={{ fontSize: "12px", color: "rgba(30, 41, 59, 0.65)", margin: "0 0 14px 0" }}>
+          <p style={{ fontSize: "12px", color: "var(--waskita-text-muted, rgba(30, 41, 59, 0.65))", margin: "0 0 14px 0" }}>
             Analisis matematis kemiripan vektor dan kekayaan kosakata naskah
           </p>
 
@@ -198,13 +199,13 @@ export const HistoryOneAuditStream: React.FC<AuditStreamProps> = ({ isDesktop = 
               >
                 <span style={{ color: COLORS.deepSlate }}>VSM Cosine Similarity</span>
                 <span style={{ color: COLORS.deepSlate }}>
-                  0.48 <span style={{ color: "rgba(30, 41, 59, 0.55)", fontWeight: 400 }}>(Maks 0.60)</span>
+                  0.48 <span style={{ color: "var(--waskita-text-subtle, rgba(30, 41, 59, 0.55))", fontWeight: 400 }}>(Maks 0.60)</span>
                 </span>
               </div>
               <div
                 style={{
                   height: "7px",
-                  background: "rgba(30, 41, 59, 0.12)",
+                  background: "var(--waskita-track, rgba(30, 41, 59, 0.12))",
                   borderRadius: "9999px",
                   overflow: "hidden",
                 }}
@@ -233,13 +234,13 @@ export const HistoryOneAuditStream: React.FC<AuditStreamProps> = ({ isDesktop = 
               >
                 <span style={{ color: COLORS.deepSlate }}>MATTR (Kekayaan Leksikal)</span>
                 <span style={{ color: COLORS.deepSlate }}>
-                  0.61 <span style={{ color: "rgba(30, 41, 59, 0.55)", fontWeight: 400 }}>(Min 0.55)</span>
+                  0.61 <span style={{ color: "var(--waskita-text-subtle, rgba(30, 41, 59, 0.55))", fontWeight: 400 }}>(Min 0.55)</span>
                 </span>
               </div>
               <div
                 style={{
                   height: "7px",
-                  background: "rgba(30, 41, 59, 0.12)",
+                  background: "var(--waskita-track, rgba(30, 41, 59, 0.12))",
                   borderRadius: "9999px",
                   overflow: "hidden",
                 }}
@@ -268,13 +269,13 @@ export const HistoryOneAuditStream: React.FC<AuditStreamProps> = ({ isDesktop = 
               >
                 <span style={{ color: COLORS.deepSlate }}>HKO Overlap (Sub-judul)</span>
                 <span style={{ color: COLORS.deepSlate }}>
-                  25% <span style={{ color: "rgba(30, 41, 59, 0.55)", fontWeight: 400 }}>(Maks 40%)</span>
+                  25% <span style={{ color: "var(--waskita-text-subtle, rgba(30, 41, 59, 0.55))", fontWeight: 400 }}>(Maks 40%)</span>
                 </span>
               </div>
               <div
                 style={{
                   height: "7px",
-                  background: "rgba(30, 41, 59, 0.12)",
+                  background: "var(--waskita-track, rgba(30, 41, 59, 0.12))",
                   borderRadius: "9999px",
                   overflow: "hidden",
                 }}
@@ -299,13 +300,13 @@ export const HistoryOneAuditStream: React.FC<AuditStreamProps> = ({ isDesktop = 
             border: "none",
             borderRadius: 0,
             padding: "20px 0",
-            borderBottom: "1px solid rgba(30, 41, 59, 0.1)",
+            borderBottom: "1px solid var(--waskita-border, rgba(30, 41, 59, 0.1))",
           }}
         >
           <h3 style={{ fontSize: "15px", fontWeight: 700, margin: "0 0 4px 0", color: COLORS.deepSlate }}>
             Celah Topik · Information Gain
           </h3>
-          <p style={{ fontSize: "12px", color: "rgba(30, 41, 59, 0.65)", margin: "0 0 12px 0" }}>
+          <p style={{ fontSize: "12px", color: "var(--waskita-text-muted, rgba(30, 41, 59, 0.65))", margin: "0 0 12px 0" }}>
             Perbandingan entitas topik terhadap dominansi hasil pencarian Google
           </p>
 
@@ -315,7 +316,7 @@ export const HistoryOneAuditStream: React.FC<AuditStreamProps> = ({ isDesktop = 
               style={{
                 fontSize: "12px",
                 fontWeight: 600,
-                color: "#DC2626",
+                color: "var(--waskita-rose-accent, #DC2626)",
                 marginBottom: "6px",
               }}
             >
@@ -326,8 +327,9 @@ export const HistoryOneAuditStream: React.FC<AuditStreamProps> = ({ isDesktop = 
                 <span
                   key={tag}
                   style={{
-                    background: "#FEE2E2",
-                    color: "#991B1B",
+                    background: "var(--waskita-rose-bg, #FEE2E2)",
+                    color: "var(--waskita-rose-text, #991B1B)",
+                    border: "1px solid var(--waskita-rose-border, transparent)",
                     padding: "4px 10px",
                     borderRadius: "9999px",
                     fontSize: "11.5px",
@@ -346,7 +348,7 @@ export const HistoryOneAuditStream: React.FC<AuditStreamProps> = ({ isDesktop = 
               style={{
                 fontSize: "12px",
                 fontWeight: 600,
-                color: "#059669",
+                color: "var(--waskita-emerald-accent, #059669)",
                 marginBottom: "6px",
               }}
             >
@@ -357,8 +359,9 @@ export const HistoryOneAuditStream: React.FC<AuditStreamProps> = ({ isDesktop = 
                 <span
                   key={tag}
                   style={{
-                    background: "#D1FAE5",
-                    color: "#065F46",
+                    background: "var(--waskita-emerald-bg, #D1FAE5)",
+                    color: "var(--waskita-emerald-text, #065F46)",
+                    border: "1px solid var(--waskita-emerald-border, transparent)",
                     padding: "4px 10px",
                     borderRadius: "9999px",
                     fontSize: "11.5px",
@@ -379,13 +382,13 @@ export const HistoryOneAuditStream: React.FC<AuditStreamProps> = ({ isDesktop = 
             border: "none",
             borderRadius: 0,
             padding: "20px 0",
-            borderBottom: "1px solid rgba(30, 41, 59, 0.1)",
+            borderBottom: "1px solid var(--waskita-border, rgba(30, 41, 59, 0.1))",
           }}
         >
           <h3 style={{ fontSize: "15px", fontWeight: 700, margin: "0 0 4px 0", color: COLORS.deepSlate }}>
             Naskah Terkurasi &amp; Anotasi
           </h3>
-          <p style={{ fontSize: "12px", color: "rgba(30, 41, 59, 0.65)", margin: "0 0 10px 0" }}>
+          <p style={{ fontSize: "12px", color: "var(--waskita-text-muted, rgba(30, 41, 59, 0.65))", margin: "0 0 10px 0" }}>
             Evaluasi per-paragraf dengan kode warna stilometri
           </p>
 
@@ -423,7 +426,7 @@ export const HistoryOneAuditStream: React.FC<AuditStreamProps> = ({ isDesktop = 
             style={{
               fontSize: "13px",
               lineHeight: 1.6,
-              color: "#334155",
+              color: "var(--waskita-text-body, #334155)",
               marginBottom: "12px",
             }}
           >
@@ -431,8 +434,8 @@ export const HistoryOneAuditStream: React.FC<AuditStreamProps> = ({ isDesktop = 
               Kopi tubruk adalah minuman khas Indonesia yang dibuat dengan cara menyeduh bubuk kopi secara langsung tanpa disaring.{" "}
               <mark
                 style={{
-                  background: "#FEF08A",
-                  color: "#1E293B",
+                  background: "var(--waskita-mark-yellow-bg, #FEF08A)",
+                  color: "var(--waskita-mark-yellow-text, #1E293B)",
                   padding: "1px 4px",
                   borderRadius: 3,
                 }}
@@ -443,8 +446,8 @@ export const HistoryOneAuditStream: React.FC<AuditStreamProps> = ({ isDesktop = 
             <p style={{ margin: 0 }}>
               <mark
                 style={{
-                  background: "#FECACA",
-                  color: "#1E293B",
+                  background: "var(--waskita-mark-red-bg, #FECACA)",
+                  color: "var(--waskita-mark-red-text, #1E293B)",
                   padding: "1px 4px",
                   borderRadius: 3,
                 }}
@@ -453,8 +456,8 @@ export const HistoryOneAuditStream: React.FC<AuditStreamProps> = ({ isDesktop = 
               </mark>{" "}
               <mark
                 style={{
-                  background: "#BBF7D0",
-                  color: "#1E293B",
+                  background: "var(--waskita-mark-green-bg, #BBF7D0)",
+                  color: "var(--waskita-mark-green-text, #1E293B)",
                   padding: "1px 4px",
                   borderRadius: 3,
                 }}
@@ -464,7 +467,7 @@ export const HistoryOneAuditStream: React.FC<AuditStreamProps> = ({ isDesktop = 
             </p>
           </div>
 
-          <div style={{ fontSize: "12px", color: "rgba(30, 41, 59, 0.65)", fontStyle: "italic" }}>
+          <div style={{ fontSize: "12px", color: "var(--waskita-text-muted, rgba(30, 41, 59, 0.65))", fontStyle: "italic" }}>
             Catatan: Hapus frase klise pada kalimat awal dan segera masukkan rincian teknis penyeduhan agar memenuhi intensitas informasi SERP.
           </div>
         </section>
@@ -476,13 +479,13 @@ export const HistoryOneAuditStream: React.FC<AuditStreamProps> = ({ isDesktop = 
             border: "none",
             borderRadius: 0,
             padding: "20px 0",
-            borderBottom: "1px solid rgba(30, 41, 59, 0.1)",
+            borderBottom: "1px solid var(--waskita-border, rgba(30, 41, 59, 0.1))",
           }}
         >
           <h3 style={{ fontSize: "15px", fontWeight: 700, margin: "0 0 4px 0", color: COLORS.deepSlate }}>
             Overview &amp; Prompt Bantuan
           </h3>
-          <p style={{ fontSize: "12px", color: "rgba(30, 41, 59, 0.65)", margin: "0 0 10px 0" }}>
+          <p style={{ fontSize: "12px", color: "var(--waskita-text-muted, rgba(30, 41, 59, 0.65))", margin: "0 0 10px 0" }}>
             Gunakan panduan instruksi ini untuk meminta asisten AI menulis ulang bagian yang defisit
           </p>
 
@@ -492,7 +495,7 @@ export const HistoryOneAuditStream: React.FC<AuditStreamProps> = ({ isDesktop = 
               paddingLeft: "18px",
               fontSize: "12.5px",
               lineHeight: 1.5,
-              color: "#334155",
+              color: "var(--waskita-text-body, #334155)",
             }}
           >
             <li>Perbaiki struktur sub-judul agar tidak menjiplak gaya artikel kompetitor.</li>
@@ -501,8 +504,8 @@ export const HistoryOneAuditStream: React.FC<AuditStreamProps> = ({ isDesktop = 
 
           <div
             style={{
-              background: "rgba(255, 255, 255, 0.7)",
-              border: "1px solid rgba(30, 41, 59, 0.15)",
+              background: "var(--waskita-code-bg, rgba(255, 255, 255, 0.7))",
+              border: "1px solid var(--waskita-border-strong, rgba(30, 41, 59, 0.15))",
               borderRadius: "12px",
               padding: "12px 14px",
               position: "relative",
@@ -516,7 +519,7 @@ export const HistoryOneAuditStream: React.FC<AuditStreamProps> = ({ isDesktop = 
                 marginBottom: "6px",
               }}
             >
-              <span style={{ fontSize: "11px", fontWeight: 700, color: "rgba(30, 41, 59, 0.6)" }}>
+              <span style={{ fontSize: "11px", fontWeight: 700, color: "var(--waskita-text-muted, rgba(30, 41, 59, 0.6))" }}>
                 prompt-bantuan.txt
               </span>
               <button
@@ -569,7 +572,7 @@ Wajib sertakan poin penting berikut:
           <h3 style={{ fontSize: "15px", fontWeight: 700, margin: "0 0 4px 0", color: COLORS.deepSlate }}>
             Referensi SERP · Top 3 Google
           </h3>
-          <p style={{ fontSize: "12px", color: "rgba(30, 41, 59, 0.65)", margin: "0 0 12px 0" }}>
+          <p style={{ fontSize: "12px", color: "var(--waskita-text-muted, rgba(30, 41, 59, 0.65))", margin: "0 0 12px 0" }}>
             Artikel kompetitor acuan untuk kueri "resep kopi tubruk tradisional"
           </p>
 
@@ -601,7 +604,7 @@ Wajib sertakan poin penting berikut:
                   alignItems: "flex-start",
                   gap: "10px",
                   padding: "8px 0",
-                  borderBottom: "1px dashed rgba(30, 41, 59, 0.12)",
+                  borderBottom: "1px dashed var(--waskita-border, rgba(30, 41, 59, 0.12))",
                 }}
               >
                 <span
@@ -640,15 +643,15 @@ Wajib sertakan poin penting berikut:
                     >
                       {item.title}
                     </h4>
-                    <IconExternalLink size={13} color="rgba(30, 41, 59, 0.6)" />
+                    <IconExternalLink size={13} color="var(--waskita-text-muted, rgba(30, 41, 59, 0.6))" />
                   </div>
-                  <span style={{ fontSize: "11px", color: "#059669", fontWeight: 500 }}>
+                  <span style={{ fontSize: "11px", color: "var(--waskita-emerald-accent, #059669)", fontWeight: 500 }}>
                     {item.domain}
                   </span>
                   <p
                     style={{
                       fontSize: "11.5px",
-                      color: "rgba(30, 41, 59, 0.65)",
+                      color: "var(--waskita-text-muted, rgba(30, 41, 59, 0.65))",
                       margin: "3px 0 0 0",
                       lineHeight: 1.4,
                     }}
@@ -671,20 +674,20 @@ Wajib sertakan poin penting berikut:
           margin: "4px 0",
         }}
       >
-        <div style={{ height: "1px", background: "rgba(30, 41, 59, 0.15)", flex: 1 }} />
+        <div style={{ height: "1px", background: "var(--waskita-border-strong, rgba(30, 41, 59, 0.15))", flex: 1 }} />
         <span
           style={{
             padding: "0 12px",
             fontSize: "11px",
             fontWeight: 700,
-            color: "rgba(30, 41, 59, 0.5)",
+            color: "var(--waskita-text-subtle, rgba(30, 41, 59, 0.5))",
             textTransform: "uppercase",
             letterSpacing: "0.5px",
           }}
         >
           Iterasi Revisi
         </span>
-        <div style={{ height: "1px", background: "rgba(30, 41, 59, 0.15)", flex: 1 }} />
+        <div style={{ height: "1px", background: "var(--waskita-border-strong, rgba(30, 41, 59, 0.15))", flex: 1 }} />
       </div>
 
       {/* Bubble Revisi Pengguna (#E9DFCA) */}
@@ -698,7 +701,7 @@ Wajib sertakan poin penting berikut:
           padding: "12px 16px",
           fontSize: "12.5px",
           lineHeight: 1.5,
-          border: "1px solid rgba(30, 41, 59, 0.08)",
+          border: "1px solid var(--waskita-border, rgba(30, 41, 59, 0.08))",
           boxShadow: "0 2px 8px rgba(30, 41, 59, 0.03)",
         }}
       >
@@ -729,21 +732,21 @@ Wajib sertakan poin penting berikut:
             justifyContent: "space-between",
             marginBottom: "14px",
             paddingBottom: "10px",
-            borderBottom: "1px dashed rgba(30, 41, 59, 0.15)",
+            borderBottom: "1px dashed var(--waskita-border-strong, rgba(30, 41, 59, 0.15))",
           }}
         >
           <span
             style={{
               fontSize: "11px",
               fontWeight: 800,
-              color: "#059669",
+              color: "var(--waskita-emerald-accent, #059669)",
               textTransform: "uppercase",
               letterSpacing: "0.5px",
             }}
           >
             Hasil Analisis #2 (Terbaru)
           </span>
-          <span style={{ fontSize: "11px", color: "rgba(30, 41, 59, 0.55)" }}>10:22 WIB</span>
+          <span style={{ fontSize: "11px", color: "var(--waskita-text-subtle, rgba(30, 41, 59, 0.55))" }}>10:22 WIB</span>
         </div>
 
         {/* Seksi 1: Status Kelayakan (CDS 85% Emerald Siap Terbit) */}
@@ -753,7 +756,7 @@ Wajib sertakan poin penting berikut:
             border: "none",
             borderRadius: 0,
             padding: "0 0 20px 0",
-            borderBottom: "1px solid rgba(30, 41, 59, 0.1)",
+            borderBottom: "1px solid var(--waskita-border, rgba(30, 41, 59, 0.1))",
           }}
         >
           <div
@@ -768,14 +771,15 @@ Wajib sertakan poin penting berikut:
               <h2 style={{ fontSize: "17px", fontWeight: 700, margin: 0, color: COLORS.deepSlate }}>
                 Status Kelayakan
               </h2>
-              <p style={{ fontSize: "12px", color: "rgba(30, 41, 59, 0.65)", margin: "2px 0 0 0" }}>
+              <p style={{ fontSize: "12px", color: "var(--waskita-text-muted, rgba(30, 41, 59, 0.65))", margin: "2px 0 0 0" }}>
                 CDS: 85% (Ambang Standar: 75%)
               </p>
             </div>
             <span
               style={{
-                background: "#D1FAE5",
-                color: "#065F46",
+                background: "var(--waskita-emerald-bg, #D1FAE5)",
+                color: "var(--waskita-emerald-text, #065F46)",
+                border: "1px solid var(--waskita-emerald-border, transparent)",
                 padding: "4px 12px",
                 borderRadius: "9999px",
                 fontSize: "12px",
@@ -785,7 +789,7 @@ Wajib sertakan poin penting berikut:
                 gap: "4px",
               }}
             >
-              <IconCheck size={14} color="#059669" /> Siap Terbit
+              <IconCheck size={14} color="var(--waskita-emerald-accent, #059669)" /> Siap Terbit
             </span>
           </div>
 
@@ -798,14 +802,14 @@ Wajib sertakan poin penting berikut:
               display: "flex",
               alignItems: "flex-start",
               gap: "8px",
-              color: "#065F46",
+              color: "var(--waskita-emerald-text, #065F46)",
               fontSize: "12.5px",
               lineHeight: 1.5,
               marginTop: "8px",
             }}
           >
             <div style={{ flexShrink: 0, marginTop: "2px" }}>
-              <IconCheck size={16} color="#059669" />
+              <IconCheck size={16} color="var(--waskita-emerald-accent, #059669)" />
             </div>
             <div>
               Selamat! Skor <strong>85%</strong> berhasil melampaui standar <strong>75%</strong>.
@@ -821,13 +825,13 @@ Wajib sertakan poin penting berikut:
             border: "none",
             borderRadius: 0,
             padding: "20px 0",
-            borderBottom: "1px solid rgba(30, 41, 59, 0.1)",
+            borderBottom: "1px solid var(--waskita-border, rgba(30, 41, 59, 0.1))",
           }}
         >
           <h3 style={{ fontSize: "15px", fontWeight: 700, margin: "0 0 4px 0", color: COLORS.deepSlate }}>
             Metrik Stilometri &amp; Leksikal
           </h3>
-          <p style={{ fontSize: "12px", color: "rgba(30, 41, 59, 0.65)", margin: "0 0 14px 0" }}>
+          <p style={{ fontSize: "12px", color: "var(--waskita-text-muted, rgba(30, 41, 59, 0.65))", margin: "0 0 14px 0" }}>
             Optimalisasi leksikal dan kemiripan semantik pasca revisi
           </p>
 
@@ -850,12 +854,12 @@ Wajib sertakan poin penting berikut:
                 }}
               >
                 <span style={{ color: COLORS.deepSlate }}>VSM Cosine Similarity</span>
-                <span style={{ color: "#059669" }}>0.36 (Optimal &lt; 0.60)</span>
+                <span style={{ color: "var(--waskita-emerald-accent, #059669)" }}>0.36 (Optimal &lt; 0.60)</span>
               </div>
               <div
                 style={{
                   height: "7px",
-                  background: "rgba(30, 41, 59, 0.12)",
+                  background: "var(--waskita-track, rgba(30, 41, 59, 0.12))",
                   borderRadius: "9999px",
                   overflow: "hidden",
                 }}
@@ -875,12 +879,12 @@ Wajib sertakan poin penting berikut:
                 }}
               >
                 <span style={{ color: COLORS.deepSlate }}>MATTR (Kekayaan Leksikal)</span>
-                <span style={{ color: "#059669" }}>0.74 (Sangat Kaya &gt; 0.55)</span>
+                <span style={{ color: "var(--waskita-emerald-accent, #059669)" }}>0.74 (Sangat Kaya &gt; 0.55)</span>
               </div>
               <div
                 style={{
                   height: "7px",
-                  background: "rgba(30, 41, 59, 0.12)",
+                  background: "var(--waskita-track, rgba(30, 41, 59, 0.12))",
                   borderRadius: "9999px",
                   overflow: "hidden",
                 }}
@@ -898,18 +902,18 @@ Wajib sertakan poin penting berikut:
             border: "none",
             borderRadius: 0,
             padding: "20px 0",
-            borderBottom: "1px solid rgba(30, 41, 59, 0.1)",
+            borderBottom: "1px solid var(--waskita-border, rgba(30, 41, 59, 0.1))",
           }}
         >
           <h3 style={{ fontSize: "15px", fontWeight: 700, margin: "0 0 4px 0", color: COLORS.deepSlate }}>
             Celah Topik · Information Gain Terpenuhi
           </h3>
-          <p style={{ fontSize: "12px", color: "rgba(30, 41, 59, 0.65)", margin: "0 0 12px 0" }}>
+          <p style={{ fontSize: "12px", color: "var(--waskita-text-muted, rgba(30, 41, 59, 0.65))", margin: "0 0 12px 0" }}>
             Seluruh defisit topik telah teratasi dengan penambahan entitas spesifik
           </p>
 
           <div>
-            <span style={{ fontSize: "12px", fontWeight: 700, color: "#059669", display: "block", marginBottom: "8px" }}>
+            <span style={{ fontSize: "12px", fontWeight: 700, color: "var(--waskita-emerald-accent, #059669)", display: "block", marginBottom: "8px" }}>
               Δ gain Terpenuhi:
             </span>
             <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
@@ -917,8 +921,9 @@ Wajib sertakan poin penting berikut:
                 <span
                   key={tag}
                   style={{
-                    background: "#D1FAE5",
-                    color: "#065F46",
+                    background: "var(--waskita-emerald-bg, #D1FAE5)",
+                    color: "var(--waskita-emerald-text, #065F46)",
+                    border: "1px solid var(--waskita-emerald-border, transparent)",
                     padding: "4px 10px",
                     borderRadius: "9999px",
                     fontSize: "11.5px",
@@ -928,7 +933,7 @@ Wajib sertakan poin penting berikut:
                     gap: "4px",
                   }}
                 >
-                  <IconCheck size={12} color="#065F46" /> {tag}
+                  <IconCheck size={12} color="var(--waskita-emerald-text, #065F46)" /> {tag}
                 </span>
               ))}
             </div>
@@ -942,13 +947,13 @@ Wajib sertakan poin penting berikut:
             border: "none",
             borderRadius: 0,
             padding: "20px 0",
-            borderBottom: "1px solid rgba(30, 41, 59, 0.1)",
+            borderBottom: "1px solid var(--waskita-border, rgba(30, 41, 59, 0.1))",
           }}
         >
           <h3 style={{ fontSize: "15px", fontWeight: 700, margin: "0 0 4px 0", color: COLORS.deepSlate }}>
             Naskah Terkurasi &amp; Anotasi
           </h3>
-          <p style={{ fontSize: "12px", color: "rgba(30, 41, 59, 0.65)", margin: "0 0 10px 0" }}>
+          <p style={{ fontSize: "12px", color: "var(--waskita-text-muted, rgba(30, 41, 59, 0.65))", margin: "0 0 10px 0" }}>
             Tinjauan draf hasil revisi dengan pembuktian stilometri dan penutupan celah informasi
           </p>
 
@@ -956,15 +961,15 @@ Wajib sertakan poin penting berikut:
             style={{
               fontSize: "13px",
               lineHeight: 1.6,
-              color: "#334155",
+              color: "var(--waskita-text-body, #334155)",
               marginBottom: "12px",
             }}
           >
             <p style={{ margin: "0 0 8px 0" }}>
               <mark
                 style={{
-                  background: "#BBF7D0",
-                  color: "#1E293B",
+                  background: "var(--waskita-mark-green-bg, #BBF7D0)",
+                  color: "var(--waskita-mark-green-text, #1E293B)",
                   padding: "1px 4px",
                   borderRadius: 3,
                 }}
@@ -976,8 +981,8 @@ Wajib sertakan poin penting berikut:
             <p style={{ margin: 0 }}>
               <mark
                 style={{
-                  background: "#BBF7D0",
-                  color: "#1E293B",
+                  background: "var(--waskita-mark-green-bg, #BBF7D0)",
+                  color: "var(--waskita-mark-green-text, #1E293B)",
                   padding: "1px 4px",
                   borderRadius: 3,
                 }}
@@ -994,11 +999,11 @@ Wajib sertakan poin penting berikut:
               alignItems: "center",
               gap: "6px",
               fontSize: "12px",
-              color: "#059669",
+              color: "var(--waskita-emerald-accent, #059669)",
               fontWeight: 600,
             }}
           >
-            <IconCheck size={14} color="#059669" />
+            <IconCheck size={14} color="var(--waskita-emerald-accent, #059669)" />
             <span>Kelulusan Anotasi: Naskah 100% orisinal, bebas klise, dan seluruh parameter teknis telah terverifikasi.</span>
           </div>
         </section>
@@ -1010,13 +1015,13 @@ Wajib sertakan poin penting berikut:
             border: "none",
             borderRadius: 0,
             padding: "20px 0",
-            borderBottom: "1px solid rgba(30, 41, 59, 0.1)",
+            borderBottom: "1px solid var(--waskita-border, rgba(30, 41, 59, 0.1))",
           }}
         >
           <h3 style={{ fontSize: "15px", fontWeight: 700, margin: "0 0 4px 0", color: COLORS.deepSlate }}>
             Overview Editorial Publikasi
           </h3>
-          <p style={{ fontSize: "12px", color: "rgba(30, 41, 59, 0.65)", margin: "0 0 10px 0" }}>
+          <p style={{ fontSize: "12px", color: "var(--waskita-text-muted, rgba(30, 41, 59, 0.65))", margin: "0 0 10px 0" }}>
             Catatan redaksi untuk kesiapan publikasi ke sistem CMS
           </p>
 
@@ -1026,7 +1031,7 @@ Wajib sertakan poin penting berikut:
               paddingLeft: "18px",
               fontSize: "12.5px",
               lineHeight: 1.5,
-              color: "#334155",
+              color: "var(--waskita-text-body, #334155)",
             }}
           >
             <li>Draf telah siap diterbitkan langsung ke WordPress/Ghost dengan skor kelayakan 85%.</li>
@@ -1036,7 +1041,7 @@ Wajib sertakan poin penting berikut:
 
           <div
             style={{
-              background: "rgba(255, 255, 255, 0.7)",
+              background: "var(--waskita-code-bg, rgba(255, 255, 255, 0.7))",
               border: "1px solid rgba(16, 185, 129, 0.3)",
               borderRadius: "12px",
               padding: "12px 14px",
@@ -1051,7 +1056,7 @@ Wajib sertakan poin penting berikut:
                 marginBottom: "6px",
               }}
             >
-              <span style={{ fontSize: "11px", fontWeight: 700, color: "#065F46" }}>
+              <span style={{ fontSize: "11px", fontWeight: 700, color: "var(--waskita-emerald-text, #065F46)" }}>
                 ringkasan-editorial-final.txt
               </span>
               <button
@@ -1104,7 +1109,7 @@ Wajib sertakan poin penting berikut:
           <h3 style={{ fontSize: "15px", fontWeight: 700, margin: "0 0 4px 0", color: COLORS.deepSlate }}>
             Referensi SERP · Top 3 Google
           </h3>
-          <p style={{ fontSize: "12px", color: "rgba(30, 41, 59, 0.65)", margin: "0 0 12px 0" }}>
+          <p style={{ fontSize: "12px", color: "var(--waskita-text-muted, rgba(30, 41, 59, 0.65))", margin: "0 0 12px 0" }}>
             Artikel kompetitor acuan untuk kueri "resep kopi tubruk tradisional"
           </p>
 
@@ -1136,7 +1141,7 @@ Wajib sertakan poin penting berikut:
                   alignItems: "flex-start",
                   gap: "10px",
                   padding: "8px 0",
-                  borderBottom: "1px dashed rgba(30, 41, 59, 0.12)",
+                  borderBottom: "1px dashed var(--waskita-border, rgba(30, 41, 59, 0.12))",
                 }}
               >
                 <span
@@ -1175,15 +1180,15 @@ Wajib sertakan poin penting berikut:
                     >
                       {item.title}
                     </h4>
-                    <IconExternalLink size={13} color="rgba(30, 41, 59, 0.6)" />
+                    <IconExternalLink size={13} color="var(--waskita-text-muted, rgba(30, 41, 59, 0.6))" />
                   </div>
-                  <span style={{ fontSize: "11px", color: "#059669", fontWeight: 500 }}>
+                  <span style={{ fontSize: "11px", color: "var(--waskita-emerald-accent, #059669)", fontWeight: 500 }}>
                     {item.domain}
                   </span>
                   <p
                     style={{
                       fontSize: "11.5px",
-                      color: "rgba(30, 41, 59, 0.65)",
+                      color: "var(--waskita-text-muted, rgba(30, 41, 59, 0.65))",
                       margin: "3px 0 0 0",
                       lineHeight: 1.4,
                     }}
@@ -1232,7 +1237,7 @@ export const HistoryTwoAuditStream: React.FC<AuditStreamProps> = ({ isDesktop = 
           padding: "10px 16px",
           fontSize: "13px",
           lineHeight: 1.45,
-          border: "1px solid rgba(30, 41, 59, 0.08)",
+          border: "1px solid var(--waskita-border, rgba(30, 41, 59, 0.08))",
           boxShadow: "0 2px 8px rgba(30, 41, 59, 0.03)",
         }}
       >
@@ -1258,21 +1263,21 @@ export const HistoryTwoAuditStream: React.FC<AuditStreamProps> = ({ isDesktop = 
             justifyContent: "space-between",
             marginBottom: "14px",
             paddingBottom: "10px",
-            borderBottom: "1px dashed rgba(30, 41, 59, 0.15)",
+            borderBottom: "1px dashed var(--waskita-border-strong, rgba(30, 41, 59, 0.15))",
           }}
         >
           <span
             style={{
               fontSize: "11px",
               fontWeight: 800,
-              color: "#059669",
+              color: "var(--waskita-emerald-accent, #059669)",
               textTransform: "uppercase",
               letterSpacing: "0.5px",
             }}
           >
             Hasil Analisis Sesi #2
           </span>
-          <span style={{ fontSize: "11px", color: "rgba(30, 41, 59, 0.55)" }}>Kemarin, 16:40 WIB</span>
+          <span style={{ fontSize: "11px", color: "var(--waskita-text-subtle, rgba(30, 41, 59, 0.55))" }}>Kemarin, 16:40 WIB</span>
         </div>
 
         {/* Seksi 1: Status Kelayakan (CDS 88% Siap Terbit) */}
@@ -1282,7 +1287,7 @@ export const HistoryTwoAuditStream: React.FC<AuditStreamProps> = ({ isDesktop = 
             border: "none",
             borderRadius: 0,
             padding: "0 0 20px 0",
-            borderBottom: "1px solid rgba(30, 41, 59, 0.1)",
+            borderBottom: "1px solid var(--waskita-border, rgba(30, 41, 59, 0.1))",
           }}
         >
           <div
@@ -1297,14 +1302,15 @@ export const HistoryTwoAuditStream: React.FC<AuditStreamProps> = ({ isDesktop = 
               <h2 style={{ fontSize: "17px", fontWeight: 700, margin: 0, color: COLORS.deepSlate }}>
                 Status Kelayakan
               </h2>
-              <p style={{ fontSize: "12px", color: "rgba(30, 41, 59, 0.65)", margin: "2px 0 0 0" }}>
+              <p style={{ fontSize: "12px", color: "var(--waskita-text-muted, rgba(30, 41, 59, 0.65))", margin: "2px 0 0 0" }}>
                 CDS: 88% (Ambang Standar: 75%)
               </p>
             </div>
             <span
               style={{
-                background: "#D1FAE5",
-                color: "#065F46",
+                background: "var(--waskita-emerald-bg, #D1FAE5)",
+                color: "var(--waskita-emerald-text, #065F46)",
+                border: "1px solid var(--waskita-emerald-border, transparent)",
                 padding: "4px 12px",
                 borderRadius: "9999px",
                 fontSize: "12px",
@@ -1314,7 +1320,7 @@ export const HistoryTwoAuditStream: React.FC<AuditStreamProps> = ({ isDesktop = 
                 gap: "4px",
               }}
             >
-              <IconCheck size={14} color="#059669" /> Siap Terbit
+              <IconCheck size={14} color="var(--waskita-emerald-accent, #059669)" /> Siap Terbit
             </span>
           </div>
 
@@ -1327,14 +1333,14 @@ export const HistoryTwoAuditStream: React.FC<AuditStreamProps> = ({ isDesktop = 
               display: "flex",
               alignItems: "flex-start",
               gap: "8px",
-              color: "#065F46",
+              color: "var(--waskita-emerald-text, #065F46)",
               fontSize: "12.5px",
               lineHeight: 1.5,
               marginTop: "8px",
             }}
           >
             <div style={{ flexShrink: 0, marginTop: "2px" }}>
-              <IconCheck size={16} color="#059669" />
+              <IconCheck size={16} color="var(--waskita-emerald-accent, #059669)" />
             </div>
             <div>
               Kualitas naskah luar biasa! Skor <strong>88%</strong> melampaui ambang standar.
@@ -1350,13 +1356,13 @@ export const HistoryTwoAuditStream: React.FC<AuditStreamProps> = ({ isDesktop = 
             border: "none",
             borderRadius: 0,
             padding: "20px 0",
-            borderBottom: "1px solid rgba(30, 41, 59, 0.1)",
+            borderBottom: "1px solid var(--waskita-border, rgba(30, 41, 59, 0.1))",
           }}
         >
           <h3 style={{ fontSize: "15px", fontWeight: 700, margin: "0 0 4px 0", color: COLORS.deepSlate }}>
             Metrik Stilometri &amp; Leksikal
           </h3>
-          <p style={{ fontSize: "12px", color: "rgba(30, 41, 59, 0.65)", margin: "0 0 14px 0" }}>
+          <p style={{ fontSize: "12px", color: "var(--waskita-text-muted, rgba(30, 41, 59, 0.65))", margin: "0 0 14px 0" }}>
             Hasil pemetaan vektor semantik dan kepadatan istilah teknis web
           </p>
 
@@ -1380,14 +1386,14 @@ export const HistoryTwoAuditStream: React.FC<AuditStreamProps> = ({ isDesktop = 
                 }}
               >
                 <span style={{ color: COLORS.deepSlate }}>VSM Cosine Similarity</span>
-                <span style={{ color: "#059669" }}>
-                  0.36 <span style={{ color: "rgba(30, 41, 59, 0.55)", fontWeight: 400 }}>(Maks 0.60)</span>
+                <span style={{ color: "var(--waskita-emerald-accent, #059669)" }}>
+                  0.36 <span style={{ color: "var(--waskita-text-subtle, rgba(30, 41, 59, 0.55))", fontWeight: 400 }}>(Maks 0.60)</span>
                 </span>
               </div>
               <div
                 style={{
                   height: "7px",
-                  background: "rgba(30, 41, 59, 0.12)",
+                  background: "var(--waskita-track, rgba(30, 41, 59, 0.12))",
                   borderRadius: "9999px",
                   overflow: "hidden",
                 }}
@@ -1408,14 +1414,14 @@ export const HistoryTwoAuditStream: React.FC<AuditStreamProps> = ({ isDesktop = 
                 }}
               >
                 <span style={{ color: COLORS.deepSlate }}>MATTR (Kekayaan Leksikal)</span>
-                <span style={{ color: "#059669" }}>
-                  0.68 <span style={{ color: "rgba(30, 41, 59, 0.55)", fontWeight: 400 }}>(Min 0.55)</span>
+                <span style={{ color: "var(--waskita-emerald-accent, #059669)" }}>
+                  0.68 <span style={{ color: "var(--waskita-text-subtle, rgba(30, 41, 59, 0.55))", fontWeight: 400 }}>(Min 0.55)</span>
                 </span>
               </div>
               <div
                 style={{
                   height: "7px",
-                  background: "rgba(30, 41, 59, 0.12)",
+                  background: "var(--waskita-track, rgba(30, 41, 59, 0.12))",
                   borderRadius: "9999px",
                   overflow: "hidden",
                 }}
@@ -1436,14 +1442,14 @@ export const HistoryTwoAuditStream: React.FC<AuditStreamProps> = ({ isDesktop = 
                 }}
               >
                 <span style={{ color: COLORS.deepSlate }}>HKO Overlap (Sub-judul)</span>
-                <span style={{ color: "#059669" }}>
-                  20% <span style={{ color: "rgba(30, 41, 59, 0.55)", fontWeight: 400 }}>(Maks 40%)</span>
+                <span style={{ color: "var(--waskita-emerald-accent, #059669)" }}>
+                  20% <span style={{ color: "var(--waskita-text-subtle, rgba(30, 41, 59, 0.55))", fontWeight: 400 }}>(Maks 40%)</span>
                 </span>
               </div>
               <div
                 style={{
                   height: "7px",
-                  background: "rgba(30, 41, 59, 0.12)",
+                  background: "var(--waskita-track, rgba(30, 41, 59, 0.12))",
                   borderRadius: "9999px",
                   overflow: "hidden",
                 }}
@@ -1461,18 +1467,18 @@ export const HistoryTwoAuditStream: React.FC<AuditStreamProps> = ({ isDesktop = 
             border: "none",
             borderRadius: 0,
             padding: "20px 0",
-            borderBottom: "1px solid rgba(30, 41, 59, 0.1)",
+            borderBottom: "1px solid var(--waskita-border, rgba(30, 41, 59, 0.1))",
           }}
         >
           <h3 style={{ fontSize: "15px", fontWeight: 700, margin: "0 0 4px 0", color: COLORS.deepSlate }}>
             Celah Topik · Information Gain
           </h3>
-          <p style={{ fontSize: "12px", color: "rgba(30, 41, 59, 0.65)", margin: "0 0 12px 0" }}>
+          <p style={{ fontSize: "12px", color: "var(--waskita-text-muted, rgba(30, 41, 59, 0.65))", margin: "0 0 12px 0" }}>
             Analisis diferensiasi materi dibanding hasil pencarian kompetitor top SEO
           </p>
 
           <div style={{ marginBottom: "10px" }}>
-            <span style={{ fontSize: "12px", fontWeight: 700, color: "#059669", display: "block", marginBottom: "6px" }}>
+            <span style={{ fontSize: "12px", fontWeight: 700, color: "var(--waskita-emerald-accent, #059669)", display: "block", marginBottom: "6px" }}>
               Δ gain (Nilai Tambah Signifikan Ditemukan):
             </span>
             <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
@@ -1486,8 +1492,9 @@ export const HistoryTwoAuditStream: React.FC<AuditStreamProps> = ({ isDesktop = 
                 <span
                   key={tag}
                   style={{
-                    background: "#D1FAE5",
-                    color: "#065F46",
+                    background: "var(--waskita-emerald-bg, #D1FAE5)",
+                    color: "var(--waskita-emerald-text, #065F46)",
+                    border: "1px solid var(--waskita-emerald-border, transparent)",
                     padding: "4px 10px",
                     borderRadius: "9999px",
                     fontSize: "11.5px",
@@ -1508,13 +1515,13 @@ export const HistoryTwoAuditStream: React.FC<AuditStreamProps> = ({ isDesktop = 
             border: "none",
             borderRadius: 0,
             padding: "20px 0",
-            borderBottom: "1px solid rgba(30, 41, 59, 0.1)",
+            borderBottom: "1px solid var(--waskita-border, rgba(30, 41, 59, 0.1))",
           }}
         >
           <h3 style={{ fontSize: "15px", fontWeight: 700, margin: "0 0 4px 0", color: COLORS.deepSlate }}>
             Naskah Terkurasi &amp; Anotasi
           </h3>
-          <p style={{ fontSize: "12px", color: "rgba(30, 41, 59, 0.65)", margin: "0 0 12px 0" }}>
+          <p style={{ fontSize: "12px", color: "var(--waskita-text-muted, rgba(30, 41, 59, 0.65))", margin: "0 0 12px 0" }}>
             Tinjauan paragraf teknis Core Web Vitals dengan pembuktian empiris
           </p>
 
@@ -1522,7 +1529,7 @@ export const HistoryTwoAuditStream: React.FC<AuditStreamProps> = ({ isDesktop = 
             style={{
               fontSize: "13px",
               lineHeight: 1.6,
-              color: "#334155",
+              color: "var(--waskita-text-body, #334155)",
               marginBottom: "12px",
             }}
           >
@@ -1530,8 +1537,8 @@ export const HistoryTwoAuditStream: React.FC<AuditStreamProps> = ({ isDesktop = 
               Transisi metrik FID menjadi{" "}
               <mark
                 style={{
-                  background: "#BBF7D0",
-                  color: "#1E293B",
+                  background: "var(--waskita-mark-green-bg, #BBF7D0)",
+                  color: "var(--waskita-mark-green-text, #1E293B)",
                   padding: "1px 4px",
                   borderRadius: 3,
                 }}
@@ -1543,8 +1550,8 @@ export const HistoryTwoAuditStream: React.FC<AuditStreamProps> = ({ isDesktop = 
             <p style={{ margin: 0 }}>
               <mark
                 style={{
-                  background: "#BFDBFE",
-                  color: "#1E293B",
+                  background: "var(--waskita-mark-blue-bg, #BFDBFE)",
+                  color: "var(--waskita-mark-blue-text, #1E293B)",
                   padding: "1px 4px",
                   borderRadius: 3,
                 }}
@@ -1555,7 +1562,7 @@ export const HistoryTwoAuditStream: React.FC<AuditStreamProps> = ({ isDesktop = 
             </p>
           </div>
 
-          <div style={{ fontSize: "12px", color: "#059669", fontStyle: "italic" }}>
+          <div style={{ fontSize: "12px", color: "var(--waskita-emerald-accent, #059669)", fontStyle: "italic" }}>
             Komentar Kurator: Naskah sangat komprehensif, memiliki bukti implementasi kode nyata, dan bebas dari kalimat klise pendahuluan.
           </div>
         </section>
@@ -1567,20 +1574,20 @@ export const HistoryTwoAuditStream: React.FC<AuditStreamProps> = ({ isDesktop = 
             border: "none",
             borderRadius: 0,
             padding: "20px 0",
-            borderBottom: "1px solid rgba(30, 41, 59, 0.1)",
+            borderBottom: "1px solid var(--waskita-border, rgba(30, 41, 59, 0.1))",
           }}
         >
           <h3 style={{ fontSize: "15px", fontWeight: 700, margin: "0 0 4px 0", color: COLORS.deepSlate }}>
             Overview &amp; Prompt Bantuan
           </h3>
-          <p style={{ fontSize: "12px", color: "rgba(30, 41, 59, 0.65)", margin: "0 0 10px 0" }}>
+          <p style={{ fontSize: "12px", color: "var(--waskita-text-muted, rgba(30, 41, 59, 0.65))", margin: "0 0 10px 0" }}>
             Instruksi otomatis untuk menyusun ringkasan eksekutif atau slide presentasi teknis
           </p>
 
           <div
             style={{
-              background: "rgba(255, 255, 255, 0.7)",
-              border: "1px solid rgba(30, 41, 59, 0.15)",
+              background: "var(--waskita-code-bg, rgba(255, 255, 255, 0.7))",
+              border: "1px solid var(--waskita-border-strong, rgba(30, 41, 59, 0.15))",
               borderRadius: "12px",
               padding: "12px 14px",
               position: "relative",
@@ -1594,7 +1601,7 @@ export const HistoryTwoAuditStream: React.FC<AuditStreamProps> = ({ isDesktop = 
                 marginBottom: "6px",
               }}
             >
-              <span style={{ fontSize: "11px", fontWeight: 700, color: "rgba(30, 41, 59, 0.6)" }}>
+              <span style={{ fontSize: "11px", fontWeight: 700, color: "var(--waskita-text-muted, rgba(30, 41, 59, 0.6))" }}>
                 seo-executive-summary-prompt.txt
               </span>
               <button
@@ -1646,7 +1653,7 @@ export const HistoryTwoAuditStream: React.FC<AuditStreamProps> = ({ isDesktop = 
           <h3 style={{ fontSize: "15px", fontWeight: 700, margin: "0 0 4px 0", color: COLORS.deepSlate }}>
             Referensi SERP · Top 3 Google
           </h3>
-          <p style={{ fontSize: "12px", color: "rgba(30, 41, 59, 0.65)", margin: "0 0 12px 0" }}>
+          <p style={{ fontSize: "12px", color: "var(--waskita-text-muted, rgba(30, 41, 59, 0.65))", margin: "0 0 12px 0" }}>
             Artikel kompetitor acuan untuk kueri "panduan optimasi core web vitals inp lcp"
           </p>
 
@@ -1678,7 +1685,7 @@ export const HistoryTwoAuditStream: React.FC<AuditStreamProps> = ({ isDesktop = 
                   alignItems: "flex-start",
                   gap: "10px",
                   padding: "8px 0",
-                  borderBottom: "1px dashed rgba(30, 41, 59, 0.12)",
+                  borderBottom: "1px dashed var(--waskita-border, rgba(30, 41, 59, 0.12))",
                 }}
               >
                 <span
@@ -1717,15 +1724,15 @@ export const HistoryTwoAuditStream: React.FC<AuditStreamProps> = ({ isDesktop = 
                     >
                       {item.title}
                     </h4>
-                    <IconExternalLink size={13} color="rgba(30, 41, 59, 0.6)" />
+                    <IconExternalLink size={13} color="var(--waskita-text-muted, rgba(30, 41, 59, 0.6))" />
                   </div>
-                  <span style={{ fontSize: "11px", color: "#059669", fontWeight: 500 }}>
+                  <span style={{ fontSize: "11px", color: "var(--waskita-emerald-accent, #059669)", fontWeight: 500 }}>
                     {item.domain}
                   </span>
                   <p
                     style={{
                       fontSize: "11.5px",
-                      color: "rgba(30, 41, 59, 0.65)",
+                      color: "var(--waskita-text-muted, rgba(30, 41, 59, 0.65))",
                       margin: "3px 0 0 0",
                       lineHeight: 1.4,
                     }}

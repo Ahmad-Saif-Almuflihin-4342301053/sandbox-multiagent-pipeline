@@ -464,7 +464,7 @@ export const SemiCircleGauge: React.FC<{
         <path
           d={`M ${cx - radius} ${cy} A ${radius} ${radius} 0 0 1 ${cx + radius} ${cy}`}
           fill="none"
-          stroke="rgba(30, 41, 59, 0.12)"
+          stroke="var(--waskita-track, rgba(30, 41, 59, 0.12))"
           strokeWidth={strokeWidth}
           strokeLinecap="round"
         />
@@ -479,7 +479,7 @@ export const SemiCircleGauge: React.FC<{
           strokeLinecap="round"
         />
         {/* Threshold Indicator Dot */}
-        <circle cx={dotX} cy={dotY} r={3.5} fill="#EF4444" stroke="#FFFFFF" strokeWidth={1.5} />
+        <circle cx={dotX} cy={dotY} r={3.5} fill="#EF4444" stroke="var(--waskita-surface-white, #FFFFFF)" strokeWidth={1.5} />
       </svg>
       {/* Centered Score Display */}
       <div
@@ -497,7 +497,7 @@ export const SemiCircleGauge: React.FC<{
         <span style={{ fontSize: "28px", fontWeight: 800, color: COLORS.deepSlate, lineHeight: 1 }}>
           {score}%
         </span>
-        <span style={{ fontSize: "11px", fontWeight: 600, color: "#64748B", marginTop: 2 }}>
+        <span style={{ fontSize: "11px", fontWeight: 600, color: "var(--waskita-text-muted, #64748B)", marginTop: 2 }}>
           Target Ambang: {threshold}%
         </span>
       </div>
@@ -598,7 +598,7 @@ export const AuditOptionsOverlay: React.FC<{
                 transform: "translateY(10px) scale(0.98)",
                 transition: "all 0.2s cubic-bezier(0.16, 1, 0.3, 1)",
                 overflow: "hidden",
-                border: "1px solid rgba(30, 41, 59, 0.08)",
+                border: "1px solid var(--waskita-border, rgba(30, 41, 59, 0.08))",
               }
             : {
                 position: "fixed",
@@ -628,7 +628,7 @@ export const AuditOptionsOverlay: React.FC<{
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
-              borderBottom: "1px solid rgba(30, 41, 59, 0.08)",
+              borderBottom: "1px solid var(--waskita-border, rgba(30, 41, 59, 0.08))",
               flexShrink: 0,
             }}
           >
@@ -645,7 +645,7 @@ export const AuditOptionsOverlay: React.FC<{
                 alignItems: "center",
                 justifyContent: "center",
                 cursor: "pointer",
-                background: "rgba(30, 41, 59, 0.06)",
+                background: "var(--waskita-track, rgba(30, 41, 59, 0.06))",
                 color: COLORS.deepSlate,
               }}
             >
@@ -714,7 +714,7 @@ export const AuditOptionsOverlay: React.FC<{
                 <div style={{ fontSize: "13px", fontWeight: 700, color: COLORS.deepSlate }}>
                   Unggah Berkas Dokumen
                 </div>
-                <div style={{ fontSize: "11px", color: "rgba(30, 41, 59, 0.7)" }}>
+                <div style={{ fontSize: "11px", color: "var(--waskita-text-muted, rgba(30, 41, 59, 0.7))" }}>
                   Mendukung .md, .txt, .docx
                 </div>
               </div>
@@ -761,7 +761,7 @@ export const AuditOptionsOverlay: React.FC<{
                 style={{
                   flex: 1,
                   background: COLORS.warmCream,
-                  border: "1px solid rgba(30, 41, 59, 0.15)",
+                  border: "1px solid var(--waskita-border-strong, rgba(30, 41, 59, 0.15))",
                   borderRadius: "10px",
                   padding: "8px 12px",
                   fontSize: "13px",
@@ -816,7 +816,7 @@ export const AuditOptionsOverlay: React.FC<{
                 }}
               >
                 <span>VSM Cosine Similarity</span>
-                <span style={{ color: "#2563EB", fontWeight: 700 }}>≤ 0.60</span>
+                <span style={{ color: "var(--waskita-emerald-accent, #059669)", fontWeight: 700 }}>≤ 0.60</span>
               </div>
               <input
                 type="range"
@@ -841,7 +841,7 @@ export const AuditOptionsOverlay: React.FC<{
                 }}
               >
                 <span>MATTR (Kekayaan Leksikal)</span>
-                <span style={{ color: "#059669", fontWeight: 700 }}>≥ 0.55</span>
+                <span style={{ color: "var(--waskita-emerald-accent, #059669)", fontWeight: 700 }}>≥ 0.55</span>
               </div>
               <input
                 type="range"
@@ -866,7 +866,7 @@ export const AuditOptionsOverlay: React.FC<{
                 }}
               >
                 <span>HKO Overlap (Sub-judul)</span>
-                <span style={{ color: "#D97706", fontWeight: 700 }}>≤ 40%</span>
+                <span style={{ color: "var(--waskita-amber-text, #D97706)", fontWeight: 700 }}>≤ 40%</span>
               </div>
               <input
                 type="range"
@@ -891,7 +891,7 @@ export const AuditOptionsOverlay: React.FC<{
                 }}
               >
                 <span>Skor Lolos Standar (CDS)</span>
-                <span style={{ color: "#059669", fontWeight: 700 }}>≥ 75%</span>
+                <span style={{ color: "var(--waskita-emerald-accent, #059669)", fontWeight: 700 }}>≥ 75%</span>
               </div>
               <input
                 type="range"
