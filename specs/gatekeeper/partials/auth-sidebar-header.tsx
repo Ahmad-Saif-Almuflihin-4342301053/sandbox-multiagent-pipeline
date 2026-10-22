@@ -133,6 +133,17 @@ export const AuthSidebar: React.FC<AuthSidebarProps> = ({
             background-color: ${COLORS.warmSand};
             font-weight: 700;
           }
+          #${sessionNewId}:checked ~ * .btn-new-analysis {
+            background-color: ${COLORS.warmSand} !important;
+            font-weight: 700 !important;
+          }
+          #${sessionNewId}:checked ~ * .btn-new-analysis-rail {
+            background-color: ${COLORS.warmSand} !important;
+          }
+          .btn-new-analysis:hover,
+          .btn-new-analysis-rail:hover {
+            background-color: ${COLORS.mutedSkyBlue};
+          }
         `}
       </style>
 
@@ -232,20 +243,21 @@ export const AuthSidebar: React.FC<AuthSidebarProps> = ({
                 style={{
                   width: "100%",
                   background: "transparent",
-                  border: "1px solid rgba(30, 41, 59, 0.15)",
-                  borderRadius: "9999px",
-                  padding: "12px 16px",
+                  border: "none",
+                  borderRadius: "12px",
+                  padding: "9px 12px",
                   display: "flex",
                   alignItems: "center",
                   gap: "10px",
                   fontSize: "13.5px",
-                  fontWeight: 700,
+                  fontWeight: 500,
                   color: COLORS.deepSlate,
                   cursor: "pointer",
                   textAlign: "left",
                   marginBottom: "10px",
                   boxSizing: "border-box",
                   userSelect: "none",
+                  transition: "background 0.15s ease",
                 }}
               >
                 <IconSquarePen size={18} color={COLORS.deepSlate} />
@@ -630,17 +642,19 @@ export const AuthSidebar: React.FC<AuthSidebarProps> = ({
               {/* Analisis Baru (Mini Rail) */}
               <label
                 htmlFor={sessionNewId}
+                className="btn-new-analysis-rail"
                 style={{
                   width: "44px",
                   height: "44px",
-                  borderRadius: "50%",
+                  borderRadius: "12px",
                   background: "transparent",
-                  border: "1px solid rgba(30, 41, 59, 0.15)",
+                  border: "none",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                   cursor: "pointer",
                   color: COLORS.deepSlate,
+                  transition: "background 0.15s ease",
                 }}
                 title="Analisis Baru"
               >
@@ -796,20 +810,21 @@ export const AuthSidebar: React.FC<AuthSidebarProps> = ({
               style={{
                 width: "100%",
                 background: "transparent",
-                border: "1px solid rgba(30, 41, 59, 0.15)",
-                borderRadius: "9999px",
-                padding: "12px 16px",
+                border: "none",
+                borderRadius: "12px",
+                padding: "9px 12px",
                 display: "flex",
                 alignItems: "center",
                 gap: "10px",
                 fontSize: "13.5px",
-                fontWeight: 700,
+                fontWeight: 500,
                 color: COLORS.deepSlate,
                 cursor: "pointer",
                 textAlign: "left",
                 marginBottom: "10px",
                 boxSizing: "border-box",
                 userSelect: "none",
+                transition: "background 0.15s ease",
               }}
             >
               <IconSquarePen size={18} color={COLORS.deepSlate} />
